@@ -31,12 +31,26 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             }
         }
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
+        viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         binding.recyclerView.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = collectionsAdapter
         }
         binding.swipeRefreshLayout.setOnRefreshListener { viewModel.loadData(true) }
+    }
+
+    private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {
+        is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collectionId)
+        CollectionsViewModel.Event.ShowErrorMessage -> showErrorMessage()
+    }
+
+    private fun openCollectionDetails(collectionId: String) {
+        navigator?.navigateToCollectionDetails(collectionId)
+    }
+
+    private fun showErrorMessage() {
+        //TODO
     }
 
     companion object {

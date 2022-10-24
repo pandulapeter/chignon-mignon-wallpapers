@@ -9,4 +9,6 @@ internal class CollectionRepositoryImpl(
 ) : BaseRepository<List<Collection>>(collectionRemoteSource::getCategories), CollectionRepository {
 
     override suspend fun getCollections(isForceRefresh: Boolean) = getData(isForceRefresh)
+
+    override suspend fun getCollectionById(collectionId: String) = getData(false).first { it.id == collectionId }
 }

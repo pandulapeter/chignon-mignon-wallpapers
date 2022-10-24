@@ -9,10 +9,11 @@ import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.bind
 import com.chignonMignon.wallpapers.presentation.utilities.withArguments
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
-    private val viewModel by viewModel<WallpaperDetailsViewModel>()
+    private val viewModel by viewModel<WallpaperDetailsViewModel> { parametersOf(arguments?.wallpaperId) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentWallpaperDetailsBinding>(view)

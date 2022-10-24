@@ -15,6 +15,7 @@ import coil.load
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -54,6 +55,10 @@ internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) ->
 
 internal inline fun <T> Flow<T>.observe(lifecycleOwner: LifecycleOwner, crossinline callback: (T) -> Unit) =
     onEach { callback(it) }.launchIn(lifecycleOwner.lifecycle.coroutineScope)
+
+internal fun <T> MutableSharedFlow<T>.pushEvent(event: T) {
+    tryEmit(event)
+}
 
 @BindingAdapter("imageUrl")
 internal fun ImageView.setImageUrl(imageUrl: String?) = load(imageUrl) {

@@ -6,6 +6,9 @@ import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsListItem
+import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
+import com.chignonMignon.wallpapers.presentation.utilities.pushEvent
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -21,6 +24,8 @@ internal class CollectionsViewModel(
     }
     private val _shouldShowLoadingIndicator = MutableStateFlow(false)
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
+    private val _events = eventFlow<Event>()
+    val events: Flow<Event> = _events
 
     init {
         loadData(false)
@@ -34,13 +39,16 @@ internal class CollectionsViewModel(
                 _shouldShowLoadingIndicator.value = false
             }
             is Result.Failure -> {
-                // TODO
+                _events.pushEvent(Event.ShowErrorMessage)
                 _shouldShowLoadingIndicator.value = false
             }
         }
     }
 
-    fun onItemSelected(collectionId: String) {
-        // TODO
+    fun onItemSelected(collectionId: String) = _events.pushEvent(Event.OpenCollectionDetails(collectionId))
+
+    sealed class Event {
+        data class OpenCollectionDetails(val collectionId: String) : Event()
+        object ShowErrorMessage : Event()
     }
 }
