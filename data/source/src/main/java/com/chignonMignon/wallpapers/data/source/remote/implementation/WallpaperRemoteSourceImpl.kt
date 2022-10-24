@@ -8,5 +8,5 @@ internal class WallpaperRemoteSourceImpl(
     private val networkingService: NetworkingService
 ) : WallpaperRemoteSource {
 
-    override suspend fun getTransactions() = networkingService.getWallpapers().mapNotNull { it.toModel() }
+    override suspend fun getWallpapers() = networkingService.getWallpapers().mapNotNull { it.toModel() }
 }

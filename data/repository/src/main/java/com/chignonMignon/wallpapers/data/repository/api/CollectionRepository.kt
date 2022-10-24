@@ -4,5 +4,5 @@ import com.chignonMignon.wallpapers.data.model.domain.Collection
 
 interface CollectionRepository {
 
-    suspend fun getCollections(): List<Collection>
+    suspend fun getCollections(isForceRefresh: Boolean): List<Collection>
 }

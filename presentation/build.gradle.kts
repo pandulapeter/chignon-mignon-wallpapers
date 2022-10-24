@@ -8,9 +8,10 @@ dependencies {
     implementation(project(":data:model"))
     implementation(project(":domain"))
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.coil)
     implementation(libs.google.android.material)
-    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }
 
 android {

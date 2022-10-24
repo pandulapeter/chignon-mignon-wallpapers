@@ -1,11 +1,12 @@
 package com.chignonMignon.wallpapers.data.repository.implementation
 
+import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.data.repository.api.CollectionRepository
 import com.chignonMignon.wallpapers.data.source.remote.api.CollectionRemoteSource
 
 internal class CollectionRepositoryImpl(
-    private val collectionRemoteSource: CollectionRemoteSource
-) : CollectionRepository {
+    collectionRemoteSource: CollectionRemoteSource
+) : BaseRepository<List<Collection>>(collectionRemoteSource::getCategories), CollectionRepository {
 
-    override suspend fun getCollections() = collectionRemoteSource.getCategories()
+    override suspend fun getCollections(isForceRefresh: Boolean) = getData(isForceRefresh)
 }

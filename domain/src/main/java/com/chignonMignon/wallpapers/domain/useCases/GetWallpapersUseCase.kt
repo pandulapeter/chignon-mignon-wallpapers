@@ -6,5 +6,5 @@ import com.chignonMignon.wallpapers.domain.resultOf
 class GetWallpapersUseCase internal constructor(
     private val wallpaperRepository: WallpaperRepository
 ) {
-    suspend operator fun invoke() = resultOf { wallpaperRepository.getWallpapers() }
+    suspend operator fun invoke(isForceRefresh: Boolean) = resultOf { wallpaperRepository.getWallpapers(isForceRefresh) }
 }
