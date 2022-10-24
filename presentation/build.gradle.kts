@@ -9,6 +9,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.coil)
     implementation(libs.google.android.material)
     implementation(libs.koin.android)
@@ -22,5 +24,5 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    dataBinding.enable = true
+    buildFeatures.dataBinding = true
 }

@@ -7,27 +7,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.about.AboutFragment
-import com.chignonMignon.wallpapers.presentation.feature.categories.CategoriesFragment
-import com.chignonMignon.wallpapers.presentation.feature.categoryDetails.CategoryDetailsFragment
+import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.CollectionDetailsFragment
+import com.chignonMignon.wallpapers.presentation.feature.collections.CollectionsFragment
 import com.chignonMignon.wallpapers.presentation.feature.wallpaperDetails.WallpaperDetailsFragment
 import com.chignonMignon.wallpapers.presentation.utilities.handleReplace
 
-class MainActivity : AppCompatActivity(R.layout.activity_chignon_mignon_wallpapers), Navigator {
+class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chignon_mignon_wallpapers), Navigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         handleSplashScreen()
+        super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            navigateToCategories()
+            navigateToCollections()
         }
     }
 
-    override fun navigateToCategories() = supportFragmentManager.handleReplace(R.id.container) {
-        CategoriesFragment.newInstance()
+    override fun navigateToCollections() = supportFragmentManager.handleReplace(R.id.container) {
+        CollectionsFragment.newInstance()
     }
 
-    override fun navigateToCategoryDetails(categoryId: String) = supportFragmentManager.handleReplace(R.id.container) {
-        CategoryDetailsFragment.newInstance(categoryId)
+    override fun navigateToCollectionDetails(collectionId: String) = supportFragmentManager.handleReplace(R.id.container) {
+        CollectionDetailsFragment.newInstance(collectionId)
     }
 
     override fun navigateToWallpaperDetails(wallpaperId: String) = supportFragmentManager.handleReplace(R.id.container) {

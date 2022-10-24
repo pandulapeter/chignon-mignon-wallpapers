@@ -1,23 +1,23 @@
-package com.chignonMignon.wallpapers.presentation.feature.about
+package com.chignonMignon.wallpapers.presentation.feature.collections
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.R
-import com.chignonMignon.wallpapers.presentation.databinding.FragmentAboutBinding
+import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionsBinding
 import com.chignonMignon.wallpapers.presentation.utilities.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AboutFragment : Fragment(R.layout.fragment_about) {
+class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
-    private val viewModel by viewModel<AboutViewModel>()
+    private val viewModel by viewModel<CollectionsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = bind<FragmentAboutBinding>(view)
+        val binding = bind<FragmentCollectionsBinding>(view)
         binding.viewModel = viewModel
     }
 
     companion object {
-        fun newInstance() = AboutFragment()
+        fun newInstance() = CollectionsFragment()
     }
 }

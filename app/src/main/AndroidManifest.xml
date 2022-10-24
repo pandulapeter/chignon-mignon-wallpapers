@@ -16,7 +16,7 @@
         tools:targetApi="33">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ChignonMignonWallpapersActivity"
             android:exported="true">
 
             <intent-filter>

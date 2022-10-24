@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.chignonMignon.wallpapers.presentation.feature.categoryDetails.CategoryDetailsViewModel" />
+            type="com.chignonMignon.wallpapers.presentation.feature.collections.CollectionsViewModel" />
 
     </data>
 

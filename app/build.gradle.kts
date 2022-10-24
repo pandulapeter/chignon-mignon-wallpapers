@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 dependencies {
@@ -26,6 +27,7 @@ android {
         versionName = System.getProperty("VERSION_NAME")
     }
     kotlinOptions.jvmTarget = libs.versions.jvm.target.get()
+    buildFeatures.dataBinding = true
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

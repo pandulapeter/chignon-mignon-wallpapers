@@ -2,9 +2,9 @@ package com.chignonMignon.wallpapers.presentation.feature
 
 interface Navigator {
 
-    fun navigateToCategories()
+    fun navigateToCollections()
 
-    fun navigateToCategoryDetails(categoryId: String)
+    fun navigateToCollectionDetails(collectionId: String)
 
     fun navigateToWallpaperDetails(wallpaperId: String)
 

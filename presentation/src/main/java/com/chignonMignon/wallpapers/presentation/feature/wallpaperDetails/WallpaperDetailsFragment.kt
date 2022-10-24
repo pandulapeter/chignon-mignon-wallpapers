@@ -16,6 +16,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentWallpaperDetailsBinding>(view)
+        binding.viewModel = viewModel
     }
 
     companion object {
