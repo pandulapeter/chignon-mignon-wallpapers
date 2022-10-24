@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- About -->
+    <string name="about_title">Rólunk</string>
+
+    <!-- Collections -->
+    <string name="collections_title">Kollekciók</string>
+    <string name="collections_about">Rólunk</string>
+
+</resources>

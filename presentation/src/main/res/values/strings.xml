@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+
+    <!-- Collections -->
+    <string name="collections_title">Collections</string>
+    <string name="collections_about">About</string>
+
+</resources>

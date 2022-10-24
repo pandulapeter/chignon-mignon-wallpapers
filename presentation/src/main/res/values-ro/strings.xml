@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- About -->
+    <string name="about_title">Despre noi</string>
+
+    <!-- Collections -->
+    <string name="collections_title">Colecții</string>
+    <string name="collections_about">Despre noi</string>
+
+</resources>

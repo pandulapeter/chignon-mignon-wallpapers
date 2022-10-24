@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.animation.AccelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.about.AboutFragment
 import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.CollectionDetailsFragment
@@ -17,26 +18,40 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
     override fun onCreate(savedInstanceState: Bundle?) {
         handleSplashScreen()
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false);
         if (savedInstanceState == null) {
             navigateToCollections()
         }
     }
 
-    override fun navigateToCollections() = supportFragmentManager.handleReplace(R.id.container) {
+    override fun navigateToCollections() = supportFragmentManager.handleReplace(
+        containerId = R.id.container
+    ) {
         CollectionsFragment.newInstance()
     }
 
-    override fun navigateToCollectionDetails(collectionId: String) = supportFragmentManager.handleReplace(R.id.container) {
+    override fun navigateToCollectionDetails(collectionId: String) = supportFragmentManager.handleReplace(
+        containerId = R.id.container,
+        addToBackStack = true
+    ) {
         CollectionDetailsFragment.newInstance(collectionId)
     }
 
-    override fun navigateToWallpaperDetails(wallpaperId: String) = supportFragmentManager.handleReplace(R.id.container) {
+    override fun navigateToWallpaperDetails(wallpaperId: String) = supportFragmentManager.handleReplace(
+        containerId = R.id.container,
+        addToBackStack = true
+    ) {
         WallpaperDetailsFragment.newInstance(wallpaperId)
     }
 
-    override fun navigateToAbout() = supportFragmentManager.handleReplace(R.id.container) {
+    override fun navigateToAbout() = supportFragmentManager.handleReplace(
+        containerId = R.id.container,
+        addToBackStack = true
+    ) {
         AboutFragment.newInstance()
     }
+
+    override fun navigateBack() = supportFragmentManager.popBackStack()
 
     private fun handleSplashScreen() = installSplashScreen().setOnExitAnimationListener { splashScreen ->
         splashScreen.view.animate()

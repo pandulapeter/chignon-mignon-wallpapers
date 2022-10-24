@@ -9,4 +9,6 @@ interface Navigator {
     fun navigateToWallpaperDetails(wallpaperId: String)
 
     fun navigateToAbout()
+
+    fun navigateBack()
 }

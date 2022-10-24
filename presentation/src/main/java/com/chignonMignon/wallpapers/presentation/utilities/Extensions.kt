@@ -2,13 +2,21 @@ package com.chignonMignon.wallpapers.presentation.utilities
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.IdRes
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.coroutineScope
+import coil.load
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 inline fun <reified T : Fragment> FragmentManager.handleReplace(
     @IdRes containerId: Int,
@@ -42,4 +50,12 @@ internal inline fun <reified B : ViewDataBinding> Fragment.bind(view: View? = nu
 
 internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) -> Unit): T = apply {
     arguments = Bundle().apply { bundleOperations(this) }
+}
+
+internal inline fun <T> Flow<T>.observe(lifecycleOwner: LifecycleOwner, crossinline callback: (T) -> Unit) =
+    onEach { callback(it) }.launchIn(lifecycleOwner.lifecycle.coroutineScope)
+
+@BindingAdapter("imageUrl")
+internal fun ImageView.setImageUrl(imageUrl: String?) = load(imageUrl) {
+    allowHardware(false)
 }

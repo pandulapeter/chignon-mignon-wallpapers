@@ -12,21 +12,60 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/collection_item_height"
+        android:layout_marginStart="@dimen/double_content_padding"
+        android:layout_marginTop="@dimen/double_content_padding"
+        android:layout_marginEnd="@dimen/double_content_padding"
+        android:background="?selectableItemBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/thumbnail"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{uiModel.collection.thumbnailUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/on_primary"
+                app:strokeWidth="@dimen/divider"
                 tools:src="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/double_content_padding"
+                android:layout_marginTop="@dimen/content_padding"
+                android:layout_marginEnd="@dimen/double_content_padding"
+                android:text="@{uiModel.collection.name}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toTopOf="@id/description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/thumbnail"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding"
+                android:layout_marginBottom="@dimen/content_padding"
+                android:text="@{uiModel.collection.description}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/name"
+                app:layout_constraintStart_toStartOf="@id/name"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:text="Description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
