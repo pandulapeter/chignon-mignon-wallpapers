@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionDetailsBinding
+import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.bind
 import com.chignonMignon.wallpapers.presentation.utilities.navigator
@@ -16,7 +17,7 @@ import org.koin.core.parameter.parametersOf
 
 class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details) {
 
-    private val viewModel by viewModel<CollectionDetailsViewModel> { parametersOf(arguments?.collectionId) }
+    private val viewModel by viewModel<CollectionDetailsViewModel> { parametersOf(arguments?.collection) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentCollectionDetailsBinding>(view)
@@ -45,10 +46,10 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     }
 
     companion object {
-        private var Bundle.collectionId by BundleDelegate.String("collectionId")
+        private var Bundle.collection by BundleDelegate.Parcelable<Navigator.Collection>("collection")
 
-        fun newInstance(collectionId: String) = CollectionDetailsFragment().withArguments {
-            it.collectionId = collectionId
+        fun newInstance(collection: Navigator.Collection) = CollectionDetailsFragment().withArguments {
+            it.collection = collection
         }
     }
 }

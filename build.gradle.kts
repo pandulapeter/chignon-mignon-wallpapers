@@ -1,4 +1,4 @@
-"VERSION_NAME" set "1.0.0"
+"VERSION_NAME" set "0.0.1"
 "VERSION_CODE" set 1
 "KEY_ALIAS" set "androiddebugkey"
 "KEY_PASSWORD" set "android"

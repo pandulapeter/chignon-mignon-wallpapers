@@ -1,9 +1,12 @@
 package com.chignonMignon.wallpapers.presentation.utilities
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -41,6 +44,8 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
         commitAllowingStateLoss()
     }
 }
+
+internal fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
 
 internal val Fragment.navigator get() = activity as? Navigator
 

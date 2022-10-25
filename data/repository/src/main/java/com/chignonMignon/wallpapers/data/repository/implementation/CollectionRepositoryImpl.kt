@@ -8,7 +8,9 @@ internal class CollectionRepositoryImpl(
     collectionRemoteSource: CollectionRemoteSource
 ) : BaseRepository<List<Collection>>(collectionRemoteSource::getCategories), CollectionRepository {
 
-    override suspend fun getCollections(isForceRefresh: Boolean) = getData(isForceRefresh)
+    override suspend fun getCollections(isForceRefresh: Boolean) =
+        getData(isForceRefresh)
 
-    override suspend fun getCollectionById(collectionId: String) = getData(false).first { it.id == collectionId }
+    override suspend fun getCollectionById(isForceRefresh: Boolean, collectionId: String) =
+        getCollections(isForceRefresh).first { it.id == collectionId }
 }

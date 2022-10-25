@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionsBinding
+import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.bind
 import com.chignonMignon.wallpapers.presentation.utilities.consume
@@ -41,12 +42,12 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {
-        is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collectionId)
+        is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collection)
         CollectionsViewModel.Event.ShowErrorMessage -> showErrorMessage()
     }
 
-    private fun openCollectionDetails(collectionId: String) {
-        navigator?.navigateToCollectionDetails(collectionId)
+    private fun openCollectionDetails(collection: Navigator.Collection) {
+        navigator?.navigateToCollectionDetails(collection)
     }
 
     private fun showErrorMessage() {

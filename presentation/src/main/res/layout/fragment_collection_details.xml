@@ -26,8 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
+                app:backgroundColor="@{viewModel.collection.backgroundColor}"
                 app:navigationIcon="@drawable/ic_close"
-                app:title="@{viewModel.collectionName}"
+                app:navigationIconTint="@{viewModel.collection.foregroundColor}"
+                app:title="@{viewModel.collection.name}"
+                app:titleTextColor="@{viewModel.collection.foregroundColor}"
                 tools:title="Collection details" />
 
         </com.google.android.material.appbar.AppBarLayout>

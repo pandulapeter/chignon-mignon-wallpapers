@@ -6,5 +6,5 @@ interface CollectionRepository {
 
     suspend fun getCollections(isForceRefresh: Boolean): List<Collection>
 
-    suspend fun getCollectionById(collectionId: String) : Collection
+    suspend fun getCollectionById(isForceRefresh: Boolean, collectionId: String) : Collection
 }

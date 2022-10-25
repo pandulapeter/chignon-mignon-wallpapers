@@ -6,5 +6,13 @@ import com.chignonMignon.wallpapers.domain.resultOf
 class GetCollectionByIdUseCase internal constructor(
     private val collectionRepository: CollectionRepository
 ) {
-    suspend operator fun invoke(collectionId: String) = resultOf { collectionRepository.getCollectionById(collectionId) }
+    suspend operator fun invoke(
+        isForceRefresh: Boolean,
+        collectionId: String
+    ) = resultOf {
+        collectionRepository.getCollectionById(
+            isForceRefresh = isForceRefresh,
+            collectionId = collectionId
+        )
+    }
 }

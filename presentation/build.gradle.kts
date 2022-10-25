@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 dependencies {
@@ -9,6 +10,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.palette)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.coil)

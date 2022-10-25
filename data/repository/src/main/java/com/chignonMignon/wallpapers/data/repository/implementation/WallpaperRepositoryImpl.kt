@@ -8,5 +8,12 @@ internal class WallpaperRepositoryImpl(
     wallpaperRemoteSource: WallpaperRemoteSource
 ) : BaseRepository<List<Wallpaper>>(wallpaperRemoteSource::getWallpapers), WallpaperRepository {
 
-    override suspend fun getWallpapers(isForceRefresh: Boolean) = getData(isForceRefresh)
+    override suspend fun getWallpapers(isForceRefresh: Boolean) =
+        getData(isForceRefresh)
+
+    override suspend fun getWallpaperById(isForceRefresh: Boolean, wallpaperId: String) =
+        getWallpapers(isForceRefresh).first { it.id == wallpaperId }
+
+    override suspend fun getWallpapersByCollectionId(isForceRefresh: Boolean, collectionId: String) =
+        getWallpapers(isForceRefresh).filter { it.collectionId == collectionId }
 }

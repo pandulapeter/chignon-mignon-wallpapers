@@ -3,8 +3,9 @@ package com.chignonMignon.wallpapers.presentation.feature.collectionDetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
-import com.chignonMignon.wallpapers.domain.useCases.GetCollectionByIdUseCase
-import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
+import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
+import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdUseCase
+import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.pushEvent
 import kotlinx.coroutines.flow.Flow
@@ -13,13 +14,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 internal class CollectionDetailsViewModel(
-    private val collectionId: String,
-    private val getCollectionById: GetCollectionByIdUseCase,
-    private val getWallpapers: GetWallpapersUseCase
+    val collection: Navigator.Collection,
+    private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase
 ) : ViewModel() {
 
-    private val _collectionName = MutableStateFlow("")
-    val collectionName: StateFlow<String> = _collectionName
+    private val wallpapers = MutableStateFlow<List<Wallpaper>?>(null)
     private val _shouldShowLoadingIndicator = MutableStateFlow(false)
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
     private val _events = eventFlow<Event>()
@@ -31,9 +30,9 @@ internal class CollectionDetailsViewModel(
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
         _shouldShowLoadingIndicator.value = true
-        when (val result = getCollectionById(collectionId)) {
+        when (val result = getWallpapersByCollectionId(isForceRefresh, collection.id)) {
             is Result.Success -> {
-                _collectionName.value = result.data.name
+                wallpapers.value = result.data
                 _shouldShowLoadingIndicator.value = false
             }
             is Result.Failure -> {
