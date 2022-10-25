@@ -15,12 +15,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val sourceModule = module {
     single {
         RetrosheetInterceptor.Builder()
-            .setLogging(true)
             .run {
                 CollectionResponse.addSheet(this)
                 WallpaperResponse.addSheet(this)
             }
-            .run { CollectionResponse.addSheet(this) }
             .build()
     }
     single {

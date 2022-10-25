@@ -18,8 +18,8 @@ interface Navigator {
     @Parcelize
     data class Collection internal constructor(
         val id: String,
-        val name: String,
-        val description: String,
+        val name: TranslatableText,
+        val description: TranslatableText,
         val thumbnailUrl: String,
         val backgroundColor: Int,
         val foregroundColor: Int
@@ -28,11 +28,18 @@ interface Navigator {
     @Parcelize
     data class Wallpaper internal constructor(
         val id: String,
-        val name: String,
-        val description: String,
+        val name: TranslatableText,
+        val description: TranslatableText,
         val url: String,
-        val collectionName: String,
+        val collectionName: TranslatableText,
         val backgroundColor: Int,
         val foregroundColor: Int
+    ) : Parcelable
+
+    @Parcelize
+    data class TranslatableText internal constructor(
+        val english: String,
+        val hungarian: String,
+        val romanian: String
     ) : Parcelable
 }

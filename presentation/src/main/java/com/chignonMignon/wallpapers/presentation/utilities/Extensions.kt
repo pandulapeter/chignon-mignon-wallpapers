@@ -4,9 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.IdRes
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -16,12 +18,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import coil.load
+import com.chignonMignon.wallpapers.data.model.domain.TranslatableText
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.Locale
 
 inline fun <reified T : Fragment> FragmentManager.handleReplace(
     @IdRes containerId: Int,
@@ -66,6 +70,28 @@ internal inline fun <T> Flow<T>.observe(lifecycleOwner: LifecycleOwner, crossinl
 
 internal fun <T> MutableSharedFlow<T>.pushEvent(event: T) {
     tryEmit(event)
+}
+
+internal fun TranslatableText.toNavigatorTranslatableText() = Navigator.TranslatableText(
+    english = english,
+    hungarian = hungarian,
+    romanian = romanian
+)
+
+private fun Navigator.TranslatableText.toText() = when (Locale.getDefault().language) {
+    "hu" -> hungarian
+    "ro" -> romanian
+    else -> english
+}
+
+@BindingAdapter("android:text")
+internal fun TextView.setText(translatableText: Navigator.TranslatableText?) {
+    text = translatableText?.toText()
+}
+
+@BindingAdapter("title")
+internal fun Toolbar.setTitle(translatableText: Navigator.TranslatableText?) {
+    title = translatableText?.toText()
 }
 
 @BindingAdapter("imageUrl")

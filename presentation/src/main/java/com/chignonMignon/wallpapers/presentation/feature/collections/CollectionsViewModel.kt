@@ -10,6 +10,7 @@ import com.chignonMignon.wallpapers.presentation.feature.collections.list.Collec
 import com.chignonMignon.wallpapers.presentation.feature.shared.ColorGenerator
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.pushEvent
+import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorTranslatableText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -55,8 +56,8 @@ internal class CollectionsViewModel(
     private suspend fun Collection.toNavigatorCollection() = colorGenerator.generateColors(thumbnailUrl).let { colors ->
         Navigator.Collection(
             id = id,
-            name = name,
-            description = description,
+            name = name.toNavigatorTranslatableText(),
+            description = description.toNavigatorTranslatableText(),
             thumbnailUrl = thumbnailUrl,
             backgroundColor = colors.backgroundColor,
             foregroundColor = colors.foregroundColor
