@@ -10,12 +10,12 @@ import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionD
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.list.CollectionDetailsAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
-import com.chignonMignon.wallpapers.presentation.utilities.bind
-import com.chignonMignon.wallpapers.presentation.utilities.dimension
-import com.chignonMignon.wallpapers.presentation.utilities.navigator
-import com.chignonMignon.wallpapers.presentation.utilities.observe
-import com.chignonMignon.wallpapers.presentation.utilities.showSnackbar
-import com.chignonMignon.wallpapers.presentation.utilities.withArguments
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

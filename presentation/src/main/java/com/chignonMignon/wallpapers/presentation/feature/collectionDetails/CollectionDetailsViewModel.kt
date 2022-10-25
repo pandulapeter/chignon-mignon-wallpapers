@@ -9,7 +9,7 @@ import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.list.CollectionDetailsListItem
 import com.chignonMignon.wallpapers.presentation.feature.shared.ColorPaletteGenerator
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
-import com.chignonMignon.wallpapers.presentation.utilities.pushEvent
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
 import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorColorPalette
 import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorTranslatableText
 import kotlinx.coroutines.flow.Flow

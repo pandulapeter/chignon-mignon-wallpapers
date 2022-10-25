@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.annotation.ColorInt
 import androidx.palette.graphics.Palette
 import com.chignonMignon.wallpapers.presentation.R
-import com.chignonMignon.wallpapers.presentation.utilities.color
-import com.chignonMignon.wallpapers.presentation.utilities.downloadImage
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.downloadImage
 
 internal class ColorPaletteGenerator(private val context: Context) {
 

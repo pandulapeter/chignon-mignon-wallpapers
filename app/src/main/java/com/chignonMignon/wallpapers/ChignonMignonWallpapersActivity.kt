@@ -11,7 +11,7 @@ import com.chignonMignon.wallpapers.presentation.feature.about.AboutFragment
 import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.CollectionDetailsFragment
 import com.chignonMignon.wallpapers.presentation.feature.collections.CollectionsFragment
 import com.chignonMignon.wallpapers.presentation.feature.wallpaperDetails.WallpaperDetailsFragment
-import com.chignonMignon.wallpapers.presentation.utilities.handleReplace
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.handleReplace
 
 class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chignon_mignon_wallpapers), Navigator {
 

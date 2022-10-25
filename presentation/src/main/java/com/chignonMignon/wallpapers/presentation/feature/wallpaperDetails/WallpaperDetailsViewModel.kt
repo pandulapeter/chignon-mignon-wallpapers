@@ -5,11 +5,11 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
-import com.chignonMignon.wallpapers.presentation.utilities.downloadImage
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.downloadImage
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
-import com.chignonMignon.wallpapers.presentation.utilities.getWallpaperFile
-import com.chignonMignon.wallpapers.presentation.utilities.pushEvent
-import com.chignonMignon.wallpapers.presentation.utilities.saveImage
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.getWallpaperFile
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.saveImage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

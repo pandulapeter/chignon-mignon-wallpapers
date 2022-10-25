@@ -8,11 +8,11 @@ import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionsBinding
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsAdapter
-import com.chignonMignon.wallpapers.presentation.utilities.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.consume
-import com.chignonMignon.wallpapers.presentation.utilities.navigator
-import com.chignonMignon.wallpapers.presentation.utilities.observe
-import com.chignonMignon.wallpapers.presentation.utilities.showSnackbar
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {

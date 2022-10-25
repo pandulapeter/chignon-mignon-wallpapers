@@ -69,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/double_content_padding"
+            android:fitsSystemWindows="true"
             android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context)}"
             android:text="@string/wallpaper_details_set_wallpaper"
             android:textColor="@{viewModel.wallpaper.colorPalette.foreground}"

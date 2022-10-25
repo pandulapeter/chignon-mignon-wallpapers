@@ -1,20 +1,22 @@
 package com.chignonMignon.wallpapers.presentation.feature.wallpaperDetails
 
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
+import android.view.WindowInsets
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentWallpaperDetailsBinding
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
-import com.chignonMignon.wallpapers.presentation.utilities.bind
-import com.chignonMignon.wallpapers.presentation.utilities.navigator
-import com.chignonMignon.wallpapers.presentation.utilities.observe
-import com.chignonMignon.wallpapers.presentation.utilities.showSnackbar
-import com.chignonMignon.wallpapers.presentation.utilities.withArguments
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.setWallpaper
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -26,6 +28,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         val binding = bind<FragmentWallpaperDetailsBinding>(view)
         binding.viewModel = viewModel
         binding.setupToolbar()
+        binding.setupFloatingActionButton()
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
     }
 
@@ -33,22 +36,20 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         navigator?.navigateBack()
     }
 
+    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() = floatingActionButton.setOnApplyWindowInsetsListener { _, insets ->
+        val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        floatingActionButton.layoutParams = (floatingActionButton.layoutParams as MarginLayoutParams).apply {
+            bottomMargin += systemBarInsets.bottom
+        }
+        WindowInsets.CONSUMED
+    }
+
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
         is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
         WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage()
     }
 
-    private fun setWallpaper(uri: Uri) = Intent.createChooser(
-        Intent(Intent.ACTION_SET_WALLPAPER, uri)
-            .addCategory(Intent.CATEGORY_DEFAULT)
-            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), getString(R.string.wallpaper_details_set_wallpaper)
-    ).let { intent ->
-        for (resolveInfo in activity?.packageManager?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).orEmpty()) {
-            val packageName = resolveInfo.activityInfo.packageName
-            context?.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-        startActivity(intent)
-    }
+    private fun setWallpaper(uri: Uri) = context?.setWallpaper(uri)
 
     private fun showErrorMessage() = context?.let { showSnackbar { viewModel.onSetWallpaperButtonPressed(it) } }
 

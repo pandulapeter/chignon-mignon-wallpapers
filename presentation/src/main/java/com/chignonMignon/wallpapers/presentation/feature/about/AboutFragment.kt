@@ -5,8 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentAboutBinding
-import com.chignonMignon.wallpapers.presentation.utilities.bind
-import com.chignonMignon.wallpapers.presentation.utilities.navigator
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutFragment : Fragment(R.layout.fragment_about) {
