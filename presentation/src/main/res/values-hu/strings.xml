@@ -8,4 +8,7 @@
     <string name="collections_title">Kollekciók</string>
     <string name="collections_about">Rólunk</string>
 
+    <!-- Wallpaper details -->
+    <string name="wallpaper_details_set_wallpaper">Háttérkép beállítása</string>
+
 </resources>

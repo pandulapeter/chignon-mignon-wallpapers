@@ -7,9 +7,10 @@ import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdUseCase
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.list.CollectionDetailsListItem
-import com.chignonMignon.wallpapers.presentation.feature.shared.ColorGenerator
+import com.chignonMignon.wallpapers.presentation.feature.shared.ColorPaletteGenerator
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.pushEvent
+import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorColorPalette
 import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorTranslatableText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 internal class CollectionDetailsViewModel(
     val collection: Navigator.Collection,
     private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase,
-    private val colorGenerator: ColorGenerator
+    private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
 
     private val wallpapers = MutableStateFlow<List<Navigator.Wallpaper>?>(null)
@@ -35,15 +36,17 @@ internal class CollectionDetailsViewModel(
     }
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
-        _shouldShowLoadingIndicator.value = true
-        when (val result = getWallpapersByCollectionId(isForceRefresh, collection.id)) {
-            is Result.Success -> {
-                wallpapers.value = result.data.map { it.toNavigatorWallpaper() }
-                _shouldShowLoadingIndicator.value = false
-            }
-            is Result.Failure -> {
-                _events.pushEvent(Event.ShowErrorMessage)
-                _shouldShowLoadingIndicator.value = false
+        if (!_shouldShowLoadingIndicator.value) {
+            _shouldShowLoadingIndicator.value = true
+            when (val result = getWallpapersByCollectionId(isForceRefresh, collection.id)) {
+                is Result.Success -> {
+                    wallpapers.value = result.data.map { it.toNavigatorWallpaper() }
+                    _shouldShowLoadingIndicator.value = false
+                }
+                is Result.Failure -> {
+                    _events.pushEvent(Event.ShowErrorMessage)
+                    _shouldShowLoadingIndicator.value = false
+                }
             }
         }
     }
@@ -52,15 +55,14 @@ internal class CollectionDetailsViewModel(
         _events.pushEvent(Event.OpenWallpaperDetails(it))
     }
 
-    private suspend fun Wallpaper.toNavigatorWallpaper() = colorGenerator.generateColors(url).let { colors ->
+    private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(url).let { colorPalette ->
         Navigator.Wallpaper(
             id = id,
             name = name.toNavigatorTranslatableText(),
             description = description.toNavigatorTranslatableText(),
             url = url,
             collectionName = collection.name,
-            backgroundColor = colors.backgroundColor,
-            foregroundColor = colors.foregroundColor
+            colorPalette = colorPalette.toNavigatorColorPalette()
         )
     }
 

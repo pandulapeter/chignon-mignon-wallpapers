@@ -16,7 +16,7 @@
         android:layout_marginStart="@dimen/double_content_padding"
         android:layout_marginTop="@dimen/double_content_padding"
         android:layout_marginEnd="@dimen/double_content_padding"
-        app:cardBackgroundColor="@{uiModel.collection.backgroundColor}">
+        app:cardBackgroundColor="@{uiModel.collection.colorPalette.background}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                 app:layout_constraintStart_toEndOf="@id/thumbnail"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:textColor="@{uiModel.collection.foregroundColor}"
+                app:textColor="@{uiModel.collection.colorPalette.foreground}"
                 tools:text="Title" />
 
             <TextView
@@ -70,7 +70,7 @@
                 app:layout_constraintEnd_toEndOf="@id/name"
                 app:layout_constraintStart_toStartOf="@id/name"
                 app:layout_constraintTop_toBottomOf="@id/name"
-                app:textColor="@{uiModel.collection.foregroundColor}"
+                app:textColor="@{uiModel.collection.colorPalette.foreground}"
                 tools:text="Description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

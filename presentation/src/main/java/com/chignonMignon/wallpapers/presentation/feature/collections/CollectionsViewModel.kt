@@ -7,9 +7,10 @@ import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsListItem
-import com.chignonMignon.wallpapers.presentation.feature.shared.ColorGenerator
+import com.chignonMignon.wallpapers.presentation.feature.shared.ColorPaletteGenerator
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.pushEvent
+import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorColorPalette
 import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorTranslatableText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 
 internal class CollectionsViewModel(
     private val getCollections: GetCollectionsUseCase,
-    private val colorGenerator: ColorGenerator
+    private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
 
     private val collections = MutableStateFlow<List<Navigator.Collection>?>(null)
@@ -36,15 +37,17 @@ internal class CollectionsViewModel(
     }
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
-        _shouldShowLoadingIndicator.value = true
-        when (val result = getCollections(isForceRefresh)) {
-            is Result.Success -> {
-                collections.value = result.data.map { it.toNavigatorCollection() }
-                _shouldShowLoadingIndicator.value = false
-            }
-            is Result.Failure -> {
-                _events.pushEvent(Event.ShowErrorMessage)
-                _shouldShowLoadingIndicator.value = false
+        if (!_shouldShowLoadingIndicator.value) {
+            _shouldShowLoadingIndicator.value = true
+            when (val result = getCollections(isForceRefresh)) {
+                is Result.Success -> {
+                    collections.value = result.data.map { it.toNavigatorCollection() }
+                    _shouldShowLoadingIndicator.value = false
+                }
+                is Result.Failure -> {
+                    _events.pushEvent(Event.ShowErrorMessage)
+                    _shouldShowLoadingIndicator.value = false
+                }
             }
         }
     }
@@ -53,14 +56,13 @@ internal class CollectionsViewModel(
         _events.pushEvent(Event.OpenCollectionDetails(it))
     }
 
-    private suspend fun Collection.toNavigatorCollection() = colorGenerator.generateColors(thumbnailUrl).let { colors ->
+    private suspend fun Collection.toNavigatorCollection() = colorPaletteGenerator.generateColors(thumbnailUrl).let { colorPalette ->
         Navigator.Collection(
             id = id,
             name = name.toNavigatorTranslatableText(),
             description = description.toNavigatorTranslatableText(),
             thumbnailUrl = thumbnailUrl,
-            backgroundColor = colors.backgroundColor,
-            foregroundColor = colors.foregroundColor
+            colorPalette = colorPalette.toNavigatorColorPalette()
         )
     }
 

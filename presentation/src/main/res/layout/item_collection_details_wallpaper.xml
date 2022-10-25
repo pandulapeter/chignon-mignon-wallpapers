@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/content_padding"
         android:background="?selectableItemBackground"
-        app:cardBackgroundColor="@{uiModel.wallpaper.backgroundColor}">
+        app:cardBackgroundColor="@{uiModel.wallpaper.colorPalette.background}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/thumbnail"
-                app:textColor="@{uiModel.wallpaper.foregroundColor}"
+                app:textColor="@{uiModel.wallpaper.colorPalette.foreground}"
                 tools:text="Title" />
 
             <TextView
@@ -68,7 +68,7 @@
                 app:layout_constraintEnd_toEndOf="@id/name"
                 app:layout_constraintStart_toStartOf="@id/name"
                 app:layout_constraintTop_toBottomOf="@id/name"
-                app:textColor="@{uiModel.wallpaper.foregroundColor}"
+                app:textColor="@{uiModel.wallpaper.colorPalette.foreground}"
                 tools:text="Description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

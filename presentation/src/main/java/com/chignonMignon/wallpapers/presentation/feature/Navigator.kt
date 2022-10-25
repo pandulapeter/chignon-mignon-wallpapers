@@ -1,6 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.feature
 
 import android.os.Parcelable
+import androidx.annotation.ColorInt
 import kotlinx.parcelize.Parcelize
 
 interface Navigator {
@@ -21,8 +22,7 @@ interface Navigator {
         val name: TranslatableText,
         val description: TranslatableText,
         val thumbnailUrl: String,
-        val backgroundColor: Int,
-        val foregroundColor: Int
+        val colorPalette: ColorPalette
     ) : Parcelable
 
     @Parcelize
@@ -32,8 +32,7 @@ interface Navigator {
         val description: TranslatableText,
         val url: String,
         val collectionName: TranslatableText,
-        val backgroundColor: Int,
-        val foregroundColor: Int
+        val colorPalette: ColorPalette
     ) : Parcelable
 
     @Parcelize
@@ -41,5 +40,11 @@ interface Navigator {
         val english: String,
         val hungarian: String,
         val romanian: String
+    ) : Parcelable
+
+    @Parcelize
+    data class ColorPalette(
+        @ColorInt val background: Int,
+        @ColorInt val foreground: Int
     ) : Parcelable
 }

@@ -8,4 +8,7 @@
     <string name="collections_title">Colecții</string>
     <string name="collections_about">Despre noi</string>
 
+    <!-- Wallpaper details -->
+    <string name="wallpaper_details_set_wallpaper">Setează fundal</string>
+
 </resources>

@@ -8,4 +8,7 @@
     <string name="collections_title">Collections</string>
     <string name="collections_about">About</string>
 
+    <!-- Wallpaper details -->
+    <string name="wallpaper_details_set_wallpaper">Set wallpaper</string>
+
 </resources>
