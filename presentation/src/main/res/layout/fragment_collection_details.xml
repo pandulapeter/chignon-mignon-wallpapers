@@ -43,12 +43,32 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:padding="@dimen/content_padding" />
+                android:animateLayoutChanges="true">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:padding="@dimen/content_padding" />
+
+                <com.chignonMignon.wallpapers.presentation.feature.shared.ErrorStateView
+                    android:id="@+id/error_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> viewModel.loadData(true)}"
+                    android:visibility="@{viewModel.shouldShowErrorState}" />
+
+                <com.chignonMignon.wallpapers.presentation.feature.shared.EmptyStateView
+                    android:id="@+id/empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.shouldShowEmptyState}" />
+
+            </FrameLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

@@ -3,7 +3,8 @@
 
     <!-- General -->
     <string name="try_again">Try again</string>
-    <string name="something_went_wrong">Something went wrong. Check your network connection</string>
+    <string name="something_went_wrong">Something went wrong.\nCheck your network connection</string>
+    <string name="empty_state">Looks like there\'s no content here…\nCheck back later!</string>
     <string name="work_in_progress">Work in progress…</string>
 
     <!-- About -->

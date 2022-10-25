@@ -69,12 +69,14 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             }
         })
         setPageTransformer { page, position ->
-            val multiplier = 1f - abs(position)
-            page.alpha = multiplier
-            page.scaleX = multiplier
-            page.scaleY = multiplier
-            page.translationX = -page.width * (position * 0.5f)
-            page.translationY = -page.height * sin((1 - multiplier) * PI.toFloat()) * 0.1f
+            page.run {
+                val multiplier = 1f - abs(position)
+                alpha = multiplier
+                scaleX = multiplier
+                scaleY = multiplier
+                translationX = -width * (position * 0.5f)
+                translationY = -height * sin((1 - multiplier) * PI.toFloat()) * 0.05f
+            }
         }
     }
 

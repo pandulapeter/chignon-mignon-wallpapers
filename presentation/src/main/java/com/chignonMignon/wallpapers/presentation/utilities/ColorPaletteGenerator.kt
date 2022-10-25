@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.presentation.feature.shared
+package com.chignonMignon.wallpapers.presentation.utilities
 
 import android.content.Context
 import android.graphics.Color

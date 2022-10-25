@@ -42,7 +42,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/view_pager"
@@ -62,8 +63,10 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="1"
+                    android:paddingHorizontal="@dimen/double_content_padding"
                     android:text="@{viewModel.focusedCollection.name}"
                     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/description"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +82,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="2"
+                    android:paddingHorizontal="@dimen/double_content_padding"
                     android:paddingBottom="@dimen/double_content_padding"
                     android:text="@{viewModel.focusedCollection.description}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
@@ -88,6 +92,27 @@
                     app:layout_constraintTop_toBottomOf="@id/name"
                     app:textColor="@{viewModel.onSecondaryColor}"
                     tools:text="Description" />
+
+                <com.chignonMignon.wallpapers.presentation.feature.shared.ErrorStateView
+                    android:id="@+id/error_state"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:onClick="@{() -> viewModel.loadData(true)}"
+                    android:visibility="@{viewModel.shouldShowErrorState}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.chignonMignon.wallpapers.presentation.feature.shared.EmptyStateView
+                    android:id="@+id/empty_state"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="@{viewModel.shouldShowEmptyState}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
