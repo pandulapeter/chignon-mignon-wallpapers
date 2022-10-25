@@ -4,7 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
-import android.view.WindowInsets
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.R
@@ -36,12 +36,12 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         navigator?.navigateBack()
     }
 
-    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() = floatingActionButton.setOnApplyWindowInsetsListener { _, insets ->
+    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() = ViewCompat.setOnApplyWindowInsetsListener(floatingActionButton) { _, insets ->
         val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
         floatingActionButton.layoutParams = (floatingActionButton.layoutParams as MarginLayoutParams).apply {
             bottomMargin += systemBarInsets.bottom
         }
-        WindowInsets.CONSUMED
+        WindowInsetsCompat.CONSUMED
     }
 
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {

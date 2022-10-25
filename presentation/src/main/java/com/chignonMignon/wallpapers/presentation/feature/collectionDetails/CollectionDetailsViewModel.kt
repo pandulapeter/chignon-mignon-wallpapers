@@ -75,6 +75,7 @@ internal class CollectionDetailsViewModel(
             description = description.toNavigatorTranslatableText(),
             url = url,
             collectionName = collection.name,
+            collectionThumbnailUrl = collection.thumbnailUrl,
             colorPalette = colorPalette.toNavigatorColorPalette()
         )
     }

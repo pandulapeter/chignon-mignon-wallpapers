@@ -3,5 +3,7 @@
     <dimen name="divider">1dp</dimen>
     <dimen name="content_padding">8dp</dimen>
     <dimen name="double_content_padding">16dp</dimen>
+    <dimen name="collection_details_header_height">256dp</dimen>
+    <dimen name="collection_details_thumbnail_height">96dp</dimen>
     <dimen name="wallpaper_item_minimum_width">128dp</dimen>
 </resources>

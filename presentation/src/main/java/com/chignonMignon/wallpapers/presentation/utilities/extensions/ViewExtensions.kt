@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import coil.load
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.utilities.toText
+import com.google.android.material.appbar.CollapsingToolbarLayout
 
 @BindingAdapter("android:text")
 internal fun TextView.setText(translatableText: Navigator.TranslatableText?) {
@@ -16,6 +17,11 @@ internal fun TextView.setText(translatableText: Navigator.TranslatableText?) {
 
 @BindingAdapter("title")
 internal fun Toolbar.setTitle(translatableText: Navigator.TranslatableText?) {
+    title = translatableText?.toText()
+}
+
+@BindingAdapter("title")
+internal fun CollapsingToolbarLayout.setTitle(translatableText: Navigator.TranslatableText?) {
     title = translatableText?.toText()
 }
 

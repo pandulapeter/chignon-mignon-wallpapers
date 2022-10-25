@@ -32,6 +32,7 @@ interface Navigator {
         val description: TranslatableText,
         val url: String,
         val collectionName: TranslatableText,
+        val collectionThumbnailUrl: String,
         val colorPalette: ColorPalette
     ) : Parcelable
 

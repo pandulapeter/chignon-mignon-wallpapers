@@ -1,8 +1,10 @@
 package com.chignonMignon.wallpapers.presentation.feature.collectionDetails
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chignonMignon.wallpapers.presentation.R
@@ -18,6 +20,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackb
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+
 
 class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details) {
 
@@ -38,8 +41,21 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
     }
 
-    private fun FragmentCollectionDetailsBinding.setupToolbar() = toolbar.setNavigationOnClickListener {
-        navigator?.navigateBack()
+    private fun FragmentCollectionDetailsBinding.setupToolbar() {
+        toolbar.setNavigationOnClickListener {
+            navigator?.navigateBack()
+        }
+        appBarLayout.addOnOffsetChangedListener { _, verticalOffset ->
+            val multiplier = -verticalOffset.toFloat() / appBarLayout.totalScrollRange
+            overlay.alpha = multiplier
+            collectionThumbnail.run {
+                scaleX = 1f + multiplier * 2f
+                scaleY = 1f + multiplier * 2f
+                translationX = width * multiplier
+                alpha = 1f - multiplier
+            }
+        }
+        collectionBackground.foreground = ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPalette.secondary, 244))
     }
 
     private fun FragmentCollectionDetailsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.setOnRefreshListener {
