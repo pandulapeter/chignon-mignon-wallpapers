@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/content_padding"
         android:background="?selectableItemBackground"
-        app:cardBackgroundColor="@{uiModel.wallpaper.colorPalette.primary}">
+        app:cardBackgroundColor="@{uiModel.wallpaper.colorPalette.primary}"
+        app:cardCornerRadius="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

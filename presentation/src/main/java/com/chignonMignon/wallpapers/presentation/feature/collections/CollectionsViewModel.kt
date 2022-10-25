@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.feature.collections
 
+import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
@@ -33,6 +34,12 @@ internal class CollectionsViewModel(
     val events: Flow<Event> = _events
     private val _focusedCollection = MutableStateFlow<Navigator.Collection?>(null)
     val focusedCollection: StateFlow<Navigator.Collection?> = _focusedCollection
+    private val _primaryColor = MutableStateFlow<Int?>(null)
+    val primaryColor: StateFlow<Int?> = _primaryColor
+    private val _secondaryColor = MutableStateFlow<Int?>(null)
+    val secondaryColor: StateFlow<Int?> = _secondaryColor
+    private val _onSecondaryColor = MutableStateFlow<Int?>(null)
+    val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
 
     init {
         loadData(false)
@@ -58,6 +65,12 @@ internal class CollectionsViewModel(
         collections.value?.let { collections ->
             _focusedCollection.value = if (position >= 0 && position < collections.size) collections[position] else null
         }
+    }
+
+    fun updateColors(@ColorInt primaryColor: Int, @ColorInt secondaryColor: Int, @ColorInt onSecondaryColor: Int) {
+        _primaryColor.value = primaryColor
+        _secondaryColor.value = secondaryColor
+        _onSecondaryColor.value = onSecondaryColor
     }
 
     fun onItemSelected(collectionId: String) = collections.value?.firstOrNull { it.id == collectionId }?.let {

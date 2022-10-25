@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
-                app:backgroundColor="@{viewModel.focusedCollection.colorPalette.primary}"
+                app:backgroundColor="@{viewModel.primaryColor}"
                 app:menu="@menu/collections"
                 app:title="@string/collections_title" />
 
@@ -36,7 +36,7 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:backgroundColor="@{viewModel.focusedCollection.colorPalette.secondary}"
+            app:backgroundColor="@{viewModel.secondaryColor}"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
 
@@ -48,6 +48,7 @@
                     android:id="@+id/view_pager"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/double_content_padding"
                     android:layout_marginBottom="@dimen/double_content_padding"
                     app:layout_constraintBottom_toTopOf="@id/name"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +67,8 @@
                     app:layout_constraintBottom_toTopOf="@id/description"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:textColor="@{viewModel.focusedCollection.colorPalette.onSecondary}"
+                    app:layout_constraintTop_toBottomOf="@id/view_pager"
+                    app:textColor="@{viewModel.onSecondaryColor}"
                     tools:text="Title" />
 
                 <TextView
@@ -83,7 +85,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:textColor="@{viewModel.focusedCollection.colorPalette.onSecondary}"
+                    app:layout_constraintTop_toBottomOf="@id/name"
+                    app:textColor="@{viewModel.onSecondaryColor}"
                     tools:text="Description" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

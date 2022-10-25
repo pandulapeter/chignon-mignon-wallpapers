@@ -1,11 +1,15 @@
 package com.chignonMignon.wallpapers.presentation.utilities.extensions
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.core.content.ContextCompat
@@ -18,6 +22,14 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+
+@SuppressLint("ResourceAsColor")
+@ColorInt
+fun Context.colorResource(@AttrRes id: Int): Int {
+    val resolvedAttr = TypedValue()
+    theme.resolveAttribute(id, resolvedAttr, true)
+    return color(resolvedAttr.run { if (resourceId != 0) resourceId else data })
+}
 
 internal fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
 
