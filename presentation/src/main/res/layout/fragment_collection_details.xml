@@ -26,12 +26,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
-                app:backgroundColor="@{viewModel.collection.colorPalette.background}"
+                app:backgroundColor="@{viewModel.collection.colorPalette.primary}"
                 app:navigationIcon="@drawable/ic_close"
-                app:navigationIconTint="@{viewModel.collection.colorPalette.foreground}"
                 app:subtitle="@{viewModel.collection.description}"
                 app:title="@{viewModel.collection.name}"
-                app:titleTextColor="@{viewModel.collection.colorPalette.foreground}"
                 tools:subtitle="Description"
                 tools:title="Collection details" />
 

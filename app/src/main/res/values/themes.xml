@@ -7,11 +7,12 @@
         <item name="postSplashScreenTheme">@style/ChignonMignon</item>
     </style>
 
-    <style name="ChignonMignon" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="ChignonMignon" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorControlNormal">@color/on_primary</item>
     </style>
 
 </resources>

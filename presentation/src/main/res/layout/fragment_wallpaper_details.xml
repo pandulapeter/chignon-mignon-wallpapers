@@ -27,12 +27,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
-                app:backgroundColor="@{viewModel.wallpaper.colorPalette.background}"
+                app:backgroundColor="@{viewModel.wallpaper.colorPalette.primary}"
                 app:navigationIcon="@drawable/ic_close"
-                app:navigationIconTint="@{viewModel.wallpaper.colorPalette.foreground}"
                 app:subtitle="@{viewModel.wallpaper.description}"
                 app:title="@{viewModel.wallpaper.name}"
-                app:titleTextColor="@{viewModel.wallpaper.colorPalette.foreground}"
                 tools:subtitle="Description"
                 tools:title="Wallpaper details" />
 
@@ -72,10 +70,9 @@
             android:fitsSystemWindows="true"
             android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context)}"
             android:text="@string/wallpaper_details_set_wallpaper"
-            android:textColor="@{viewModel.wallpaper.colorPalette.foreground}"
+            android:textColor="?colorOnPrimary"
             app:icon="@drawable/ic_set_wallpaper"
-            app:iconTint="@{viewModel.wallpaper.colorPalette.foreground}"
-            app:supportBackgroundTintList="@{viewModel.wallpaper.colorPalette.background}" />
+            app:supportBackgroundTintList="@{viewModel.wallpaper.colorPalette.primary}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -12,8 +12,9 @@ internal fun TranslatableText.toNavigatorTranslatableText() = Navigator.Translat
 )
 
 internal fun ColorPaletteGenerator.ColorPalette.toNavigatorColorPalette() = Navigator.ColorPalette(
-    background = background,
-    foreground = foreground
+    primary = primary,
+    secondary = secondary,
+    onSecondary = onSecondary
 )
 
 internal fun Navigator.TranslatableText.toText() = when (Locale.getDefault().language) {

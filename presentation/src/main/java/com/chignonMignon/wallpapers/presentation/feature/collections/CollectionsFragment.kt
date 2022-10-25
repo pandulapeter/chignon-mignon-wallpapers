@@ -1,15 +1,17 @@
 package com.chignonMignon.wallpapers.presentation.feature.collections
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionsBinding
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsAdapter
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.consume
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
@@ -29,7 +31,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         binding.viewModel = viewModel
         binding.setupToolbar()
         binding.setupSwipeRefreshLayout()
-        binding.setupRecyclerView()
+        binding.setupViewPager()
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
     }
@@ -46,10 +48,20 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         this@CollectionsFragment.viewModel.loadData(true)
     }
 
-    private fun FragmentCollectionsBinding.setupRecyclerView() = recyclerView.run {
-        setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(context)
+    private fun FragmentCollectionsBinding.setupViewPager() = viewPager.run {
         adapter = collectionsAdapter
+        registerOnPageChangeCallback(object : OnPageChangeCallback() {
+
+            override fun onPageSelected(position: Int) = this@CollectionsFragment.viewModel.onPageSelected(position)
+
+            override fun onPageScrollStateChanged(state: Int) {
+                swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+        })
     }
 
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {

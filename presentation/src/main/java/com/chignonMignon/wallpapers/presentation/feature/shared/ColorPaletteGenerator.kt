@@ -13,19 +13,24 @@ internal class ColorPaletteGenerator(private val context: Context) {
     private val defaultForegroundColor by lazy { context.color(R.color.on_primary) }
 
     suspend fun generateColors(url: String) = context.downloadImage(url)?.let { bitmap ->
-        Palette.from(bitmap).generate().lightMutedSwatch?.let { swatch ->
+        Palette.from(bitmap).generate().let { palette ->
+            val primarySwatch = palette.lightMutedSwatch ?: palette.lightVibrantSwatch ?: palette.vibrantSwatch
+            val secondarySwatch = palette.darkMutedSwatch ?: palette.darkVibrantSwatch ?: palette.mutedSwatch
             ColorPalette(
-                background = swatch.rgb,
-                foreground = swatch.titleTextColor
+                primary = primarySwatch?.rgb ?: defaultBackgroundColor,
+                secondary = secondarySwatch?.rgb ?: defaultBackgroundColor,
+                onSecondary = secondarySwatch?.bodyTextColor ?: defaultForegroundColor
             )
         }
     } ?: ColorPalette(
-        background = defaultBackgroundColor,
-        foreground = defaultForegroundColor
+        primary = defaultBackgroundColor,
+        secondary = defaultBackgroundColor,
+        onSecondary = defaultForegroundColor
     )
 
     data class ColorPalette(
-        @ColorInt val background: Int,
-        @ColorInt val foreground: Int
+        @ColorInt val primary: Int,
+        @ColorInt val secondary: Int,
+        @ColorInt val onSecondary: Int
     )
 }

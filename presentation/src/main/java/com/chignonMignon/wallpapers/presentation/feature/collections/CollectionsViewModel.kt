@@ -31,6 +31,8 @@ internal class CollectionsViewModel(
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
+    private val _focusedCollection = MutableStateFlow<Navigator.Collection?>(null)
+    val focusedCollection: StateFlow<Navigator.Collection?> = _focusedCollection
 
     init {
         loadData(false)
@@ -49,6 +51,12 @@ internal class CollectionsViewModel(
                     _shouldShowLoadingIndicator.value = false
                 }
             }
+        }
+    }
+
+    fun onPageSelected(position: Int) {
+        collections.value?.let { collections ->
+            _focusedCollection.value = if (position >= 0 && position < collections.size) collections[position] else null
         }
     }
 

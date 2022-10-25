@@ -44,7 +44,8 @@ interface Navigator {
 
     @Parcelize
     data class ColorPalette(
-        @ColorInt val background: Int,
-        @ColorInt val foreground: Int
+        @ColorInt val primary: Int,
+        @ColorInt val secondary: Int,
+        @ColorInt val onSecondary: Int
     ) : Parcelable
 }
