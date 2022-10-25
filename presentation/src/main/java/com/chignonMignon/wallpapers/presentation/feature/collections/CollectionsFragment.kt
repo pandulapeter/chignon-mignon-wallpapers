@@ -12,6 +12,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.bind
 import com.chignonMignon.wallpapers.presentation.utilities.consume
 import com.chignonMignon.wallpapers.presentation.utilities.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.observe
+import com.chignonMignon.wallpapers.presentation.utilities.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
@@ -60,9 +61,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         navigator?.navigateToCollectionDetails(collection)
     }
 
-    private fun showErrorMessage() {
-        //TODO
-    }
+    private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }
 
     companion object {
         fun newInstance() = CollectionsFragment()

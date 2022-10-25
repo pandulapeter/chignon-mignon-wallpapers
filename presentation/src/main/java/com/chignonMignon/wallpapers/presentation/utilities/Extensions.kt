@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -26,8 +27,10 @@ import coil.load
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.chignonMignon.wallpapers.data.model.domain.TranslatableText
+import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.shared.ColorPaletteGenerator
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -68,7 +71,7 @@ internal fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.g
 
 internal fun Context.getWallpapersFolder() = File(filesDir, "wallpapers").also { it.mkdirs() }
 
-internal fun Context.getWallpaperFile(id: String) =File("${getWallpapersFolder().path}/${id}.png")
+internal fun Context.getWallpaperFile(id: String) = File("${getWallpapersFolder().path}/${id}.png")
 
 internal fun Context.getUriForFile(file: File) =
     FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".fileProvider", file)
@@ -96,6 +99,26 @@ internal fun Context.saveImage(file: File, bitmap: Bitmap): Uri? {
 }
 
 internal val Fragment.navigator get() = activity as? Navigator
+
+internal fun Fragment.showSnackbar(
+    @StringRes messageResourceId: Int = R.string.something_went_wrong,
+    @StringRes actionButtonTextResourceId: Int = R.string.try_again,
+    action: (() -> Unit)? = null
+) = showSnackbar(
+    message = getString(messageResourceId),
+    actionButtonTextResourceId = actionButtonTextResourceId,
+    action = action
+)
+
+internal fun Fragment.showSnackbar(
+    message: String,
+    @StringRes actionButtonTextResourceId: Int = R.string.try_again,
+    action: (() -> Unit)? = null
+) = view?.run {
+    Snackbar.make(this, message, Snackbar.LENGTH_SHORT).apply {
+        action?.let { setAction(actionButtonTextResourceId) { action() } }
+    }.show()
+}
 
 internal inline fun <reified B : ViewDataBinding> Fragment.bind(view: View? = null): B =
     DataBindingUtil.bind<B>(view ?: this.view ?: throw IllegalStateException("Fragment doesn't have a View."))?.apply {

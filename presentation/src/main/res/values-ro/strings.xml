@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- General -->
+    <string name="try_again">Încearcă din nou</string>
+    <string name="something_went_wrong">A intervenit o eroare. Verifică conexiunea la internet</string>
+    <string name="work_in_progress">Încă nu e gata…</string>
+
     <!-- About -->
     <string name="about_title">Despre noi</string>
 

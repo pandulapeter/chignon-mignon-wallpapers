@@ -13,6 +13,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.bind
 import com.chignonMignon.wallpapers.presentation.utilities.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.observe
+import com.chignonMignon.wallpapers.presentation.utilities.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.withArguments
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -34,7 +35,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
         is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
-        WallpaperDetailsViewModel.Event.ShowErrorSnackbar -> showErrorSnackbar()
+        WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage()
     }
 
     private fun setWallpaper(uri: Uri) = Intent.createChooser(
@@ -49,9 +50,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         startActivity(intent)
     }
 
-    private fun showErrorSnackbar() {
-        // TODO
-    }
+    private fun showErrorMessage() = context?.let { showSnackbar { viewModel.onSetWallpaperButtonPressed(it) } }
 
     companion object {
         private var Bundle.wallpaper by BundleDelegate.Parcelable<Navigator.Wallpaper>("wallpaper")

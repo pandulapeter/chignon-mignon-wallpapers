@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- General -->
+    <string name="try_again">Try again</string>
+    <string name="something_went_wrong">Something went wrong. Check your network connection</string>
+    <string name="work_in_progress">Work in progress…</string>
+
     <!-- About -->
     <string name="about_title">About</string>
 

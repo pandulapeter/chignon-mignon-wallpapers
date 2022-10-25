@@ -32,11 +32,11 @@ internal class WallpaperDetailsViewModel(
             _events.pushEvent(
                 context.downloadImage(wallpaper.url).let { bitmap ->
                     if (bitmap == null) {
-                        Event.ShowErrorSnackbar
+                        Event.ShowErrorMessage
                     } else {
                         context.saveImage(context.getWallpaperFile(wallpaper.id), bitmap).let { uri ->
                             if (uri == null) {
-                                Event.ShowErrorSnackbar
+                                Event.ShowErrorMessage
                             } else {
                                 Event.SetWallpaper(uri)
                             }
@@ -51,6 +51,6 @@ internal class WallpaperDetailsViewModel(
 
     sealed class Event {
         data class SetWallpaper(val uri: Uri) : Event()
-        object ShowErrorSnackbar : Event()
+        object ShowErrorMessage : Event()
     }
 }

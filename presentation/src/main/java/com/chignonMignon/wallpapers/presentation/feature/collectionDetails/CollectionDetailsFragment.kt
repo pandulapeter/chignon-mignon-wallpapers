@@ -14,6 +14,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.bind
 import com.chignonMignon.wallpapers.presentation.utilities.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.observe
+import com.chignonMignon.wallpapers.presentation.utilities.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.withArguments
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -66,9 +67,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         navigator?.navigateToWallpaperDetails(wallpaper)
     }
 
-    private fun showErrorMessage() {
-        // TODO
-    }
+    private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }
 
     companion object {
         private var Bundle.collection by BundleDelegate.Parcelable<Navigator.Collection>("collection")
