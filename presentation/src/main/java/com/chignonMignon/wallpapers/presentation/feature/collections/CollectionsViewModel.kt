@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.feature.collections
 
+import android.view.View
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -86,8 +87,8 @@ internal class CollectionsViewModel(
         _onSecondaryColor.value = onSecondaryColor
     }
 
-    fun onItemSelected(collectionId: String) = collections.value?.firstOrNull { it.id == collectionId }?.let {
-        _events.pushEvent(Event.OpenCollectionDetails(it))
+    fun onItemSelected(collectionId: String, sharedElements: List<View>) = collections.value?.firstOrNull { it.id == collectionId }?.let {
+        _events.pushEvent(Event.OpenCollectionDetails(it, sharedElements))
     }
 
     private suspend fun Collection.toNavigatorCollection() = colorPaletteGenerator.generateColors(thumbnailUrl).let { colorPalette ->
@@ -101,7 +102,7 @@ internal class CollectionsViewModel(
     }
 
     sealed class Event {
-        data class OpenCollectionDetails(val collection: Navigator.Collection) : Event()
+        data class OpenCollectionDetails(val collection: Navigator.Collection, val sharedElements: List<View>) : Event()
         object ShowErrorMessage : Event()
     }
 }

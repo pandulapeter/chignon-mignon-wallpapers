@@ -47,6 +47,23 @@
                     app:layout_collapseParallaxMultiplier="0.6"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginStart="@dimen/collection_details_description_start_margin"
+                    android:layout_marginTop="?actionBarSize"
+                    android:layout_marginEnd="@dimen/double_content_padding"
+                    android:layout_marginBottom="@dimen/collection_details_description_bottom_margin"
+                    android:ellipsize="end"
+                    android:fitsSystemWindows="true"
+                    android:gravity="bottom|end"
+                    android:text="@{viewModel.collection.description}"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.9"
+                    tools:text="Description" />
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/collection_thumbnail"
                     android:layout_width="@dimen/collection_details_thumbnail_height"
@@ -57,6 +74,7 @@
                     android:fitsSystemWindows="true"
                     android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
+                    android:transitionName="@{viewModel.collection.id}"
                     app:imageUrl="@{viewModel.collection.thumbnailUrl}"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7"

@@ -30,9 +30,12 @@ internal fun Toolbar.setSubtitle(translatableText: Navigator.TranslatableText?) 
     subtitle = translatableText?.toText()
 }
 
-@BindingAdapter("imageUrl")
-internal fun ImageView.setImageUrl(imageUrl: String?) = load(imageUrl) {
+@BindingAdapter(value = ["imageUrl", "shouldFade"], requireAll = false)
+internal fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) = load(imageUrl) {
     allowHardware(false)
+    if (shouldFade == true) {
+        crossfade(500)
+    }
 }
 
 @set:BindingAdapter("android:visibility")

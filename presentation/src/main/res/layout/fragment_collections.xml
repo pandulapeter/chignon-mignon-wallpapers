@@ -45,6 +45,20 @@
                 android:layout_height="match_parent"
                 android:animateLayoutChanges="true">
 
+                <ImageView
+                    android:id="@+id/background"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:alpha="0.05"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{viewModel.focusedCollection.thumbnailUrl}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shouldFade="@{true}" />
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/view_pager"
                     android:layout_width="0dp"
@@ -81,7 +95,7 @@
                     android:layout_marginBottom="@dimen/double_content_padding"
                     android:ellipsize="end"
                     android:gravity="center"
-                    android:lines="2"
+                    android:lines="3"
                     android:paddingHorizontal="@dimen/double_content_padding"
                     android:paddingBottom="@dimen/double_content_padding"
                     android:text="@{viewModel.focusedCollection.description}"

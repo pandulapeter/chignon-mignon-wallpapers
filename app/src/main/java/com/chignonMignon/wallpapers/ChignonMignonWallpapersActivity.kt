@@ -2,6 +2,7 @@ package com.chignonMignon.wallpapers
 
 import android.animation.Animator
 import android.os.Bundle
+import android.view.View
 import android.view.animation.AccelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -30,8 +31,9 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
         CollectionsFragment.newInstance()
     }
 
-    override fun navigateToCollectionDetails(collection: Navigator.Collection) = supportFragmentManager.handleReplace(
+    override fun navigateToCollectionDetails(collection: Navigator.Collection, sharedElements: List<View>) = supportFragmentManager.handleReplace(
         containerId = R.id.container,
+        sharedElements = sharedElements,
         addToBackStack = true
     ) {
         CollectionDetailsFragment.newInstance(collection)

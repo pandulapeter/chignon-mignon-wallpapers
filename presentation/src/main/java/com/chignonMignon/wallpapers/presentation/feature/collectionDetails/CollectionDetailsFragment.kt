@@ -18,6 +18,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
+import com.google.android.material.transition.MaterialContainerTransform
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -31,6 +32,13 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         )
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform()
+        sharedElementReturnTransition = MaterialContainerTransform()
+        postponeEnterTransition()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentCollectionDetailsBinding>(view)
         binding.viewModel = viewModel
@@ -39,6 +47,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         binding.setupRecyclerView()
         viewModel.items.observe(viewLifecycleOwner, collectionDetailsAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
+        binding.root.post { startPostponedEnterTransition() }
     }
 
     private fun FragmentCollectionDetailsBinding.setupToolbar() {
@@ -49,10 +58,17 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             val multiplier = -verticalOffset.toFloat() / appBarLayout.totalScrollRange
             overlay.alpha = multiplier
             collectionThumbnail.run {
-                scaleX = 1f + multiplier * 2f
-                scaleY = 1f + multiplier * 2f
+                scaleX = 1f + multiplier * 5f
+                scaleY = 1f + multiplier * 3f
                 translationX = width * multiplier
                 alpha = 1f - multiplier
+            }
+            description.run {
+                alpha = 1f - multiplier * 2f
+                pivotX = width.toFloat()
+                scaleX = 1f - multiplier
+                scaleY = 1f - multiplier
+                translationX = width * multiplier * 0.2f
             }
         }
         collectionBackground.foreground = ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPalette.secondary, 244))

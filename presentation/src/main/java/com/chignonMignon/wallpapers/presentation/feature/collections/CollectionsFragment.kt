@@ -3,7 +3,9 @@ package com.chignonMignon.wallpapers.presentation.feature.collections
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -17,6 +19,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResou
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
+import com.google.android.material.transition.MaterialContainerTransform
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.PI
 import kotlin.math.abs
@@ -30,10 +33,16 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             onItemSelected = viewModel::onItemSelected
         )
     }
-
     private var primaryColor: Int? = null
     private var secondaryColor: Int? = null
     private var onSecondaryColor: Int? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform()
+        sharedElementReturnTransition = MaterialContainerTransform()
+        postponeEnterTransition()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentCollectionsBinding>(view)
@@ -44,6 +53,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.focusedCollection.observe(viewLifecycleOwner, ::updateColors)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
+        (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() }}
     }
 
     private fun FragmentCollectionsBinding.setupToolbar() = toolbar.setOnMenuItemClickListener { menuItem ->
@@ -119,12 +129,12 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {
-        is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collection)
+        is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collection, event.sharedElements)
         CollectionsViewModel.Event.ShowErrorMessage -> showErrorMessage()
     }
 
-    private fun openCollectionDetails(collection: Navigator.Collection) {
-        navigator?.navigateToCollectionDetails(collection)
+    private fun openCollectionDetails(collection: Navigator.Collection, sharedElements: List<View>) {
+        navigator?.navigateToCollectionDetails(collection, sharedElements)
     }
 
     private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }

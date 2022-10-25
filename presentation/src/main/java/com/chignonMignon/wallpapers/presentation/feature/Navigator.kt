@@ -1,6 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.feature
 
 import android.os.Parcelable
+import android.view.View
 import androidx.annotation.ColorInt
 import kotlinx.parcelize.Parcelize
 
@@ -8,7 +9,7 @@ interface Navigator {
 
     fun navigateToCollections()
 
-    fun navigateToCollectionDetails(collection: Collection)
+    fun navigateToCollectionDetails(collection: Collection, sharedElements: List<View>)
 
     fun navigateToWallpaperDetails(wallpaper: Wallpaper)
 
