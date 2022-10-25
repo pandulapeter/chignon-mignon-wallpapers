@@ -9,7 +9,7 @@ interface Navigator {
 
     fun navigateToCollectionDetails(collection: Collection)
 
-    fun navigateToWallpaperDetails(wallpaperId: String)
+    fun navigateToWallpaperDetails(wallpaper: Wallpaper)
 
     fun navigateToAbout()
 
@@ -21,6 +21,17 @@ interface Navigator {
         val name: String,
         val description: String,
         val thumbnailUrl: String,
+        val backgroundColor: Int,
+        val foregroundColor: Int
+    ) : Parcelable
+
+    @Parcelize
+    data class Wallpaper internal constructor(
+        val id: String,
+        val name: String,
+        val description: String,
+        val url: String,
+        val collectionName: String,
         val backgroundColor: Int,
         val foregroundColor: Int
     ) : Parcelable

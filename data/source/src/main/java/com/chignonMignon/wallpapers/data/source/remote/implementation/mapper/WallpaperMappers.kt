@@ -8,7 +8,7 @@ internal fun WallpaperResponse.toModel() = try {
     Wallpaper(
         id = id.toWallpaperId(),
         collectionId = collectionId.toCollectionId(),
-        name = description.toWallpaperName(),
+        name = name.toWallpaperName(),
         description = description.toWallpaperDescription(),
         url = url.toWallpaperUrl()
     )

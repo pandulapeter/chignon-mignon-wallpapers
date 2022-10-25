@@ -17,28 +17,38 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val viewModel by viewModel<CollectionsViewModel>()
+    private val collectionsAdapter by lazy {
+        CollectionsAdapter(
+            onItemSelected = viewModel::onItemSelected
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentCollectionsBinding>(view)
         binding.viewModel = viewModel
-        val collectionsAdapter = CollectionsAdapter(
-            onItemSelected = viewModel::onItemSelected
-        )
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
-            consume {
-                if (menuItem.itemId == R.id.about) {
-                    navigator?.navigateToAbout()
-                }
-            }
-        }
+        binding.setupToolbar()
+        binding.setupSwipeRefreshLayout()
+        binding.setupRecyclerView()
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
-        binding.recyclerView.run {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = collectionsAdapter
+    }
+
+    private fun FragmentCollectionsBinding.setupToolbar() = toolbar.setOnMenuItemClickListener { menuItem ->
+        consume {
+            if (menuItem.itemId == R.id.about) {
+                navigator?.navigateToAbout()
+            }
         }
-        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.loadData(true) }
+    }
+
+    private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.setOnRefreshListener {
+        this@CollectionsFragment.viewModel.loadData(true)
+    }
+
+    private fun FragmentCollectionsBinding.setupRecyclerView() = recyclerView.run {
+        setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(context)
+        adapter = collectionsAdapter
     }
 
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {

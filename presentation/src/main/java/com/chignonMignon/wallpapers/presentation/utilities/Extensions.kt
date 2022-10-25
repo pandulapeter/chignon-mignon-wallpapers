@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -46,6 +47,8 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
 }
 
 internal fun Context.color(@ColorRes colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
+
+internal fun Context.dimension(@DimenRes dimensionResourceId: Int) = resources.getDimensionPixelSize(dimensionResourceId)
 
 internal val Fragment.navigator get() = activity as? Navigator
 

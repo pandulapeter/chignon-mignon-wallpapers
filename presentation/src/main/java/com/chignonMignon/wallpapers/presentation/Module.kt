@@ -12,6 +12,6 @@ val presentationModule = module {
     single { ColorGenerator(get()) }
     viewModel { AboutViewModel() }
     viewModel { CollectionsViewModel(get(), get()) }
-    viewModel { CollectionDetailsViewModel(it[0], get()) }
+    viewModel { CollectionDetailsViewModel(it[0], get(), get()) }
     viewModel { WallpaperDetailsViewModel(it[0]) }
 }

@@ -16,7 +16,11 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentAboutBinding>(view)
         binding.viewModel = viewModel
-        binding.toolbar.setNavigationOnClickListener { navigator?.navigateBack() }
+        binding.setupToolbar()
+    }
+
+    private fun FragmentAboutBinding.setupToolbar() = toolbar.setNavigationOnClickListener {
+        navigator?.navigateBack()
     }
 
     companion object {
