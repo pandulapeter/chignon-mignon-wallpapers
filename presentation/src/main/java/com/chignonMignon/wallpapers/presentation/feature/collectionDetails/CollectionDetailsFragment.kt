@@ -4,6 +4,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -43,6 +44,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         val binding = bind<FragmentCollectionDetailsBinding>(view)
         binding.viewModel = viewModel
         binding.setupToolbar()
+        binding.setupBackgroundAnimation()
         binding.setupSwipeRefreshLayout()
         binding.setupRecyclerView()
         viewModel.items.observe(viewLifecycleOwner, collectionDetailsAdapter::submitList)
@@ -72,6 +74,10 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             }
         }
         collectionBackground.foreground = ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPalette.secondary, 244))
+    }
+
+    private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {
+        startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_background))
     }
 
     private fun FragmentCollectionDetailsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.setOnRefreshListener {

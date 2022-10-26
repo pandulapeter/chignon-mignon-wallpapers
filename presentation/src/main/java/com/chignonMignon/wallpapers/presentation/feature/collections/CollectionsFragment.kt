@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -49,11 +50,12 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         binding.viewModel = viewModel
         binding.setupToolbar()
         binding.setupSwipeRefreshLayout()
+        binding.setupBackgroundAnimation()
         binding.setupViewPager()
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.focusedCollection.observe(viewLifecycleOwner, ::updateColors)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
-        (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() }}
+        (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
     }
 
     private fun FragmentCollectionsBinding.setupToolbar() = toolbar.setOnMenuItemClickListener { menuItem ->
@@ -66,6 +68,10 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.setOnRefreshListener {
         this@CollectionsFragment.viewModel.loadData(true)
+    }
+
+    private fun FragmentCollectionsBinding.setupBackgroundAnimation() = background.run {
+        startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_background))
     }
 
     private fun FragmentCollectionsBinding.setupViewPager() = viewPager.run {

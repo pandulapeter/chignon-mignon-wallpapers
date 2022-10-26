@@ -59,6 +59,7 @@
                     android:ellipsize="end"
                     android:fitsSystemWindows="true"
                     android:gravity="bottom|end"
+                    android:maxLines="9"
                     android:text="@{viewModel.collection.description}"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.9"
