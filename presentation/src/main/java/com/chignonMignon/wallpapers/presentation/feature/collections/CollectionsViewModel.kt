@@ -47,8 +47,6 @@ internal class CollectionsViewModel(
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _secondaryColor = MutableStateFlow<Int?>(null)
     val secondaryColor: StateFlow<Int?> = _secondaryColor
-    private val _onSecondaryColor = MutableStateFlow<Int?>(null)
-    val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
 
     init {
         loadData(false)
@@ -81,10 +79,9 @@ internal class CollectionsViewModel(
         }
     }
 
-    fun updateColors(@ColorInt primaryColor: Int, @ColorInt secondaryColor: Int, @ColorInt onSecondaryColor: Int) {
+    fun updateColors(@ColorInt primaryColor: Int, @ColorInt secondaryColor: Int) {
         _primaryColor.value = primaryColor
         _secondaryColor.value = secondaryColor
-        _onSecondaryColor.value = onSecondaryColor
     }
 
     fun onItemSelected(collectionId: String, sharedElements: List<View>) = collections.value?.firstOrNull { it.id == collectionId }?.let {

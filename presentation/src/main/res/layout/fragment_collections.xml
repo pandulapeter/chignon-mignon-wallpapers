@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -65,47 +64,10 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/double_content_padding"
                     android:layout_marginBottom="@dimen/double_content_padding"
-                    app:layout_constraintBottom_toTopOf="@id/name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:lines="1"
-                    android:paddingHorizontal="@dimen/double_content_padding"
-                    android:text="@{viewModel.focusedCollection.name}"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@id/description"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view_pager"
-                    app:textColor="@{viewModel.onSecondaryColor}"
-                    tools:text="Title" />
-
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/double_content_padding"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:lines="3"
-                    android:paddingHorizontal="@dimen/double_content_padding"
-                    android:paddingBottom="@dimen/double_content_padding"
-                    android:text="@{viewModel.focusedCollection.description}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/name"
-                    app:textColor="@{viewModel.onSecondaryColor}"
-                    tools:text="Description" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.chignonMignon.wallpapers.presentation.feature.shared.ErrorStateView
                     android:id="@+id/error_state"

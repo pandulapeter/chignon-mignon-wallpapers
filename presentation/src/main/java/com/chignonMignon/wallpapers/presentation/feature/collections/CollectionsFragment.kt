@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionsBinding
+import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsCollectionBinding
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.consume
@@ -36,7 +37,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
     private var primaryColor: Int? = null
     private var secondaryColor: Int? = null
-    private var onSecondaryColor: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,19 +85,31 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             }
         })
         setPageTransformer { page, position ->
-            page.run {
-                val multiplier = 1f - abs(position)
-                alpha = multiplier
-                scaleX = multiplier
-                scaleY = multiplier
-                translationX = -width * (position * 0.5f)
-                translationY = -height * sin((1 - multiplier) * PI.toFloat()) * 0.05f
+            val multiplier = 1f - abs(position)
+            when(val binding = page.tag) {
+                is ItemCollectionsCollectionBinding -> {
+                    binding.thumbnail.run {
+                        alpha = multiplier
+                        scaleX = multiplier
+                        scaleY = multiplier
+                        translationX = -width * (position * 0.5f)
+                        translationY = -height * sin((1 - multiplier) * PI.toFloat()) * 0.05f
+                    }
+                    binding.name.run {
+                        alpha = multiplier
+                    }
+                    binding.description.run {
+                        translationX = width * (position * 0.9f)
+                        alpha = multiplier
+                    }
+                }
+                else -> Unit
             }
         }
     }
 
     private fun updateColors(collection: Navigator.Collection?) {
-        if (primaryColor == null || secondaryColor == null || onSecondaryColor == null) {
+        if (primaryColor == null || secondaryColor == null) {
             val windowBackgroundColor = context?.colorResource(android.R.attr.windowBackground)
             if (primaryColor == null) {
                 primaryColor = windowBackgroundColor
@@ -105,30 +117,22 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             if (secondaryColor == null) {
                 secondaryColor = windowBackgroundColor
             }
-            if (onSecondaryColor == null) {
-                onSecondaryColor = windowBackgroundColor
-            }
         }
         if (collection != null) {
             val newPrimaryColor = collection.colorPalette.primary
             val newSecondaryColor = collection.colorPalette.secondary
-            val newOnSecondaryColor = collection.colorPalette.onSecondary
             primaryColor?.let { currentPrimaryColor ->
                 secondaryColor?.let { currentSecondaryColor ->
-                    onSecondaryColor?.let { currentOnSecondaryColor ->
-                        ValueAnimator.ofFloat(0f, 1f).apply {
-                            addUpdateListener {
-                                viewModel.updateColors(
-                                    primaryColor = ColorUtils.blendARGB(currentPrimaryColor, newPrimaryColor, it.animatedFraction),
-                                    secondaryColor = ColorUtils.blendARGB(currentSecondaryColor, newSecondaryColor, it.animatedFraction),
-                                    onSecondaryColor = ColorUtils.blendARGB(currentOnSecondaryColor, newOnSecondaryColor, it.animatedFraction),
-                                )
-                            }
-                        }.start()
-                        primaryColor = newPrimaryColor
-                        secondaryColor = newSecondaryColor
-                        onSecondaryColor = newOnSecondaryColor
-                    }
+                    ValueAnimator.ofFloat(0f, 1f).apply {
+                        addUpdateListener {
+                            viewModel.updateColors(
+                                primaryColor = ColorUtils.blendARGB(currentPrimaryColor, newPrimaryColor, it.animatedFraction),
+                                secondaryColor = ColorUtils.blendARGB(currentSecondaryColor, newSecondaryColor, it.animatedFraction)
+                            )
+                        }
+                    }.start()
+                    primaryColor = newPrimaryColor
+                    secondaryColor = newSecondaryColor
                 }
             }
         }

@@ -21,6 +21,7 @@ internal class CollectionsAdapter(
     ) : BaseViewHolder<CollectionsListItem.CollectionUiModel, ItemCollectionsCollectionBinding>(binding) {
 
         init {
+            binding.root.tag = binding
             binding.thumbnail.setOnClickListener {
                 if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     binding.uiModel?.collection?.id?.let { onItemSelected(it, listOf(binding.thumbnail)) }
