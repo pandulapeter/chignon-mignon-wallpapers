@@ -58,6 +58,7 @@
             android:layout_marginBottom="@dimen/double_content_padding"
             android:ellipsize="end"
             android:gravity="center"
+            android:letterSpacing="0"
             android:paddingBottom="@dimen/double_content_padding"
             android:text="@string/collections_welcome_message"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"

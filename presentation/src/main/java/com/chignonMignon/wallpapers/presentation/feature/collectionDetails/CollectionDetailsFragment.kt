@@ -76,7 +76,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
                 translationX = width * multiplier * 0.2f
             }
         }
-        collectionBackground.foreground = ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPalette.secondary, 244))
+        collectionBackground.foreground = ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPalette.secondary, 240))
     }
 
     private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {

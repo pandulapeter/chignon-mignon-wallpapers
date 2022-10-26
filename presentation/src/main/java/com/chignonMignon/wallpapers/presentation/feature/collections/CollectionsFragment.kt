@@ -92,17 +92,20 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             val multiplier = 1f - abs(position)
             when (val binding = page.tag) {
                 is ItemCollectionsCollectionBinding -> {
-                    binding.root.run {
-                        alpha = multiplier
-                    }
+                    val multiplierSquared = multiplier * multiplier
                     binding.thumbnail.run {
+                        alpha = multiplier
                         scaleX = multiplier
                         scaleY = multiplier
                         translationX = -width * (position * 0.5f)
                         translationY = -height * sin((1 - multiplier) * PI.toFloat()) * 0.05f
                     }
+                    binding.name.run {
+                        alpha = multiplierSquared
+                    }
                     binding.description.run {
-                        translationX = width * (position * 0.9f)
+                        translationX = width * (position * 0.5f)
+                        alpha = multiplierSquared
                     }
                 }
                 is ItemCollectionsWelcomeBinding -> {
