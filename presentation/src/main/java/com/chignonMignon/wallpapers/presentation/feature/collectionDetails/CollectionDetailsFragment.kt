@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.feature.collectionDetails
 
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -37,9 +38,8 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform()
-        sharedElementReturnTransition = MaterialContainerTransform()
-        postponeEnterTransition()
+        sharedElementEnterTransition = MaterialContainerTransform().apply { scrimColor = Color.TRANSPARENT }
+        sharedElementReturnTransition = MaterialContainerTransform().apply { scrimColor = Color.TRANSPARENT }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,6 +51,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         binding.setupRecyclerView()
         viewModel.items.observe(viewLifecycleOwner, collectionDetailsAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
+        postponeEnterTransition()
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.recyclerView.post { startPostponedEnterTransition() } }
     }
 
