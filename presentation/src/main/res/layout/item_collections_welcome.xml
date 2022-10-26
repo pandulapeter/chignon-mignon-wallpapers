@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="uiModel"
-            type="com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsListItem.CollectionUiModel" />
+            type="com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsListItem.WelcomeUiModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/double_content_padding">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <ImageView
             android:id="@+id/thumbnail"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/double_content_padding"
             android:foreground="?selectableItemBackground"
             android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
-            android:transitionName="@{uiModel.collection.id}"
-            app:imageUrl="@{uiModel.collection.thumbnailUrl}"
+            android:padding="@dimen/double_content_padding"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,46 +30,42 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.1"
             app:strokeColor="@color/on_primary"
-            app:strokeWidth="@dimen/divider"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            app:strokeWidth="@dimen/divider" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
             android:paddingHorizontal="@dimen/double_content_padding"
-            android:text="@{uiModel.collection.name}"
+            android:text="@string/collections_welcome"
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:textColor="@color/on_primary"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/description"
+            app:layout_constraintBottom_toTopOf="@id/message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/thumbnail"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:textColor="@{uiModel.collection.colorPalette.onSecondary}"
-            tools:text="Title" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_content_padding"
             android:layout_marginBottom="@dimen/double_content_padding"
             android:ellipsize="end"
             android:gravity="center"
-            android:lines="3"
             android:paddingBottom="@dimen/double_content_padding"
-            android:text="@{uiModel.collection.description}"
+            android:text="@string/collections_welcome_message"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            android:textColor="@color/on_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            app:textColor="@{uiModel.collection.colorPalette.onSecondary}"
-            tools:text="Description" />
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

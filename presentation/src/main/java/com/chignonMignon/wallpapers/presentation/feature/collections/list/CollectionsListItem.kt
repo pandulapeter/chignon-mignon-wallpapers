@@ -7,6 +7,10 @@ internal sealed class CollectionsListItem(
     override val id: String
 ) : ListItem {
 
+    data class WelcomeUiModel(
+        val nothing: Any? = null
+    ) : CollectionsListItem("welcome")
+
     data class CollectionUiModel(
         val collection: Navigator.Collection
     ) : CollectionsListItem("collection_${collection.id}")

@@ -13,10 +13,12 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionsBinding
 import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsCollectionBinding
+import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsWelcomeBinding
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.consume
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
@@ -25,6 +27,7 @@ import com.google.android.material.transition.MaterialContainerTransform
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.PI
 import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.sin
 
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
@@ -86,21 +89,36 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         })
         setPageTransformer { page, position ->
             val multiplier = 1f - abs(position)
-            when(val binding = page.tag) {
+            when (val binding = page.tag) {
                 is ItemCollectionsCollectionBinding -> {
-                    binding.thumbnail.run {
+                    binding.root.run {
                         alpha = multiplier
+                    }
+                    binding.thumbnail.run {
                         scaleX = multiplier
                         scaleY = multiplier
                         translationX = -width * (position * 0.5f)
                         translationY = -height * sin((1 - multiplier) * PI.toFloat()) * 0.05f
                     }
-                    binding.name.run {
-                        alpha = multiplier
-                    }
                     binding.description.run {
                         translationX = width * (position * 0.9f)
-                        alpha = multiplier
+                    }
+                }
+                is ItemCollectionsWelcomeBinding -> {
+                    binding.root.run {
+                        alpha = 1f + position * 2f
+                        translationX = -width * position
+                    }
+                    binding.thumbnail.run {
+                        val scale = max(0f, 0.6f + position)
+                        scaleX = scale
+                        scaleY = scale
+                    }
+                    binding.title.run {
+                        translationY = height * position * 4f
+                    }
+                    binding.message.run {
+                        translationY = height * position * 2f
                     }
                 }
                 else -> Unit
@@ -118,22 +136,20 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                 secondaryColor = windowBackgroundColor
             }
         }
-        if (collection != null) {
-            val newPrimaryColor = collection.colorPalette.primary
-            val newSecondaryColor = collection.colorPalette.secondary
-            primaryColor?.let { currentPrimaryColor ->
-                secondaryColor?.let { currentSecondaryColor ->
-                    ValueAnimator.ofFloat(0f, 1f).apply {
-                        addUpdateListener {
-                            viewModel.updateColors(
-                                primaryColor = ColorUtils.blendARGB(currentPrimaryColor, newPrimaryColor, it.animatedFraction),
-                                secondaryColor = ColorUtils.blendARGB(currentSecondaryColor, newSecondaryColor, it.animatedFraction)
-                            )
-                        }
-                    }.start()
-                    primaryColor = newPrimaryColor
-                    secondaryColor = newSecondaryColor
-                }
+        val newPrimaryColor = collection?.colorPalette?.primary ?: requireContext().color(R.color.primary)
+        val newSecondaryColor = collection?.colorPalette?.secondary ?: requireContext().colorResource(android.R.attr.windowBackground)
+        primaryColor?.let { currentPrimaryColor ->
+            secondaryColor?.let { currentSecondaryColor ->
+                ValueAnimator.ofFloat(0f, 1f).apply {
+                    addUpdateListener {
+                        viewModel.updateColors(
+                            primaryColor = ColorUtils.blendARGB(currentPrimaryColor, newPrimaryColor, it.animatedFraction),
+                            secondaryColor = ColorUtils.blendARGB(currentSecondaryColor, newSecondaryColor, it.animatedFraction)
+                        )
+                    }
+                }.start()
+                primaryColor = newPrimaryColor
+                secondaryColor = newSecondaryColor
             }
         }
     }

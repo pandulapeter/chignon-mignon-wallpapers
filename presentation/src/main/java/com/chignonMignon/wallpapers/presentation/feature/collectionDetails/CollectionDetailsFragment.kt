@@ -4,8 +4,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chignonMignon.wallpapers.presentation.R
@@ -49,7 +51,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         binding.setupRecyclerView()
         viewModel.items.observe(viewLifecycleOwner, collectionDetailsAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
-        binding.root.post { startPostponedEnterTransition() }
+        (view.parent as? ViewGroup)?.doOnPreDraw { binding.recyclerView.post { startPostponedEnterTransition() } }
     }
 
     private fun FragmentCollectionDetailsBinding.setupToolbar() {
