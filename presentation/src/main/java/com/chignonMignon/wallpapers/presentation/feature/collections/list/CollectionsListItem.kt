@@ -11,6 +11,14 @@ internal sealed class CollectionsListItem(
         val nothing: Any? = null
     ) : CollectionsListItem("welcome")
 
+    data class ErrorUiModel(
+        val nothing: Any? = null
+    ) : CollectionsListItem("error")
+
+    data class EmptyUiModel(
+        val nothing: Any? = null
+    ) : CollectionsListItem("empty")
+
     data class CollectionUiModel(
         val collection: Navigator.Collection
     ) : CollectionsListItem("collection_${collection.id}")

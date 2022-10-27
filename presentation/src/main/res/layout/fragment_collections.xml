@@ -65,28 +65,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.chignonMignon.wallpapers.presentation.feature.shared.ErrorStateView
-                    android:id="@+id/error_state"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:onClick="@{() -> viewModel.loadData(true)}"
-                    android:visibility="@{viewModel.shouldShowErrorState}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.chignonMignon.wallpapers.presentation.feature.shared.EmptyStateView
-                    android:id="@+id/empty_state"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="@{viewModel.shouldShowEmptyState}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:userInputEnabled="@{!viewModel.shouldShowLoadingIndicator}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

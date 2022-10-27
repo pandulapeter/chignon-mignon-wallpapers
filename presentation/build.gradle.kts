@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.androidx.palette)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.androidx.viewpager)
     implementation(libs.coil)
     implementation(libs.google.android.material)
     implementation(libs.koin.android)

@@ -64,6 +64,10 @@ internal class CollectionDetailsViewModel(
         }
     }
 
+    fun onThumbnailClicked() {
+        _events.pushEvent(Event.NavigateBack)
+    }
+
     fun onItemSelected(wallpaperId: String) = wallpapers.value?.firstOrNull { it.id == wallpaperId }?.let {
         _events.pushEvent(Event.OpenWallpaperDetails(it))
     }
@@ -81,6 +85,7 @@ internal class CollectionDetailsViewModel(
     }
 
     sealed class Event {
+        object NavigateBack : Event()
         data class OpenWallpaperDetails(val wallpaper: Navigator.Wallpaper) : Event()
         object ShowErrorMessage : Event()
     }

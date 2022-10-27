@@ -5,6 +5,7 @@ androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/re
 androidx-palette = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/palette
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
 androidx-swiperefreshlayout = "1.1.0" # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
+androidx-viewpager = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/viewpager2
 coil = "2.2.2" # https://github.com/coil-kt/coil/releases
 google-android-material = "1.7.0" # https://github.com/material-components/material-components-android/releases
 gradle = "7.3.0" # https://developer.android.com/studio/releases/gradle-plugin
@@ -24,6 +25,7 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 androidx-palette = { module = "androidx.palette:palette", version.ref = "androidx-palette" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
+androidx-viewpager = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 google-android-material = { module = "com.google.android.material:material", version.ref = "google-android-material" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }

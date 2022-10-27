@@ -23,7 +23,6 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.PI
@@ -36,11 +35,13 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private val viewModel by viewModel<CollectionsViewModel>()
     private val collectionsAdapter by lazy {
         CollectionsAdapter(
-            onItemSelected = viewModel::onItemSelected
+            onItemSelected = viewModel::onItemSelected,
+            onTryAgainButtonClicked = { viewModel.loadData(true) }
         )
     }
     private var primaryColor: Int? = null
     private var secondaryColor: Int? = null
+    private var binding: FragmentCollectionsBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,17 +50,23 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = bind<FragmentCollectionsBinding>(view)
-        binding.viewModel = viewModel
-        binding.setupToolbar()
-        binding.setupSwipeRefreshLayout()
-        binding.setupBackgroundAnimation()
-        binding.setupViewPager()
+        binding = bind<FragmentCollectionsBinding>(view).also { binding ->
+            binding.viewModel = viewModel
+            binding.setupToolbar()
+            binding.setupSwipeRefreshLayout()
+            binding.setupBackgroundAnimation()
+            binding.setupViewPager()
+        }
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.focusedCollection.observe(viewLifecycleOwner, ::updateColors)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         postponeEnterTransition()
-        (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
+        (view.parent as? ViewGroup)?.doOnPreDraw { binding?.viewPager?.post { startPostponedEnterTransition() } }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     private fun FragmentCollectionsBinding.setupToolbar() = toolbar.setOnMenuItemClickListener { menuItem ->
@@ -70,8 +77,8 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
     }
 
-    private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.setOnRefreshListener {
-        this@CollectionsFragment.viewModel.loadData(true)
+    private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
+        setOnRefreshListener { this@CollectionsFragment.viewModel.loadData(true) }
     }
 
     private fun FragmentCollectionsBinding.setupBackgroundAnimation() = background.run {
@@ -80,14 +87,16 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun FragmentCollectionsBinding.setupViewPager() = viewPager.run {
         adapter = collectionsAdapter
-        registerOnPageChangeCallback(object : OnPageChangeCallback() {
+        offscreenPageLimit = 1
+        registerOnPageChangeCallback(
+            object : OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) = this@CollectionsFragment.viewModel.onPageSelected(position)
 
-            override fun onPageSelected(position: Int) = this@CollectionsFragment.viewModel.onPageSelected(position)
-
-            override fun onPageScrollStateChanged(state: Int) {
-                swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
+                override fun onPageScrollStateChanged(state: Int) {
+                    swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
+                }
             }
-        })
+        )
         setPageTransformer { page, position ->
             val multiplier = 1f - abs(position)
             when (val binding = page.tag) {
@@ -160,14 +169,16 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {
         is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collection, event.sharedElements)
-        CollectionsViewModel.Event.ShowErrorMessage -> showErrorMessage()
+        is CollectionsViewModel.Event.ScrollToWelcome -> scrollToWelcome()
     }
 
     private fun openCollectionDetails(collection: Navigator.Collection, sharedElements: List<View>) {
         navigator?.navigateToCollectionDetails(collection, sharedElements)
     }
 
-    private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }
+    private fun scrollToWelcome() {
+        binding?.viewPager?.currentItem = 0
+    }
 
     companion object {
         fun newInstance() = CollectionsFragment()

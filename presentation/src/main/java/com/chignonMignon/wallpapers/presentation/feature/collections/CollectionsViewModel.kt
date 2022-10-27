@@ -16,11 +16,8 @@ import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorColorPalet
 import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorTranslatableText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class CollectionsViewModel(
@@ -31,9 +28,15 @@ internal class CollectionsViewModel(
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
     private val collections = MutableStateFlow<List<Navigator.Collection>?>(null)
+    private val _shouldShowLoadingIndicator = MutableStateFlow(false)
+    val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
     val items = collections.map { collections ->
         if (collections.isNullOrEmpty()) {
-            emptyList()
+            if (collections == null) {
+                listOf(CollectionsListItem.WelcomeUiModel(), CollectionsListItem.ErrorUiModel())
+            } else {
+                listOf(CollectionsListItem.WelcomeUiModel(), CollectionsListItem.EmptyUiModel())
+            }
         } else {
             collections
                 .map { CollectionsListItem.CollectionUiModel(it) }
@@ -41,13 +44,6 @@ internal class CollectionsViewModel(
                 .apply { add(0, CollectionsListItem.WelcomeUiModel()) }
         }
     }
-    private val _shouldShowLoadingIndicator = MutableStateFlow(false)
-    val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
-    private val _shouldShowErrorState = MutableStateFlow(false)
-    val shouldShowErrorState: StateFlow<Boolean> = _shouldShowErrorState
-    val shouldShowEmptyState = combine(collections, shouldShowLoadingIndicator) { collections, shouldShowLoadingIndicator ->
-        collections?.isEmpty() == true && !shouldShowLoadingIndicator
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     private val _focusedCollection = MutableStateFlow<Navigator.Collection?>(null)
     val focusedCollection: StateFlow<Navigator.Collection?> = _focusedCollection
     private val _primaryColor = MutableStateFlow<Int?>(null)
@@ -61,19 +57,16 @@ internal class CollectionsViewModel(
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
-            _shouldShowErrorState.value = false
             _shouldShowLoadingIndicator.value = true
+            if (collections.value == null) {
+                _events.pushEvent(Event.ScrollToWelcome)
+            }
             when (val result = getCollections(isForceRefresh)) {
                 is Result.Success -> {
                     collections.value = result.data.map { it.toNavigatorCollection() }
                     _shouldShowLoadingIndicator.value = false
                 }
                 is Result.Failure -> {
-                    if (collections.value == null) {
-                        _shouldShowErrorState.value = true
-                    } else {
-                        _events.pushEvent(Event.ShowErrorMessage)
-                    }
                     _shouldShowLoadingIndicator.value = false
                 }
             }
@@ -107,6 +100,6 @@ internal class CollectionsViewModel(
 
     sealed class Event {
         data class OpenCollectionDetails(val collection: Navigator.Collection, val sharedElements: List<View>) : Event()
-        object ShowErrorMessage : Event()
+        object ScrollToWelcome : Event()
     }
 }

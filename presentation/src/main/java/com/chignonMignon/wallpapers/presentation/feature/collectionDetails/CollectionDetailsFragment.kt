@@ -100,8 +100,13 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     }
 
     private fun handleEvent(event: CollectionDetailsViewModel.Event) = when (event) {
+        CollectionDetailsViewModel.Event.NavigateBack -> navigateBack()
         is CollectionDetailsViewModel.Event.OpenWallpaperDetails -> openWallpaperDetails(event.wallpaper)
         CollectionDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage()
+    }
+
+    private fun navigateBack() {
+        navigator?.navigateBack()
     }
 
     private fun openWallpaperDetails(wallpaper: Navigator.Wallpaper) {
