@@ -42,6 +42,7 @@
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"
+            android:transitionName="@{viewModel.wallpaper.id}"
             app:imageUrl="@{viewModel.wallpaper.url}"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             tools:src="@tools:sample/backgrounds/scenic" />
@@ -71,6 +72,7 @@
             android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context)}"
             android:text="@string/wallpaper_details_set_wallpaper"
             android:textColor="?colorOnPrimary"
+            android:visibility="invisible"
             app:icon="@drawable/ic_set_wallpaper"
             app:supportBackgroundTintList="@{viewModel.wallpaper.colorPalette.primary}" />
 

@@ -38,8 +38,9 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
         CollectionDetailsFragment.newInstance(collection)
     }
 
-    override fun navigateToWallpaperDetails(wallpaper: Navigator.Wallpaper) = supportFragmentManager.handleReplace(
+    override fun navigateToWallpaperDetails(wallpaper: Navigator.Wallpaper, sharedElements: List<View>) = supportFragmentManager.handleReplace(
         containerId = R.id.container,
+        sharedElements = sharedElements,
         addToBackStack = true
     ) {
         WallpaperDetailsFragment.newInstance(wallpaper)

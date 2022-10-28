@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.feature.collectionDetails
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
@@ -68,8 +69,8 @@ internal class CollectionDetailsViewModel(
         _events.pushEvent(Event.NavigateBack)
     }
 
-    fun onItemSelected(wallpaperId: String) = wallpapers.value?.firstOrNull { it.id == wallpaperId }?.let {
-        _events.pushEvent(Event.OpenWallpaperDetails(it))
+    fun onItemSelected(wallpaperId: String, sharedElements: List<View>) = wallpapers.value?.firstOrNull { it.id == wallpaperId }?.let {
+        _events.pushEvent(Event.OpenWallpaperDetails(it, sharedElements))
     }
 
     private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(url).let { colorPalette ->
@@ -86,7 +87,7 @@ internal class CollectionDetailsViewModel(
 
     sealed class Event {
         object NavigateBack : Event()
-        data class OpenWallpaperDetails(val wallpaper: Navigator.Wallpaper) : Event()
+        data class OpenWallpaperDetails(val wallpaper: Navigator.Wallpaper, val sharedElements: List<View>) : Event()
         object ShowErrorMessage : Event()
     }
 }

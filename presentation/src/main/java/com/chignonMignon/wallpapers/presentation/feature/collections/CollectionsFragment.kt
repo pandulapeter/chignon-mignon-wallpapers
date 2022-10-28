@@ -1,7 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.feature.collections
 
 import android.animation.ValueAnimator
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResou
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
-import com.google.android.material.transition.MaterialContainerTransform
+import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.PI
 import kotlin.math.abs
@@ -35,10 +34,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val viewModel by viewModel<CollectionsViewModel>()
     private val collectionsAdapter by lazy {
-        CollectionsAdapter(
-            onItemSelected = viewModel::onItemSelected,
-            onTryAgainButtonClicked = { viewModel.loadData(true) }
-        )
+        CollectionsAdapter(onItemSelected = viewModel::onItemSelected, onTryAgainButtonClicked = { viewModel.loadData(true) })
     }
     private var primaryColor: Int? = null
     private var secondaryColor: Int? = null
@@ -47,8 +43,8 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform().apply { scrimColor = Color.TRANSPARENT }
-        sharedElementReturnTransition = MaterialContainerTransform().apply { scrimColor = Color.TRANSPARENT }
+        sharedElementEnterTransition = sharedElementTransition()
+        sharedElementReturnTransition = sharedElementTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,15 +87,13 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private fun FragmentCollectionsBinding.setupViewPager() = viewPager.run {
         adapter = collectionsAdapter
         offscreenPageLimit = 1
-        registerOnPageChangeCallback(
-            object : OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) = this@CollectionsFragment.viewModel.onPageSelected(position)
+        registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) = this@CollectionsFragment.viewModel.onPageSelected(position)
 
-                override fun onPageScrollStateChanged(state: Int) {
-                    swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
-                }
+            override fun onPageScrollStateChanged(state: Int) {
+                swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
             }
-        )
+        })
         setPageTransformer { page, position ->
             val multiplier = 1f - abs(position)
             when (val binding = page.tag) {

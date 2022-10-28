@@ -11,7 +11,7 @@ interface Navigator {
 
     fun navigateToCollectionDetails(collection: Collection, sharedElements: List<View>)
 
-    fun navigateToWallpaperDetails(wallpaper: Wallpaper)
+    fun navigateToWallpaperDetails(wallpaper: Wallpaper, sharedElements: List<View>)
 
     fun navigateBack()
 

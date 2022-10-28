@@ -3,9 +3,12 @@ package com.chignonMignon.wallpapers.presentation.feature.wallpaperDetails
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import androidx.core.app.SharedElementCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentWallpaperDetailsBinding
@@ -17,6 +20,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.setWallpaper
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
+import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -24,24 +28,43 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
     private val viewModel by viewModel<WallpaperDetailsViewModel> { parametersOf(arguments?.wallpaper) }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = sharedElementTransition()
+        sharedElementReturnTransition = sharedElementTransition()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentWallpaperDetailsBinding>(view)
         binding.viewModel = viewModel
         binding.setupToolbar()
         binding.setupFloatingActionButton()
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
+        postponeEnterTransition()
+        (view.parent as? ViewGroup)?.doOnPreDraw { binding.preview.post { startPostponedEnterTransition() } }
     }
 
     private fun FragmentWallpaperDetailsBinding.setupToolbar() = toolbar.setNavigationOnClickListener {
         navigator?.navigateBack()
     }
 
-    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() = ViewCompat.setOnApplyWindowInsetsListener(floatingActionButton) { _, insets ->
-        val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-        floatingActionButton.layoutParams = (floatingActionButton.layoutParams as MarginLayoutParams).apply {
-            bottomMargin += systemBarInsets.bottom
+    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() {
+        ViewCompat.setOnApplyWindowInsetsListener(floatingActionButton) { _, insets ->
+            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            floatingActionButton.layoutParams = (floatingActionButton.layoutParams as MarginLayoutParams).apply {
+                bottomMargin += systemBarInsets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
         }
-        WindowInsetsCompat.CONSUMED
+        setEnterSharedElementCallback(object : SharedElementCallback() {
+            override fun onSharedElementEnd(
+                sharedElementNames: MutableList<String>?,
+                sharedElements: MutableList<View>?,
+                sharedElementSnapshots: MutableList<View>?
+            ) {
+                floatingActionButton.run { postDelayed({ show() }, 500) }
+            }
+        })
     }
 
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {

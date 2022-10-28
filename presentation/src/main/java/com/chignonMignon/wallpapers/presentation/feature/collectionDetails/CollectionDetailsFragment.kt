@@ -1,6 +1,5 @@
 package com.chignonMignon.wallpapers.presentation.feature.collectionDetails
 
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -22,7 +21,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
-import com.google.android.material.transition.MaterialContainerTransform
+import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -38,8 +37,8 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform().apply { scrimColor = Color.TRANSPARENT }
-        sharedElementReturnTransition = MaterialContainerTransform().apply { scrimColor = Color.TRANSPARENT }
+        sharedElementEnterTransition = sharedElementTransition()
+        sharedElementReturnTransition = sharedElementTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,7 +100,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     private fun handleEvent(event: CollectionDetailsViewModel.Event) = when (event) {
         CollectionDetailsViewModel.Event.NavigateBack -> navigateBack()
-        is CollectionDetailsViewModel.Event.OpenWallpaperDetails -> openWallpaperDetails(event.wallpaper)
+        is CollectionDetailsViewModel.Event.OpenWallpaperDetails -> openWallpaperDetails(event.wallpaper, event.sharedElements)
         CollectionDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage()
     }
 
@@ -109,8 +108,8 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         navigator?.navigateBack()
     }
 
-    private fun openWallpaperDetails(wallpaper: Navigator.Wallpaper) {
-        navigator?.navigateToWallpaperDetails(wallpaper)
+    private fun openWallpaperDetails(wallpaper: Navigator.Wallpaper, sharedElements: List<View>) {
+        navigator?.navigateToWallpaperDetails(wallpaper, sharedElements)
     }
 
     private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }
