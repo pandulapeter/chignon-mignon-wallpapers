@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -24,10 +25,12 @@
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:fitsSystemWindows="true"
                 app:backgroundColor="@{viewModel.primaryColor}"
                 app:menu="@menu/collections"
-                app:title="@string/collections_title" />
+                app:title="@{viewModel.screenTitle}"
+                tools:title="Title" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

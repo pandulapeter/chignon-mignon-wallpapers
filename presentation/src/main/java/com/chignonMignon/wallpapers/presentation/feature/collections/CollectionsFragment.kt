@@ -43,6 +43,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private var primaryColor: Int? = null
     private var secondaryColor: Int? = null
     private var binding: FragmentCollectionsBinding? = null
+    private val aboutMenuItem get() = binding?.toolbar?.menu?.findItem(R.id.about)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +61,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.focusedCollection.observe(viewLifecycleOwner, ::updateColors)
+        viewModel.isAboutIconVisible.observe(viewLifecycleOwner, ::updateAboutIconVisibility)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         postponeEnterTransition()
         (view.parent as? ViewGroup)?.doOnPreDraw { binding?.viewPager?.post { startPostponedEnterTransition() } }
@@ -166,6 +168,10 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                 secondaryColor = newSecondaryColor
             }
         }
+    }
+
+    private fun updateAboutIconVisibility(isVisible: Boolean) {
+        aboutMenuItem?.isVisible = isVisible
     }
 
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {

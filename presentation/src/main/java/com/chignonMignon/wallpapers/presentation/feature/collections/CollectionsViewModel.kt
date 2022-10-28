@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
+import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsListItem
 import com.chignonMignon.wallpapers.presentation.utilities.ColorPaletteGenerator
@@ -16,8 +17,11 @@ import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorColorPalet
 import com.chignonMignon.wallpapers.presentation.utilities.toNavigatorTranslatableText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class CollectionsViewModel(
@@ -43,8 +47,19 @@ internal class CollectionsViewModel(
             }
         }
     }
+    private val isLastPageFocused = MutableStateFlow(false)
     private val _focusedCollection = MutableStateFlow<Navigator.Collection?>(null)
     val focusedCollection: StateFlow<Navigator.Collection?> = _focusedCollection
+    val isAboutIconVisible = combine(collections, isLastPageFocused) { collections, isLastPageFocused ->
+        collections != null && !isLastPageFocused
+    }
+    val screenTitle = combine(focusedCollection, isLastPageFocused) { focusedCollection, isLastPageFocused ->
+        if (focusedCollection == null) {
+            if (isLastPageFocused) R.string.collections_title_about else R.string.collections_title_welcome
+        } else {
+            R.string.collections_title
+        }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _secondaryColor = MutableStateFlow<Int?>(null)
@@ -75,6 +90,7 @@ internal class CollectionsViewModel(
 
     fun onPageSelected(position: Int) {
         collections.value?.let { collections ->
+            isLastPageFocused.value = position == collections.size + 1
             _focusedCollection.value = if (position >= 1 && position <= collections.size) collections[position - 1] else null
         }
     }
