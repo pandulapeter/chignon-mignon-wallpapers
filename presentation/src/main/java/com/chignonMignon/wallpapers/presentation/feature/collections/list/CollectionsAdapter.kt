@@ -39,6 +39,10 @@ internal class CollectionsAdapter(
         binding: ItemCollectionsAboutBinding
     ) : BaseViewHolder<CollectionsListItem.AboutUiModel, ItemCollectionsAboutBinding>(binding) {
 
+        init {
+            binding.root.tag = binding
+        }
+
         companion object {
             fun create(
                 parent: ViewGroup,

@@ -95,7 +95,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     private fun getSpanCount(): Int {
         val displayMetrics = DisplayMetrics()
         activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-        return displayMetrics.widthPixels / requireContext().dimension(R.dimen.wallpaper_item_minimum_width)
+        return displayMetrics.widthPixels / requireContext().dimension(R.dimen.collection_details_wallpaper_item_minimum_width)
     }
 
     private fun handleEvent(event: CollectionDetailsViewModel.Event) = when (event) {

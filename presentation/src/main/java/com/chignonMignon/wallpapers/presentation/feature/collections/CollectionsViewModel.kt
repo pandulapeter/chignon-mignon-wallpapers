@@ -50,20 +50,46 @@ internal class CollectionsViewModel(
     private val isLastPageFocused = MutableStateFlow(false)
     private val _focusedCollection = MutableStateFlow<Navigator.Collection?>(null)
     val focusedCollection: StateFlow<Navigator.Collection?> = _focusedCollection
-    val isAboutIconVisible = combine(collections, isLastPageFocused) { collections, isLastPageFocused ->
+    val isAboutIconVisible = combine(
+        collections,
+        isLastPageFocused
+    ) { collections,
+        isLastPageFocused ->
         collections != null && !isLastPageFocused
     }
-    val screenTitle = combine(focusedCollection, isLastPageFocused) { focusedCollection, isLastPageFocused ->
+    val screenTitle = combine(
+        focusedCollection,
+        isLastPageFocused
+    ) { focusedCollection,
+        isLastPageFocused ->
         if (focusedCollection == null) {
-            if (isLastPageFocused) R.string.collections_title_about else R.string.collections_title_welcome
+            if (isLastPageFocused) R.string.collections_about else R.string.collections_welcome
         } else {
             R.string.collections_title
         }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    val shouldShowPreviousButton = combine(
+        focusedCollection,
+        isLastPageFocused
+    ) { focusedCollection,
+        isLastPageFocused ->
+        focusedCollection != null || isLastPageFocused
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+    val shouldShowNextButton = combine(
+        collections,
+        focusedCollection,
+        isLastPageFocused
+    ) { collections,
+        focusedCollection,
+        isLastPageFocused ->
+        collections != null && (focusedCollection != null || !isLastPageFocused)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _secondaryColor = MutableStateFlow<Int?>(null)
     val secondaryColor: StateFlow<Int?> = _secondaryColor
+    private val _onSecondaryColor = MutableStateFlow<Int?>(null)
+    val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
 
     init {
         loadData(false)
@@ -95,14 +121,23 @@ internal class CollectionsViewModel(
         }
     }
 
-    fun updateColors(@ColorInt primaryColor: Int, @ColorInt secondaryColor: Int) {
+    fun updateColors(
+        @ColorInt primaryColor: Int,
+        @ColorInt secondaryColor: Int,
+        @ColorInt onSecondaryColor: Int
+    ) {
         _primaryColor.value = primaryColor
         _secondaryColor.value = secondaryColor
+        _onSecondaryColor.value = onSecondaryColor
     }
 
     fun onItemSelected(collectionId: String, sharedElements: List<View>) = collections.value?.firstOrNull { it.id == collectionId }?.let {
         _events.pushEvent(Event.OpenCollectionDetails(it, sharedElements))
     }
+
+    fun onPreviousButtonPressed() = _events.pushEvent(Event.NavigateToPreviousPage)
+
+    fun onNextButtonPressed() = _events.pushEvent(Event.NavigateToNextPage)
 
     private suspend fun Collection.toNavigatorCollection() = colorPaletteGenerator.generateColors(thumbnailUrl).let { colorPalette ->
         Navigator.Collection(
@@ -116,6 +151,8 @@ internal class CollectionsViewModel(
 
     sealed class Event {
         data class OpenCollectionDetails(val collection: Navigator.Collection, val sharedElements: List<View>) : Event()
+        object NavigateToPreviousPage : Event()
+        object NavigateToNextPage : Event()
         object ShowErrorMessage : Event()
         object ScrollToWelcome : Event()
     }

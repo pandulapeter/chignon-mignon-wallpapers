@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:paddingHorizontal="@dimen/collections_pager_margin"
         android:scrollbars="none">
 
         <LinearLayout
@@ -23,9 +24,10 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:importantForAccessibility="no"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
                 android:src="@drawable/img_logo" />
 
             <TextView
@@ -37,9 +39,11 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_content_padding"
+                android:adjustViewBounds="true"
                 android:importantForAccessibility="no"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
                 android:src="@drawable/img_logo" />
 
             <TextView
@@ -51,9 +55,11 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_content_padding"
+                android:adjustViewBounds="true"
                 android:importantForAccessibility="no"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
                 android:src="@drawable/img_logo" />
 
             <TextView
@@ -65,9 +71,11 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_content_padding"
+                android:adjustViewBounds="true"
                 android:importantForAccessibility="no"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
                 android:src="@drawable/img_logo" />
 
             <TextView
@@ -79,9 +87,11 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_content_padding"
+                android:adjustViewBounds="true"
                 android:importantForAccessibility="no"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
                 android:src="@drawable/img_logo" />
 
         </LinearLayout>

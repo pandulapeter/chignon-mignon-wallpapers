@@ -71,6 +71,38 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:userInputEnabled="@{!viewModel.shouldShowLoadingIndicator}" />
 
+                <ImageView
+                    android:id="@+id/previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_padding"
+                    android:layout_marginBottom="@dimen/content_padding"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/collections_previous"
+                    android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
+                    android:padding="@dimen/content_padding"
+                    android:src="@drawable/ic_previous"
+                    android:visibility="@{viewModel.shouldShowPreviousButton}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:tint="@{viewModel.onSecondaryColor}" />
+
+                <ImageView
+                    android:id="@+id/next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_padding"
+                    android:layout_marginBottom="@dimen/content_padding"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/collections_next"
+                    android:onClick="@{() -> viewModel.onNextButtonPressed()}"
+                    android:padding="@dimen/content_padding"
+                    android:src="@drawable/ic_next"
+                    android:visibility="@{viewModel.shouldShowNextButton}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:tint="@{viewModel.onSecondaryColor}" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

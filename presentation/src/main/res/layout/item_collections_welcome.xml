@@ -33,24 +33,6 @@
             app:strokeWidth="@dimen/divider" />
 
         <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:lines="1"
-            android:paddingHorizontal="@dimen/double_content_padding"
-            android:text="@string/collections_welcome"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-            android:textColor="@color/on_primary"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/message"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/thumbnail"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
             android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -66,7 +48,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/thumbnail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

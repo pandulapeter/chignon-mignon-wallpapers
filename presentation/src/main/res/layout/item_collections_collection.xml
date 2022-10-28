@@ -65,7 +65,7 @@
             android:gravity="center"
             android:letterSpacing="0"
             android:lines="3"
-            android:paddingHorizontal="@dimen/double_content_padding"
+            android:paddingHorizontal="@dimen/collections_pager_margin"
             android:text="@{uiModel.collection.description}"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
             app:layout_constraintBottom_toBottomOf="parent"

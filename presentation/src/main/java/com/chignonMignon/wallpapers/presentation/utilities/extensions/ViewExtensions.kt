@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.utilities.extensions
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -36,6 +37,12 @@ internal fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = nul
     if (shouldFade == true) {
         crossfade(500)
     }
+}
+
+
+@BindingAdapter("tint")
+internal fun ImageView.setTint(color: Int?) = color?.let {
+    imageTintList = ColorStateList.valueOf(color)
 }
 
 @set:BindingAdapter("android:visibility")

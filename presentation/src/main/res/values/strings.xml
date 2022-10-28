@@ -9,11 +9,11 @@
 
     <!-- Collections -->
     <string name="collections_title">Collections</string>
-    <string name="collections_title_welcome">Hello</string>
-    <string name="collections_title_about">About</string>
+    <string name="collections_welcome">Welcome</string>
     <string name="collections_about">About</string>
-    <string name="collections_welcome">Welcome!</string>
     <string name="collections_welcome_message">Start swiping horizontally\nto explore the various collections</string>
+    <string name="collections_previous">Previous</string>
+    <string name="collections_next">Next</string>
 
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Set wallpaper</string>

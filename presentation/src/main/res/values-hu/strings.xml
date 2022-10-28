@@ -9,11 +9,11 @@
 
     <!-- Collections -->
     <string name="collections_title">Kollekciók</string>
-    <string name="collections_title_welcome">Helló</string>
-    <string name="collections_title_about">Rólunk</string>
+    <string name="collections_welcome">Üdv</string>
     <string name="collections_about">Rólunk</string>
-    <string name="collections_welcome">Üdv!</string>
     <string name="collections_welcome_message">Start swiping horizontally to explore the various collections</string> <!-- TODO -->
+    <string name="collections_previous">Előző</string>
+    <string name="collections_next">Következő</string>
 
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Háttérkép beállítása</string>
