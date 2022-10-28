@@ -31,17 +31,16 @@ internal class CollectionsViewModel(
     private val _shouldShowLoadingIndicator = MutableStateFlow(false)
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
     val items = collections.map { collections ->
-        if (collections.isNullOrEmpty()) {
-            if (collections == null) {
-                listOf(CollectionsListItem.WelcomeUiModel(), CollectionsListItem.ErrorUiModel())
-            } else {
-                listOf(CollectionsListItem.WelcomeUiModel(), CollectionsListItem.EmptyUiModel())
+        buildList {
+            add(CollectionsListItem.WelcomeUiModel())
+            when {
+                collections == null -> add(CollectionsListItem.ErrorUiModel())
+                collections.isEmpty() -> add(CollectionsListItem.EmptyUiModel())
+                else -> addAll(collections.map { CollectionsListItem.CollectionUiModel(it) })
             }
-        } else {
-            collections
-                .map { CollectionsListItem.CollectionUiModel(it) }
-                .toMutableList<CollectionsListItem>()
-                .apply { add(0, CollectionsListItem.WelcomeUiModel()) }
+            if (collections != null) {
+                add(CollectionsListItem.AboutUiModel())
+            }
         }
     }
     private val _focusedCollection = MutableStateFlow<Navigator.Collection?>(null)
@@ -67,6 +66,7 @@ internal class CollectionsViewModel(
                     _shouldShowLoadingIndicator.value = false
                 }
                 is Result.Failure -> {
+                    _events.pushEvent(Event.ShowErrorMessage)
                     _shouldShowLoadingIndicator.value = false
                 }
             }
@@ -100,6 +100,7 @@ internal class CollectionsViewModel(
 
     sealed class Event {
         data class OpenCollectionDetails(val collection: Navigator.Collection, val sharedElements: List<View>) : Event()
+        object ShowErrorMessage : Event()
         object ScrollToWelcome : Event()
     }
 }

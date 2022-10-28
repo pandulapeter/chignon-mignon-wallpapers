@@ -13,8 +13,6 @@ interface Navigator {
 
     fun navigateToWallpaperDetails(wallpaper: Wallpaper)
 
-    fun navigateToAbout()
-
     fun navigateBack()
 
     @Parcelize

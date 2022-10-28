@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
-import com.chignonMignon.wallpapers.presentation.feature.about.AboutFragment
 import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.CollectionDetailsFragment
 import com.chignonMignon.wallpapers.presentation.feature.collections.CollectionsFragment
 import com.chignonMignon.wallpapers.presentation.feature.wallpaperDetails.WallpaperDetailsFragment
@@ -44,13 +43,6 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
         addToBackStack = true
     ) {
         WallpaperDetailsFragment.newInstance(wallpaper)
-    }
-
-    override fun navigateToAbout() = supportFragmentManager.handleReplace(
-        containerId = R.id.container,
-        addToBackStack = true
-    ) {
-        AboutFragment.newInstance()
     }
 
     override fun navigateBack() = supportFragmentManager.popBackStack()

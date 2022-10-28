@@ -7,19 +7,23 @@ internal sealed class CollectionsListItem(
     override val id: String
 ) : ListItem {
 
-    data class WelcomeUiModel(
+    data class AboutUiModel(
         val nothing: Any? = null
-    ) : CollectionsListItem("welcome")
+    ) : CollectionsListItem("about")
 
-    data class ErrorUiModel(
-        val nothing: Any? = null
-    ) : CollectionsListItem("error")
+    data class CollectionUiModel(
+        val collection: Navigator.Collection
+    ) : CollectionsListItem("collection_${collection.id}")
 
     data class EmptyUiModel(
         val nothing: Any? = null
     ) : CollectionsListItem("empty")
 
-    data class CollectionUiModel(
-        val collection: Navigator.Collection
-    ) : CollectionsListItem("collection_${collection.id}")
+    data class ErrorUiModel(
+        val nothing: Any? = null
+    ) : CollectionsListItem("error")
+
+    data class WelcomeUiModel(
+        val nothing: Any? = null
+    ) : CollectionsListItem("welcome")
 }

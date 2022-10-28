@@ -23,6 +23,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.PI
@@ -72,7 +73,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private fun FragmentCollectionsBinding.setupToolbar() = toolbar.setOnMenuItemClickListener { menuItem ->
         consume {
             if (menuItem.itemId == R.id.about) {
-                navigator?.navigateToAbout()
+                viewPager.currentItem = viewPager.adapter?.run { itemCount - 1 } ?: 0 // TODO
             }
         }
     }
@@ -169,12 +170,15 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {
         is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collection, event.sharedElements)
+        is CollectionsViewModel.Event.ShowErrorMessage -> showErrorMessage()
         is CollectionsViewModel.Event.ScrollToWelcome -> scrollToWelcome()
     }
 
     private fun openCollectionDetails(collection: Navigator.Collection, sharedElements: List<View>) {
         navigator?.navigateToCollectionDetails(collection, sharedElements)
     }
+
+    private fun showErrorMessage() = context?.let { showSnackbar { viewModel.loadData(true) } }
 
     private fun scrollToWelcome() {
         binding?.viewPager?.currentItem = 0

@@ -7,9 +7,6 @@
     <string name="empty_state">Se pare că nu există conținut aici…\mReveniți mai târziu!</string>
     <string name="work_in_progress">Încă nu e gata…</string>
 
-    <!-- About -->
-    <string name="about_title">Despre noi</string>
-
     <!-- Collections -->
     <string name="collections_title">Colecții</string>
     <string name="collections_about">Despre noi</string>

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chignonMignon.wallpapers.presentation.R
+import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsAboutBinding
 import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsCollectionBinding
 import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsEmptyBinding
 import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsErrorBinding
@@ -18,18 +19,33 @@ internal class CollectionsAdapter(
 ) : BaseListAdapter<CollectionsListItem>() {
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
+        is CollectionsListItem.AboutUiModel -> R.layout.item_collections_about
         is CollectionsListItem.CollectionUiModel -> R.layout.item_collections_collection
-        is CollectionsListItem.WelcomeUiModel -> R.layout.item_collections_welcome
         is CollectionsListItem.EmptyUiModel -> R.layout.item_collections_empty
         is CollectionsListItem.ErrorUiModel -> R.layout.item_collections_error
+        is CollectionsListItem.WelcomeUiModel -> R.layout.item_collections_welcome
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<out CollectionsListItem, *> = when (viewType) {
+        R.layout.item_collections_about -> AboutViewHolder.create(parent)
         R.layout.item_collections_collection -> CollectionViewHolder.create(parent, onItemSelected)
-        R.layout.item_collections_welcome -> WelcomeViewHolder.create(parent)
         R.layout.item_collections_empty -> EmptyViewHolder.create(parent)
         R.layout.item_collections_error -> ErrorViewHolder.create(parent, onTryAgainButtonClicked)
+        R.layout.item_collections_welcome -> WelcomeViewHolder.create(parent)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType")
+    }
+
+    private class AboutViewHolder private constructor(
+        binding: ItemCollectionsAboutBinding
+    ) : BaseViewHolder<CollectionsListItem.AboutUiModel, ItemCollectionsAboutBinding>(binding) {
+
+        companion object {
+            fun create(
+                parent: ViewGroup,
+            ) = AboutViewHolder(
+                binding = ItemCollectionsAboutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+        }
     }
 
     private class CollectionViewHolder private constructor(
@@ -57,30 +73,9 @@ internal class CollectionsAdapter(
         }
     }
 
-    private class WelcomeViewHolder private constructor(
-        binding: ItemCollectionsWelcomeBinding
-    ) : BaseViewHolder<CollectionsListItem.WelcomeUiModel, ItemCollectionsWelcomeBinding>(binding) {
-
-        init {
-            binding.root.tag = binding
-        }
-
-        companion object {
-            fun create(
-                parent: ViewGroup
-            ) = WelcomeViewHolder(
-                binding = ItemCollectionsWelcomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            )
-        }
-    }
-
     private class EmptyViewHolder private constructor(
         binding: ItemCollectionsEmptyBinding
     ) : BaseViewHolder<CollectionsListItem.EmptyUiModel, ItemCollectionsEmptyBinding>(binding) {
-
-        init {
-            binding.root.tag = binding
-        }
 
         companion object {
             fun create(
@@ -97,7 +92,6 @@ internal class CollectionsAdapter(
     ) : BaseViewHolder<CollectionsListItem.ErrorUiModel, ItemCollectionsErrorBinding>(binding) {
 
         init {
-            binding.root.tag = binding
             binding.errorState.setOnClickListener { onTryAgainButtonClicked() }
         }
 
@@ -108,6 +102,23 @@ internal class CollectionsAdapter(
             ) = ErrorViewHolder(
                 binding = ItemCollectionsErrorBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                 onTryAgainButtonClicked = onTryAgainButtonClicked
+            )
+        }
+    }
+
+    private class WelcomeViewHolder private constructor(
+        binding: ItemCollectionsWelcomeBinding
+    ) : BaseViewHolder<CollectionsListItem.WelcomeUiModel, ItemCollectionsWelcomeBinding>(binding) {
+
+        init {
+            binding.root.tag = binding
+        }
+
+        companion object {
+            fun create(
+                parent: ViewGroup
+            ) = WelcomeViewHolder(
+                binding = ItemCollectionsWelcomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
         }
     }
