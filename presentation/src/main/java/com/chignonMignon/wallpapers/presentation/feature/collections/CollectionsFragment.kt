@@ -93,7 +93,9 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             override fun onPageSelected(position: Int) = this@CollectionsFragment.viewModel.onPageSelected(position)
 
             override fun onPageScrollStateChanged(state: Int) {
-                swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
+                if (!this@CollectionsFragment.viewModel.shouldShowLoadingIndicator.value) {
+                    swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
+                }
             }
         })
         setPageTransformer { page, position ->

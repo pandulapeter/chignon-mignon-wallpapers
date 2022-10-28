@@ -34,6 +34,13 @@ internal class CollectionsViewModel(
     private val collections = MutableStateFlow<List<Navigator.Collection>?>(null)
     private val _shouldShowLoadingIndicator = MutableStateFlow(false)
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
+    val isViewPagerSwipeEnabled = combine(
+        shouldShowLoadingIndicator,
+        collections
+    ) { shouldShowLoadingIndicator,
+        collections ->
+        collections != null || !shouldShowLoadingIndicator
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     val items = collections.map { collections ->
         buildList {
             add(CollectionsListItem.WelcomeUiModel())
