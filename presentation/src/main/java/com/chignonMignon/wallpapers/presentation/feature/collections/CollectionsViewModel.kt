@@ -75,22 +75,6 @@ internal class CollectionsViewModel(
             R.string.collections_title
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
-    val shouldShowPreviousButton = combine(
-        focusedCollection,
-        isLastPageFocused
-    ) { focusedCollection,
-        isLastPageFocused ->
-        focusedCollection != null || isLastPageFocused
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
-    val shouldShowNextButton = combine(
-        collections,
-        focusedCollection,
-        isLastPageFocused
-    ) { collections,
-        focusedCollection,
-        isLastPageFocused ->
-        collections != null && (focusedCollection != null || !isLastPageFocused)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _secondaryColor = MutableStateFlow<Int?>(null)
@@ -142,9 +126,17 @@ internal class CollectionsViewModel(
         _events.pushEvent(Event.OpenCollectionDetails(it, sharedElements))
     }
 
-    fun onPreviousButtonPressed() = _events.pushEvent(Event.NavigateToPreviousPage)
+    fun onPreviousButtonPressed() {
+        if (focusedCollection.value != null || isLastPageFocused.value) {
+            _events.pushEvent(Event.NavigateToPreviousPage)
+        }
+    }
 
-    fun onNextButtonPressed() = _events.pushEvent(Event.NavigateToNextPage)
+    fun onNextButtonPressed() {
+        if (collections.value != null && (focusedCollection.value != null || !isLastPageFocused.value)) {
+            _events.pushEvent(Event.NavigateToNextPage)
+        }
+    }
 
     private suspend fun Collection.toNavigatorCollection() = colorPaletteGenerator.generateColors(thumbnailUrl).let { colorPalette ->
         Navigator.Collection(

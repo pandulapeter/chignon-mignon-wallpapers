@@ -1,9 +1,13 @@
 package com.chignonMignon.wallpapers.presentation.utilities
 
+import android.widget.ImageView
 import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionDetailsBinding
 import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsAboutBinding
 import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsCollectionBinding
 import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsWelcomeBinding
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.relativeTranslationX
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.relativeTranslationY
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.scale
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.max
@@ -18,14 +22,13 @@ internal fun ItemCollectionsCollectionBinding.animate(position: Float) {
     val multiplierSquared = multiplier * multiplier
     thumbnail.run {
         alpha = multiplier
-        scaleX = multiplier
-        scaleY = multiplier
-        translationX = -width * (position * 0.5f)
-        translationY = -height * sin((1 - multiplier) * PI.toFloat()) * 0.05f
+        scale(multiplier)
+        relativeTranslationX(-position * 0.5f)
+        relativeTranslationY(-sin((1 - multiplier) * PI.toFloat()) * 0.05f)
     }
     name.alpha = multiplierSquared
     description.run {
-        translationX = width * (position * 0.5f)
+        relativeTranslationX(position * 0.5f)
         alpha = multiplierSquared
     }
 }
@@ -33,16 +36,22 @@ internal fun ItemCollectionsCollectionBinding.animate(position: Float) {
 internal fun ItemCollectionsWelcomeBinding.animate(position: Float) {
     root.run {
         alpha = 1f + position * 2f
-        translationX = -width * position
+        relativeTranslationX(-position)
     }
-    thumbnail.run {
-        val scale = max(0f, 0.6f + position)
-        scaleX = scale
-        scaleY = scale
-    }
-    message.run {
-        translationY = height * position * 2f
-    }
+    thumbnail.scale(max(0f, 0.6f + position))
+    message.relativeTranslationY(position * 2f)
+}
+
+internal fun ImageView.animateCollectionsPreviousButton(adjustedPosition: Float) {
+    alpha = adjustedPosition * adjustedPosition
+    relativeTranslationX(1 - adjustedPosition)
+    scale(adjustedPosition)
+}
+
+internal fun ImageView.animateCollectionsNextButton(adjustedPosition: Float) {
+    alpha = adjustedPosition * adjustedPosition
+    relativeTranslationX(adjustedPosition - 1)
+    scale(adjustedPosition)
 }
 
 internal fun FragmentCollectionDetailsBinding.animateHeader(multiplier: Float) {
@@ -50,14 +59,13 @@ internal fun FragmentCollectionDetailsBinding.animateHeader(multiplier: Float) {
     collectionThumbnail.run {
         scaleX = 1f + multiplier * 5f
         scaleY = 1f + multiplier * 3f
-        translationX = width * multiplier
+        relativeTranslationX(multiplier)
         alpha = 1f - multiplier
     }
     description.run {
         alpha = 1f - multiplier * 2f
         pivotX = width.toFloat()
-        scaleX = 1f - multiplier
-        scaleY = 1f - multiplier
-        translationX = width * multiplier * 0.2f
+        scale(1f - multiplier)
+        relativeTranslationX(multiplier * 0.2f)
     }
 }

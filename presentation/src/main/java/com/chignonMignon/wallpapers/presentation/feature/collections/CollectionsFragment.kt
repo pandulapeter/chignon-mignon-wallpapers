@@ -16,6 +16,8 @@ import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsWelc
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.animate
+import com.chignonMignon.wallpapers.presentation.utilities.animateCollectionsNextButton
+import com.chignonMignon.wallpapers.presentation.utilities.animateCollectionsPreviousButton
 import com.chignonMignon.wallpapers.presentation.utilities.consume
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
@@ -24,6 +26,9 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
@@ -65,6 +70,12 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.viewPager.invalidate()
+        binding.background.alpha = if (viewModel.focusedCollection.value == null) 0f else BACKGROUND_ALPHA
+    }
+
     private fun FragmentCollectionsBinding.setupToolbar() = toolbar.setOnMenuItemClickListener { menuItem ->
         consume {
             if (menuItem.itemId == R.id.about) {
@@ -94,10 +105,22 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             }
         })
         setPageTransformer { page, position ->
-            when (val binding = page.tag) {
-                is ItemCollectionsAboutBinding -> binding.animate(position)
-                is ItemCollectionsCollectionBinding -> binding.animate(position)
-                is ItemCollectionsWelcomeBinding -> binding.animate(position)
+            when (val pageBinding = page.tag) {
+                is ItemCollectionsAboutBinding -> {
+                    pageBinding.animate(position)
+                    binding.next.run {
+                        val adjustedPosition = abs(min(1f, position))
+                        binding.next.animateCollectionsNextButton(adjustedPosition)
+                        binding.background.alpha = adjustedPosition * BACKGROUND_ALPHA
+                    }
+                }
+                is ItemCollectionsCollectionBinding -> pageBinding.animate(position)
+                is ItemCollectionsWelcomeBinding -> {
+                    pageBinding.animate(position)
+                    val adjustedPosition = -max(-1f, position)
+                    binding.previous.animateCollectionsPreviousButton(adjustedPosition)
+                    binding.background.alpha = adjustedPosition * BACKGROUND_ALPHA
+                }
                 else -> Unit
             }
         }
@@ -134,6 +157,8 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     companion object {
+        private const val BACKGROUND_ALPHA = 0.1f
+
         fun newInstance() = CollectionsFragment()
     }
 }

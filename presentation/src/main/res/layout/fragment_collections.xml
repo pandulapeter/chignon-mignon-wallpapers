@@ -51,7 +51,6 @@
                     android:id="@+id/background"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:alpha="0.1"
                     android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
                     app:imageUrl="@{viewModel.focusedCollection.thumbnailUrl}"
@@ -82,7 +81,6 @@
                     android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
                     android:padding="@dimen/content_padding"
                     android:src="@drawable/ic_previous"
-                    android:visibility="@{viewModel.shouldShowPreviousButton}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:tint="@{viewModel.onSecondaryColor}" />
@@ -98,7 +96,6 @@
                     android:onClick="@{() -> viewModel.onNextButtonPressed()}"
                     android:padding="@dimen/content_padding"
                     android:src="@drawable/ic_next"
-                    android:visibility="@{viewModel.shouldShowNextButton}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:tint="@{viewModel.onSecondaryColor}" />
