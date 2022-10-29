@@ -10,6 +10,7 @@
     <!-- Collections -->
 
     <dimen name="collections_pager_margin">56dp</dimen>
+    <dimen name="collections_logo_max_width">224dp</dimen>
 
     <!-- Collection details -->
 

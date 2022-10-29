@@ -38,7 +38,7 @@ internal fun ItemCollectionsWelcomeBinding.animate(position: Float) {
         alpha = 1f + position * 2f
         relativeTranslationX(-position)
     }
-    thumbnail.scale(max(0f, 0.6f + position))
+    thumbnail.scale(1f + position)
     message.relativeTranslationY(position * 2f)
 }
 
