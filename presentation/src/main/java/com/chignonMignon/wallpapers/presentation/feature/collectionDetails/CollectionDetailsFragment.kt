@@ -15,6 +15,7 @@ import com.chignonMignon.wallpapers.presentation.databinding.FragmentCollectionD
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collectionDetails.list.CollectionDetailsAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
+import com.chignonMignon.wallpapers.presentation.utilities.animateHeader
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
@@ -24,7 +25,6 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArgume
 import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-
 
 class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details) {
 
@@ -55,26 +55,8 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     }
 
     private fun FragmentCollectionDetailsBinding.setupToolbar() {
-        toolbar.setNavigationOnClickListener {
-            navigator?.navigateBack()
-        }
-        appBarLayout.addOnOffsetChangedListener { _, verticalOffset ->
-            val multiplier = -verticalOffset.toFloat() / appBarLayout.totalScrollRange
-            overlay.alpha = multiplier
-            collectionThumbnail.run {
-                scaleX = 1f + multiplier * 5f
-                scaleY = 1f + multiplier * 3f
-                translationX = width * multiplier
-                alpha = 1f - multiplier
-            }
-            description.run {
-                alpha = 1f - multiplier * 2f
-                pivotX = width.toFloat()
-                scaleX = 1f - multiplier
-                scaleY = 1f - multiplier
-                translationX = width * multiplier * 0.2f
-            }
-        }
+        toolbar.setNavigationOnClickListener { navigator?.navigateBack() }
+        appBarLayout.addOnOffsetChangedListener { _, verticalOffset -> animateHeader(-verticalOffset.toFloat() / appBarLayout.totalScrollRange) }
         collectionBackground.foreground = ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPalette.secondary, 240))
     }
 

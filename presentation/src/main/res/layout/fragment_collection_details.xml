@@ -125,14 +125,14 @@
                     android:clipToPadding="false"
                     android:padding="@dimen/content_padding" />
 
-                <com.chignonMignon.wallpapers.presentation.feature.shared.ErrorStateView
+                <com.chignonMignon.wallpapers.presentation.utilities.view.ErrorStateView
                     android:id="@+id/error_state"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="@{() -> viewModel.loadData(true)}"
                     android:visibility="@{viewModel.shouldShowErrorState}" />
 
-                <com.chignonMignon.wallpapers.presentation.feature.shared.EmptyStateView
+                <com.chignonMignon.wallpapers.presentation.utilities.view.EmptyStateView
                     android:id="@+id/empty_state"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

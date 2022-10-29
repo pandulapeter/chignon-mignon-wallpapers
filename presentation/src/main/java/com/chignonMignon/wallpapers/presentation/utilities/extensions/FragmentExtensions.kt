@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
+import com.chignonMignon.wallpapers.presentation.utilities.AutoClearedValue
 import com.google.android.material.snackbar.Snackbar
 
 internal val Fragment.navigator get() = activity as? Navigator
@@ -40,3 +41,5 @@ internal inline fun <reified B : ViewDataBinding> Fragment.bind(view: View? = nu
 internal inline fun <T : Fragment> T.withArguments(bundleOperations: (Bundle) -> Unit): T = apply {
     arguments = Bundle().apply { bundleOperations(this) }
 }
+
+internal fun <T : Any> Fragment.autoClearedValue() = AutoClearedValue<T>(this)

@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.presentation.feature.shared
+package com.chignonMignon.wallpapers.presentation.utilities.view
 
 import android.content.Context
 import android.util.AttributeSet
