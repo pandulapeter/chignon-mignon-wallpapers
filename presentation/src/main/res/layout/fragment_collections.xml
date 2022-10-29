@@ -67,8 +67,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:animateLayoutChanges="true">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/background"
@@ -87,42 +86,52 @@
                     android:id="@+id/view_pager"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:fitsSystemWindows="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:userInputEnabled="@{viewModel.isViewPagerSwipeEnabled}" />
 
-                <ImageView
-                    android:id="@+id/previous"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/content_padding"
-                    android:layout_marginBottom="@dimen/content_padding"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/collections_previous"
-                    android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
-                    android:padding="@dimen/content_padding"
-                    android:src="@drawable/ic_previous"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@{viewModel.onSecondaryColor}" />
-
-                <ImageView
-                    android:id="@+id/next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/content_padding"
-                    android:layout_marginBottom="@dimen/content_padding"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/collections_next"
-                    android:onClick="@{() -> viewModel.onNextButtonPressed()}"
-                    android:padding="@dimen/content_padding"
-                    android:src="@drawable/ic_next"
-                    android:visibility="@{viewModel.areCollectionsLoaded}"
+                    android:animateLayoutChanges="true"
+                    android:fitsSystemWindows="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:tint="@{viewModel.onSecondaryColor}" />
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageView
+                        android:id="@+id/previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_margin="@dimen/content_padding"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/collections_previous"
+                        android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
+                        android:padding="@dimen/content_padding"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_previous"
+                        app:tint="@{viewModel.onSecondaryColor}" />
+
+                    <ImageView
+                        android:id="@+id/next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_margin="@dimen/content_padding"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/collections_next"
+                        android:onClick="@{() -> viewModel.onNextButtonPressed()}"
+                        android:padding="@dimen/content_padding"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_next"
+                        android:visibility="@{viewModel.areCollectionsLoaded}"
+                        app:tint="@{viewModel.onSecondaryColor}" />
+
+                </FrameLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
