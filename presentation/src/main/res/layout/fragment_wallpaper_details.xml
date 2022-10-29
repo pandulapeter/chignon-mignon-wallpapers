@@ -19,7 +19,8 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:theme="@style/LightTheme">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -72,8 +73,10 @@
             android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context)}"
             android:text="@string/wallpaper_details_set_wallpaper"
             android:textColor="?colorOnPrimary"
+            android:theme="@style/LightTheme"
             android:visibility="invisible"
             app:icon="@drawable/ic_set_wallpaper"
+            app:iconTint="?colorOnPrimary"
             app:supportBackgroundTintList="@{viewModel.wallpaper.colorPalette.primary}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

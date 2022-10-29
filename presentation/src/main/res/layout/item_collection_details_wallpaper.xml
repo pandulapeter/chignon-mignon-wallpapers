@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/content_padding"
         android:background="?selectableItemBackground"
+        android:theme="@style/LightTheme"
         android:transitionName="@{uiModel.wallpaper.id}"
         app:cardBackgroundColor="@{uiModel.wallpaper.colorPalette.primary}"
         app:cardCornerRadius="0dp">

@@ -52,7 +52,6 @@
             android:letterSpacing="0"
             android:text="@string/collections_welcome_message"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-            android:textColor="@color/on_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
