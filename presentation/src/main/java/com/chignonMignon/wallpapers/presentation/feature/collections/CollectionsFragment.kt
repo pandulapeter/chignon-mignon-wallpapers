@@ -16,9 +16,9 @@ import com.chignonMignon.wallpapers.presentation.databinding.ItemCollectionsWelc
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.animate
+import com.chignonMignon.wallpapers.presentation.utilities.animateCollectionsAboutButton
 import com.chignonMignon.wallpapers.presentation.utilities.animateCollectionsNextButton
 import com.chignonMignon.wallpapers.presentation.utilities.animateCollectionsPreviousButton
-import com.chignonMignon.wallpapers.presentation.utilities.consume
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.navigator
@@ -40,7 +40,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         )
     }
     private var binding by autoClearedValue<FragmentCollectionsBinding>()
-    private val aboutMenuItem get() = binding.toolbar.menu?.findItem(R.id.about)
     private val collectionsColorTransitionManager by lazy {
         CollectionsColorTransitionManager(
             context = requireContext(),
@@ -57,14 +56,12 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = bind<FragmentCollectionsBinding>(view).also { binding ->
             binding.viewModel = viewModel
-            binding.setupToolbar()
             binding.setupSwipeRefreshLayout()
             binding.setupBackgroundAnimation()
             binding.setupViewPager()
         }
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.focusedCollection.observe(viewLifecycleOwner, collectionsColorTransitionManager::updateColors)
-        viewModel.isAboutIconVisible.observe(viewLifecycleOwner, ::updateAboutIconVisibility)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         postponeEnterTransition()
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
@@ -74,14 +71,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         super.onResume()
         binding.viewPager.invalidate()
         binding.background.alpha = if (viewModel.focusedCollection.value == null) 0f else BACKGROUND_ALPHA
-    }
-
-    private fun FragmentCollectionsBinding.setupToolbar() = toolbar.setOnMenuItemClickListener { menuItem ->
-        consume {
-            if (menuItem.itemId == R.id.about) {
-                viewPager.currentItem = viewPager.adapter?.run { itemCount - 1 } ?: 0 // TODO
-            }
-        }
     }
 
     private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
@@ -111,6 +100,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                     binding.next.run {
                         val adjustedPosition = abs(min(1f, position))
                         binding.next.animateCollectionsNextButton(adjustedPosition)
+                        binding.about.animateCollectionsAboutButton(adjustedPosition)
                         binding.background.alpha = adjustedPosition * BACKGROUND_ALPHA
                     }
                 }
@@ -126,14 +116,11 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
     }
 
-    private fun updateAboutIconVisibility(isVisible: Boolean) {
-        aboutMenuItem?.isVisible = isVisible
-    }
-
     private fun handleEvent(event: CollectionsViewModel.Event) = when (event) {
         is CollectionsViewModel.Event.OpenCollectionDetails -> openCollectionDetails(event.collection, event.sharedElements)
         CollectionsViewModel.Event.NavigateToPreviousPage -> navigateToPreviousPage()
         CollectionsViewModel.Event.NavigateToNextPage -> navigateToNextPage()
+        CollectionsViewModel.Event.NavigateToAboutPage -> navigateToAboutPage()
         is CollectionsViewModel.Event.ShowErrorMessage -> showErrorMessage()
         is CollectionsViewModel.Event.ScrollToWelcome -> scrollToWelcome()
     }
@@ -142,12 +129,16 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         navigator?.navigateToCollectionDetails(collection, sharedElements)
     }
 
+    private fun navigateToPreviousPage() {
+        binding.viewPager.currentItem--
+    }
+
     private fun navigateToNextPage() {
         binding.viewPager.currentItem++
     }
 
-    private fun navigateToPreviousPage() {
-        binding.viewPager.currentItem--
+    private fun navigateToAboutPage() {
+        binding.viewPager.currentItem = binding.viewPager.adapter?.run { itemCount - 1 } ?: 0
     }
 
     private fun showErrorMessage() = context?.let { showSnackbar { viewModel.loadData(true) } }

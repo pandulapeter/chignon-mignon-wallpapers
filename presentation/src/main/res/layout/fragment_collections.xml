@@ -20,17 +20,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:fitsSystemWindows="true"
-                app:backgroundColor="@{viewModel.primaryColor}"
-                app:menu="@menu/collections"
-                app:title="@{viewModel.screenTitle}"
-                tools:title="Title" />
+                app:backgroundColor="@{viewModel.primaryColor}">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{viewModel.screenTitle}"
+                    tools:title="Title" />
+
+                <ImageView
+                    android:id="@+id/about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_padding"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/collections_about"
+                    android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
+                    android:padding="@dimen/content_padding"
+                    android:src="@drawable/ic_about"
+                    android:visibility="@{viewModel.areCollectionsLoaded}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -96,6 +119,7 @@
                     android:onClick="@{() -> viewModel.onNextButtonPressed()}"
                     android:padding="@dimen/content_padding"
                     android:src="@drawable/ic_next"
+                    android:visibility="@{viewModel.areCollectionsLoaded}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:tint="@{viewModel.onSecondaryColor}" />

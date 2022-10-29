@@ -54,6 +54,11 @@ internal fun ImageView.animateCollectionsNextButton(adjustedPosition: Float) {
     scale(adjustedPosition)
 }
 
+internal fun ImageView.animateCollectionsAboutButton(adjustedPosition: Float) {
+    alpha = adjustedPosition * adjustedPosition
+    scale(adjustedPosition)
+}
+
 internal fun FragmentCollectionDetailsBinding.animateHeader(multiplier: Float) {
     overlay.alpha = multiplier
     collectionThumbnail.run {

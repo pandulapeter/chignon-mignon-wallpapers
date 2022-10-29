@@ -57,13 +57,7 @@ internal class CollectionsViewModel(
     private val isLastPageFocused = MutableStateFlow(false)
     private val _focusedCollection = MutableStateFlow<Navigator.Collection?>(null)
     val focusedCollection: StateFlow<Navigator.Collection?> = _focusedCollection
-    val isAboutIconVisible = combine(
-        collections,
-        isLastPageFocused
-    ) { collections,
-        isLastPageFocused ->
-        collections != null && !isLastPageFocused
-    }
+    val areCollectionsLoaded = collections.map { it != null }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val screenTitle = combine(
         focusedCollection,
         isLastPageFocused
@@ -126,6 +120,12 @@ internal class CollectionsViewModel(
         _events.pushEvent(Event.OpenCollectionDetails(it, sharedElements))
     }
 
+    fun onAboutButtonPressed() {
+        if (areCollectionsLoaded.value) {
+            _events.pushEvent(Event.NavigateToAboutPage)
+        }
+    }
+
     fun onPreviousButtonPressed() {
         if (focusedCollection.value != null || isLastPageFocused.value) {
             _events.pushEvent(Event.NavigateToPreviousPage)
@@ -152,6 +152,7 @@ internal class CollectionsViewModel(
         data class OpenCollectionDetails(val collection: Navigator.Collection, val sharedElements: List<View>) : Event()
         object NavigateToPreviousPage : Event()
         object NavigateToNextPage : Event()
+        object NavigateToAboutPage : Event()
         object ShowErrorMessage : Event()
         object ScrollToWelcome : Event()
     }
