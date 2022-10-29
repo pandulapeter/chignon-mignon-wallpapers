@@ -12,6 +12,7 @@
     <com.chignonMignon.wallpapers.presentation.utilities.view.EmptyStateView
         android:id="@+id/error_state"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" />
 
 </layout>

@@ -10,7 +10,6 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.relativeTr
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.scale
 import kotlin.math.PI
 import kotlin.math.abs
-import kotlin.math.max
 import kotlin.math.sin
 
 internal fun ItemCollectionsAboutBinding.animate(position: Float) {
@@ -21,7 +20,7 @@ internal fun ItemCollectionsCollectionBinding.animate(position: Float) {
     val multiplier = 1f - abs(position)
     val multiplierSquared = multiplier * multiplier
     thumbnail.run {
-        alpha = multiplier
+        alpha = multiplierSquared
         scale(multiplier)
         relativeTranslationX(-position * 0.5f)
         relativeTranslationY(-sin((1 - multiplier) * PI.toFloat()) * 0.05f)
