@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -46,6 +47,13 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             updateColors = viewModel::updateColors
         )
     }
+    private val onBackPressedCallback by lazy {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                binding.viewPager.currentItem = 0
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +73,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         postponeEnterTransition()
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     override fun onResume() {
@@ -84,7 +93,10 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         adapter = collectionsAdapter
         offscreenPageLimit = 1
         registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) = this@CollectionsFragment.viewModel.onPageSelected(position)
+            override fun onPageSelected(position: Int) {
+                this@CollectionsFragment.viewModel.onPageSelected(position)
+                onBackPressedCallback.isEnabled = position != 0
+            }
 
             override fun onPageScrollStateChanged(state: Int) {
                 if (!this@CollectionsFragment.viewModel.shouldShowLoadingIndicator.value) {
