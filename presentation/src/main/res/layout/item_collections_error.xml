@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,6 +14,7 @@
         android:id="@+id/error_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true" />
+        app:marginWithInsetLeft="@{@dimen/collections_pager_margin}"
+        app:marginWithInsetRight="@{@dimen/collections_pager_margin}" />
 
 </layout>

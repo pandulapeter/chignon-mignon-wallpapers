@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":presentation"))
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.google.android.material)
     implementation(libs.koin.android)

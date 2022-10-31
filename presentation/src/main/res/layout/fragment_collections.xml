@@ -97,17 +97,17 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
-                    android:fitsSystemWindows="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:marginWithInsetLeft="@{@dimen/content_padding}"
+                    app:marginWithInsetRight="@{@dimen/content_padding}">
 
                     <ImageView
                         android:id="@+id/previous"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|start"
-                        android:layout_margin="@dimen/content_padding"
                         android:background="?selectableItemBackgroundBorderless"
                         android:contentDescription="@string/collections_previous"
                         android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
@@ -121,7 +121,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|end"
-                        android:layout_margin="@dimen/content_padding"
                         android:background="?selectableItemBackgroundBorderless"
                         android:contentDescription="@string/collections_next"
                         android:onClick="@{() -> viewModel.onNextButtonPressed()}"

@@ -14,16 +14,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:paddingHorizontal="@dimen/double_content_padding">
+        app:marginWithInsetLeft="@{@dimen/double_content_padding}"
+        app:marginWithInsetRight="@{@dimen/double_content_padding}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/thumbnail"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/double_content_padding"
             android:layout_marginTop="@dimen/double_content_padding"
-            android:layout_marginEnd="@dimen/double_content_padding"
             android:foreground="?selectableItemBackground"
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"

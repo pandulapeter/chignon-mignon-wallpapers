@@ -69,7 +69,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     override fun onResume() {
         super.onResume()
-        binding.viewPager.invalidate()
         binding.background.alpha = if (viewModel.focusedCollection.value == null) 0f else BACKGROUND_ALPHA
     }
 

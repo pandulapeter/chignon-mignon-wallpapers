@@ -4,10 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
-import androidx.core.app.SharedElementCallback
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.R
@@ -49,22 +45,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     }
 
     private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() {
-        ViewCompat.setOnApplyWindowInsetsListener(floatingActionButton) { _, insets ->
-            val systemBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            floatingActionButton.layoutParams = (floatingActionButton.layoutParams as MarginLayoutParams).apply {
-                bottomMargin += systemBarInsets.bottom
-            }
-            WindowInsetsCompat.CONSUMED
-        }
-        setEnterSharedElementCallback(object : SharedElementCallback() {
-            override fun onSharedElementEnd(
-                sharedElementNames: MutableList<String>?,
-                sharedElements: MutableList<View>?,
-                sharedElementSnapshots: MutableList<View>?
-            ) {
-                floatingActionButton.run { postDelayed({ show() }, 500) }
-            }
-        })
+        floatingActionButton.run { postDelayed({ show() }, 500) }
     }
 
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:paddingHorizontal="@dimen/collections_pager_margin"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:marginWithInsetLeft="@{@dimen/collections_pager_margin}"
+            app:marginWithInsetRight="@{@dimen/collections_pager_margin}">
 
             <ImageView
                 android:layout_width="match_parent"

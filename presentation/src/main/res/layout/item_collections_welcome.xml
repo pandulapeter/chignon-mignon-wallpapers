@@ -12,8 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/thumbnail"
@@ -25,6 +24,8 @@
             android:padding="@dimen/content_padding"
             android:scaleType="centerInside"
             android:src="@drawable/img_logo"
+            app:marginWithInsetLeft="@{@dimen/collections_pager_margin}"
+            app:marginWithInsetRight="@{@dimen/collections_pager_margin}"
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"

@@ -11,8 +11,9 @@
 
     <com.chignonMignon.wallpapers.presentation.utilities.view.EmptyStateView
         android:id="@+id/error_state"
+        app:marginWithInsetLeft="@{@dimen/collections_pager_margin}"
+        app:marginWithInsetRight="@{@dimen/collections_pager_margin}"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" />
+        android:layout_height="match_parent" />
 
 </layout>

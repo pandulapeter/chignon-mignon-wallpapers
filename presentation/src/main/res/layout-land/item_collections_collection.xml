@@ -14,13 +14,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        app:marginWithInsetLeft="@{@dimen/collections_pager_margin}"
+        app:marginWithInsetRight="@{@dimen/collections_pager_margin}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/thumbnail"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/collections_pager_margin"
             android:layout_marginTop="@dimen/double_content_padding"
             android:layout_marginBottom="@dimen/double_content_padding"
             android:foreground="?selectableItemBackground"
@@ -31,7 +31,7 @@
             app:imageUrl="@{uiModel.collection.thumbnailUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -56,8 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_content_padding"
             android:layout_marginTop="@dimen/double_content_padding"
-            android:layout_marginEnd="@dimen/collections_pager_margin"
-            app:layout_constraintVertical_bias="0.5"
             android:layout_marginBottom="@dimen/double_content_padding"
             android:ellipsize="end"
             android:gravity="center"
@@ -70,6 +68,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/thumbnail"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
             app:layout_constraintVertical_chainStyle="packed"
             app:textColor="@{uiModel.collection.colorPalette.onSecondary}"
             tools:text="Title" />
