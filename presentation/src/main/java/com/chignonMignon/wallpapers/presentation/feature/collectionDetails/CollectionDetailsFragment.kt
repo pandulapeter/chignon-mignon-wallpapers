@@ -64,8 +64,9 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_background))
     }
 
-    private fun FragmentCollectionDetailsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.setOnRefreshListener {
-        this@CollectionDetailsFragment.viewModel.loadData(true)
+    private fun FragmentCollectionDetailsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
+        setOnRefreshListener { this@CollectionDetailsFragment.viewModel.loadData(true) }
+        setColorSchemeResources(R.color.on_primary)
     }
 
     private fun FragmentCollectionDetailsBinding.setupRecyclerView() = recyclerView.run {

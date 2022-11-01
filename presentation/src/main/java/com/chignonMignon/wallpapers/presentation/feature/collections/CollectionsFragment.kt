@@ -83,6 +83,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
         setOnRefreshListener { this@CollectionsFragment.viewModel.loadData(true) }
+        setColorSchemeResources(R.color.on_primary)
     }
 
     private fun FragmentCollectionsBinding.setupBackgroundAnimation() = background.run {

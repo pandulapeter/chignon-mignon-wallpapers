@@ -14,8 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:marginWithInsetLeft="@{@dimen/double_content_padding}"
-        app:marginWithInsetRight="@{@dimen/double_content_padding}">
+        android:paddingHorizontal="@dimen/collections_pager_margin">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/thumbnail"
@@ -52,8 +51,6 @@
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/collections_pager_margin"
-            android:layout_marginEnd="@dimen/collections_pager_margin"
             android:layout_marginBottom="@dimen/double_content_padding"
             android:ellipsize="end"
             android:gravity="center"
@@ -74,8 +71,6 @@
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/collections_pager_margin"
-            android:layout_marginEnd="@dimen/collections_pager_margin"
             android:layout_marginBottom="@dimen/double_content_padding"
             android:ellipsize="end"
             android:gravity="center"

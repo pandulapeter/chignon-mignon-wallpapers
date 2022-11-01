@@ -18,7 +18,7 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
     override fun onCreate(savedInstanceState: Bundle?) {
         handleSplashScreen()
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false);
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         if (savedInstanceState == null) {
             navigateToCollections()
         }

@@ -23,7 +23,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
                 android:fitsSystemWindows="true"
                 app:backgroundColor="@{viewModel.primaryColor}">
 
@@ -98,7 +97,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <ImageView
                     android:id="@+id/background"
@@ -117,10 +118,14 @@
                     android:id="@+id/view_pager"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetLeft="@{0f}"
+                    app:marginWithInsetRight="@{0f}"
                     app:userInputEnabled="@{viewModel.isViewPagerSwipeEnabled}" />
 
                 <FrameLayout

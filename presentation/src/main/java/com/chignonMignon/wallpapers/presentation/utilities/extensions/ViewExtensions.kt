@@ -104,7 +104,6 @@ fun View.setInsets(
         }
     }
     WindowInsetsCompat.CONSUMED
-    insets
 }
 
 @BindingAdapter("expandedTitleMarginStart")
