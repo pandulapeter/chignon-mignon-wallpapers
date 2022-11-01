@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -33,17 +32,40 @@
                     style="@style/Widget.MaterialComponents.Toolbar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:clipChildren="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/title"
+                    <ViewFlipper
+                        android:id="@+id/view_flipper"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                        android:text="@{viewModel.screenTitle}"
-                        tools:text="Title" />
+                        android:animateFirstView="false"
+                        android:clipChildren="false"
+                        android:inAnimation="@anim/anim_slide_in"
+                        android:outAnimation="@anim/anim_slide_out"
+                        app:displayedChild="@{viewModel.selectedTitle}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/collections_welcome"
+                            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/collections_title"
+                            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/collections_about"
+                            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
+
+                    </ViewFlipper>
 
                 </com.google.android.material.appbar.MaterialToolbar>
 
