@@ -35,9 +35,17 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:title="@{viewModel.screenTitle}"
-                    tools:title="Title" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
+                        android:text="@{viewModel.screenTitle}"
+                        tools:text="Title" />
+
+                </com.google.android.material.appbar.MaterialToolbar>
 
                 <ImageView
                     android:id="@+id/about"

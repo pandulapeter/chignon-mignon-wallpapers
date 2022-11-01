@@ -30,55 +30,87 @@
                 android:fitsSystemWindows="true"
                 app:backgroundColor="@{viewModel.wallpaper.colorPalette.primary}"
                 app:navigationIcon="@drawable/ic_close"
-                app:subtitle="@{viewModel.wallpaper.description}"
                 app:title="@{viewModel.wallpaper.name}"
+                app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Title"
                 tools:subtitle="Description"
                 tools:title="Wallpaper details" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageView
-            android:id="@+id/preview"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
-            android:transitionName="@{viewModel.wallpaper.id}"
-            app:imageUrl="@{viewModel.wallpaper.url}"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark_overlay"
-            android:visibility="@{viewModel.shouldShowLoadingIndicator}">
+            <ImageView
+                android:id="@+id/preview"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/double_content_padding"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:transitionName="@{viewModel.wallpaper.id}"
+                app:imageUrl="@{viewModel.wallpaper.url}"
+                app:layout_constraintBottom_toTopOf="@id/description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/loading_indicator"
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="@dimen/wallpaper_details_description_vertical_padding"
+                android:text="@{viewModel.wallpaper.description}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:marginWithInsetBottom="@{0f}"
+                app:marginWithInsetLeft="@{@dimen/double_content_padding}"
+                app:marginWithInsetRight="@{@dimen/double_content_padding}" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/dark_overlay"
+                android:visibility="@{viewModel.shouldShowLoadingIndicator}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/loading_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true" />
+
+            </FrameLayout>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/floating_action_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="true" />
+                android:enabled="@{!viewModel.shouldShowLoadingIndicator}"
+                android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context)}"
+                android:text="@string/wallpaper_details_set_wallpaper"
+                android:textColor="?colorOnPrimary"
+                android:theme="@style/LightTheme"
+                android:visibility="invisible"
+                app:icon="@drawable/ic_set_wallpaper"
+                app:iconTint="?colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="@id/preview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/preview"
+                app:marginWithInsetBottom="@{@dimen/double_content_padding}"
+                app:marginWithInsetRight="@{@dimen/double_content_padding}"
+                app:supportBackgroundTintList="@{viewModel.wallpaper.colorPalette.primary}" />
 
-        </FrameLayout>
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/double_content_padding"
-            android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context)}"
-            android:text="@string/wallpaper_details_set_wallpaper"
-            android:textColor="?colorOnPrimary"
-            android:theme="@style/LightTheme"
-            android:visibility="invisible"
-            app:icon="@drawable/ic_set_wallpaper"
-            app:iconTint="?colorOnPrimary"
-            app:marginWithInsetBottom="@{@dimen/double_content_padding}"
-            app:marginWithInsetRight="@{@dimen/double_content_padding}"
-            app:supportBackgroundTintList="@{viewModel.wallpaper.colorPalette.primary}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
