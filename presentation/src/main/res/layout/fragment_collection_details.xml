@@ -57,9 +57,9 @@
                     android:gravity="center|end"
                     android:lineHeight="18sp"
                     android:lines="@integer/collection_details_description_lines"
-                    android:textColor="@{viewModel.collection.colorPalette.onSecondary}"
                     android:text="@{viewModel.collection.description}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="@{viewModel.collection.colorPalette.onSecondary}"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.9"
                     app:marginWithInsetLeft="@{@dimen/collection_details_description_start_margin}"
@@ -127,7 +127,7 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:paddingTop="@dimen/content_padding"
-                    android:paddingBottom="@dimen/content_padding" />
+                    app:paddingBottomWithBottomOffset="@{@dimen/content_padding}" />
 
                 <com.chignonMignon.wallpapers.presentation.utilities.view.ErrorStateView
                     android:id="@+id/error_state"

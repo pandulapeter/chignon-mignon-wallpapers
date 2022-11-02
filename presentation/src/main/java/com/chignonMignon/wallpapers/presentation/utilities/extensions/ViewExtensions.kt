@@ -117,6 +117,17 @@ fun View.setHeightWithTopInset(
     insets
 }
 
+@BindingAdapter("paddingBottomWithBottomOffset")
+fun View.setPaddingBottomWithBottomOffset(
+    paddingBottomWithBottomOffset: Float? = null
+) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
+    val windowInsets = insets.toInsets()
+    if (paddingBottomWithBottomOffset != null) {
+        setPadding(paddingLeft, paddingTop, paddingRight, windowInsets.bottom + paddingBottomWithBottomOffset.roundToInt())
+    }
+    insets
+}
+
 @BindingAdapter("expandedTitleMarginStart")
 fun CollapsingToolbarLayout.updateExpandedTitleMargin(
     expandedTitleMarginStart: Float? = null
