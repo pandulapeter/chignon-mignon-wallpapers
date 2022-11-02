@@ -40,7 +40,7 @@ internal fun CollapsingToolbarLayout.setTitle(translatableText: Navigator.Transl
 internal fun AnimatedTitleView.setTitle(translatableText: Navigator.TranslatableText?) = setTitle(translatableText?.toText())
 
 @BindingAdapter(value = ["imageUrl", "shouldFade"], requireAll = false)
-internal fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) = if (shouldFade == true) {
+internal fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) = if (shouldFade == true && isLaidOut) {
     context.imageLoader.enqueue(
         ImageRequest.Builder(context)
             .data(imageUrl)

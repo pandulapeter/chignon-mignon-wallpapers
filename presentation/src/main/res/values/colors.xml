@@ -2,5 +2,5 @@
 <resources>
     <color name="primary">#FECE46</color>
     <color name="on_primary">#2B292A</color>
-    <color name="dark_overlay">#80000000</color>
+    <color name="dark_overlay">#20000000</color>
 </resources>

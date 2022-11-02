@@ -13,7 +13,7 @@ import kotlin.math.abs
 import kotlin.math.sin
 
 internal fun ItemCollectionsAboutBinding.animate(position: Float) {
-    root.alpha = 1f - position
+    root.alpha = 1f - position * position
 }
 
 internal fun ItemCollectionsCollectionBinding.animate(position: Float) {
