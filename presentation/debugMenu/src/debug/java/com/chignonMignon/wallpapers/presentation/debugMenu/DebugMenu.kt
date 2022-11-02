@@ -55,7 +55,12 @@ object DebugMenu : DebugMenuContract {
         Beagle.log(text)
     }
 
-    override suspend fun getMockCollections() = if (shouldUseMockData) Result.Success(generateMockCollections()) else null
+    override suspend fun getMockCollections(
+        isForceRefresh: Boolean
+    ) = if (shouldUseMockData) Result.Success(generateMockCollections(isForceRefresh)) else null
 
-    override suspend fun getMockWallpapers(collectionId: String) = if (shouldUseMockData) Result.Success(generateMockWallpapers(collectionId)) else null
+    override suspend fun getMockWallpapers(
+        collectionId: String,
+        isForceRefresh: Boolean
+    ) = if (shouldUseMockData) Result.Success(generateMockWallpapers(collectionId, isForceRefresh)) else null
 }

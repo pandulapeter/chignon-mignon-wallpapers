@@ -20,9 +20,12 @@ interface DebugMenuContract {
         text: String
     ) = Unit
 
-    suspend fun getMockCollections(): Result<List<Collection>>? = null
+    suspend fun getMockCollections(
+        isForceRefresh: Boolean
+    ): Result<List<Collection>>? = null
 
     suspend fun getMockWallpapers(
-        collectionId: String
+        collectionId: String,
+        isForceRefresh: Boolean
     ): Result<List<Wallpaper>>? = null
 }

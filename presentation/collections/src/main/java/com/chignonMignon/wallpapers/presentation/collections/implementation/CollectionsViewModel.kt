@@ -94,7 +94,7 @@ internal class CollectionsViewModel(
                 _events.pushEvent(Event.ScrollToWelcome)
             }
             DebugMenu.log("Loading collections (force refresh: $isForceRefresh)...")
-            when (val result = DebugMenu.getMockCollections() ?: getCollections(isForceRefresh)) {
+            when (val result = DebugMenu.getMockCollections(isForceRefresh) ?: getCollections(isForceRefresh)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} collections.")
                     collections.value = result.data.map { it.toNavigatorCollection() }
