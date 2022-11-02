@@ -14,15 +14,15 @@
 
     <!-- Collection details -->
 
-    <dimen name="collection_details_toolbar_top_margin">0dp</dimen>
-    <dimen name="collection_details_thumbnail_top_margin">@dimen/double_content_padding</dimen>
-    <dimen name="collection_details_header_height">256dp</dimen>
+    <dimen name="collection_details_header_height">204dp</dimen>
     <dimen name="collection_details_thumbnail_height">96dp</dimen>
+    <dimen name="collection_details_thumbnail_top_margin">56dp</dimen>
+    <dimen name="collection_details_description_top_margin">32dp</dimen>
     <dimen name="collection_details_description_start_margin">128dp</dimen>
-    <dimen name="collection_details_description_bottom_margin">48dp</dimen>
     <dimen name="collection_details_wallpaper_item_minimum_width">128dp</dimen>
 
     <!-- Wallpaper details -->
+
     <dimen name="wallpaper_details_description_vertical_padding">32dp</dimen>
 
 </resources>

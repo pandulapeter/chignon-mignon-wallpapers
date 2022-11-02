@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.BindingAdapter
 import coil.drawable.CrossfadeDrawable
 import coil.imageLoader
@@ -87,30 +86,43 @@ fun View.setInsets(
     insetTop: Float? = null,
     insetRight: Float? = null,
     insetBottom: Float? = null
-) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
+) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
     layoutParams = (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
-        val systemBarInsets = insets.displayCutout
+        val systemBarInsets = windowInsets.toInsets()
         if (insetLeft != null) {
-            leftMargin = ((systemBarInsets?.safeInsetLeft ?: 0) + insetLeft).roundToInt()
+            leftMargin = (systemBarInsets.left + insetLeft).roundToInt()
         }
         if (insetTop != null) {
-            topMargin = ((systemBarInsets?.safeInsetTop ?: 0) + insetTop).roundToInt()
+            topMargin = (systemBarInsets.top + insetTop).roundToInt()
         }
         if (insetRight != null) {
-            rightMargin = ((systemBarInsets?.safeInsetRight ?: 0) + insetRight).roundToInt()
+            rightMargin = (systemBarInsets.right + insetRight).roundToInt()
         }
         if (insetBottom != null) {
-            bottomMargin = ((systemBarInsets?.safeInsetBottom ?: 0) + insetBottom).roundToInt()
+            bottomMargin = (systemBarInsets.bottom + insetBottom).roundToInt()
         }
     }
-    WindowInsetsCompat.CONSUMED
+    windowInsets
+}
+
+@BindingAdapter("heightWithTopInset")
+fun View.setHeightWithTopInset(
+    heightWithTopInset: Float? = null
+) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
+    layoutParams = layoutParams?.apply {
+        val windowInsets = insets.toInsets()
+        if (heightWithTopInset != null) {
+            height = (windowInsets.top + heightWithTopInset).roundToInt()
+        }
+    }
+    insets
 }
 
 @BindingAdapter("expandedTitleMarginStart")
 fun CollapsingToolbarLayout.updateExpandedTitleMargin(
     expandedTitleMarginStart: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
-    setExpandedTitleMarginStart(((expandedTitleMarginStart ?: 0f) + (insets.displayCutout?.safeInsetLeft?.toFloat() ?: 0f)).roundToInt())
+    setExpandedTitleMarginStart(((expandedTitleMarginStart ?: 0f) + insets.toInsets().left.toFloat()).roundToInt())
     insets
 }
 

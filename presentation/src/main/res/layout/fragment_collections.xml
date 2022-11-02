@@ -23,7 +23,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
                 app:backgroundColor="@{viewModel.primaryColor}">
 
                 <com.google.android.material.appbar.MaterialToolbar
@@ -34,7 +33,9 @@
                     android:clipChildren="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetLeft="@{0f}"
+                    app:marginWithInsetTop="@{0f}">
 
                     <com.chignonMignon.wallpapers.presentation.utilities.view.AnimatedTitleView
                         android:id="@+id/view_flipper"
@@ -57,7 +58,9 @@
                     android:visibility="@{viewModel.areCollectionsLoaded}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetRight="@{@dimen/double_content_padding}"
+                    app:marginWithInsetTop="@{0f}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -100,6 +103,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetBottom="@{0f}"
                     app:marginWithInsetLeft="@{0f}"
                     app:marginWithInsetRight="@{0f}"
                     app:userInputEnabled="@{viewModel.isViewPagerSwipeEnabled}" />

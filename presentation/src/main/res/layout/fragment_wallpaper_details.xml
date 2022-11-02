@@ -20,15 +20,17 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/LightTheme">
+            android:theme="@style/LightTheme"
+            app:backgroundColor="@{viewModel.wallpaper.colorPalette.primary}">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                style="@style/Widget.MaterialComponents.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                app:backgroundColor="@{viewModel.wallpaper.colorPalette.primary}"
+                app:marginWithInsetLeft="@{0f}"
+                app:marginWithInsetRight="@{0f}"
+                app:marginWithInsetTop="@{0f}"
                 app:navigationIcon="@drawable/ic_close"
                 app:title="@{viewModel.wallpaper.name}"
                 app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Title"

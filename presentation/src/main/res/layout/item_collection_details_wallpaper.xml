@@ -51,28 +51,12 @@
                 android:gravity="center"
                 android:lines="1"
                 android:text="@{uiModel.wallpaper.name}"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                 android:textColor="?colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/thumbnail"
                 tools:text="Title" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_padding"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="2"
-                android:text="@{uiModel.wallpaper.description}"
-                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                android:textColor="?colorOnPrimary"
-                app:layout_constraintEnd_toEndOf="@id/name"
-                app:layout_constraintStart_toStartOf="@id/name"
-                app:layout_constraintTop_toBottomOf="@id/name"
-                tools:text="Description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
