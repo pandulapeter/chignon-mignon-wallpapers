@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val presentationModule = module {
     single { ColorPaletteGenerator(get()) }
-    viewModel { CollectionsViewModel(get(), get()) }
+    viewModel { CollectionsViewModel(get(), get(), get()) }
     viewModel { CollectionDetailsViewModel(it[0], get(), get()) }
     viewModel { WallpaperDetailsViewModel(it[0]) }
 }

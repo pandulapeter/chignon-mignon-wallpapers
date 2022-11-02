@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
+import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
 import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsListItem
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 
 internal class CollectionsViewModel(
     private val getCollections: GetCollectionsUseCase,
+    private val getWallpapers: GetWallpapersUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
 
@@ -69,11 +71,14 @@ internal class CollectionsViewModel(
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _secondaryColor = MutableStateFlow<Int?>(null)
     val secondaryColor: StateFlow<Int?> = _secondaryColor
+    private val _onPrimaryColor = MutableStateFlow<Int?>(null)
+    val onPrimaryColor: StateFlow<Int?> = _onPrimaryColor
     private val _onSecondaryColor = MutableStateFlow<Int?>(null)
     val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
 
     init {
         loadData(false)
+        viewModelScope.launch { getWallpapers(false) } // Pre-fetch, no error handling needed here.
     }
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
@@ -105,10 +110,12 @@ internal class CollectionsViewModel(
     fun updateColors(
         @ColorInt primaryColor: Int,
         @ColorInt secondaryColor: Int,
+        @ColorInt onPrimaryColor: Int,
         @ColorInt onSecondaryColor: Int
     ) {
         _primaryColor.value = primaryColor
         _secondaryColor.value = secondaryColor
+        _onPrimaryColor.value = onPrimaryColor
         _onSecondaryColor.value = onSecondaryColor
     }
 

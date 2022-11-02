@@ -17,6 +17,7 @@ import coil.request.ImageRequest
 import coil.transition.TransitionTarget
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.utilities.toText
+import com.chignonMignon.wallpapers.presentation.utilities.view.AnimatedTitleView
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlin.math.roundToInt
 
@@ -35,10 +36,8 @@ internal fun CollapsingToolbarLayout.setTitle(translatableText: Navigator.Transl
     title = translatableText?.toText()
 }
 
-@BindingAdapter("subtitle")
-internal fun Toolbar.setSubtitle(translatableText: Navigator.TranslatableText?) {
-    subtitle = translatableText?.toText()
-}
+@BindingAdapter("title")
+internal fun AnimatedTitleView.setTitle(translatableText: Navigator.TranslatableText?) = setTitle(translatableText?.toText())
 
 @BindingAdapter(value = ["imageUrl", "shouldFade"], requireAll = false)
 internal fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) = if (shouldFade == true) {

@@ -28,14 +28,20 @@
                 style="@style/Widget.MaterialComponents.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipChildren="false"
                 app:marginWithInsetLeft="@{0f}"
-                app:marginWithInsetRight="@{0f}"
                 app:marginWithInsetTop="@{0f}"
                 app:navigationIcon="@drawable/ic_close"
-                app:title="@{viewModel.wallpaper.name}"
-                app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                tools:subtitle="Description"
-                tools:title="Wallpaper details" />
+                app:navigationIconTint="@{viewModel.wallpaper.colorPalette.onSecondary}">
+
+                <com.chignonMignon.wallpapers.presentation.utilities.view.AnimatedTitleView
+                    android:id="@+id/view_flipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:textColor="@{viewModel.wallpaper.colorPalette.onSecondary}"
+                    app:title="@{viewModel.wallpaper.name}" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -100,11 +106,11 @@
                 android:enabled="@{!viewModel.shouldShowLoadingIndicator}"
                 android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context)}"
                 android:text="@string/wallpaper_details_set_wallpaper"
-                android:textColor="?colorOnPrimary"
+                android:textColor="@{viewModel.wallpaper.colorPalette.onSecondary}"
                 android:theme="@style/LightTheme"
                 android:visibility="invisible"
                 app:icon="@drawable/ic_set_wallpaper"
-                app:iconTint="?colorOnPrimary"
+                app:iconTint="@{viewModel.wallpaper.colorPalette.onSecondary}"
                 app:layout_constraintBottom_toBottomOf="@id/preview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/preview"

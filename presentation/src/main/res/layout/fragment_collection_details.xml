@@ -57,6 +57,7 @@
                     android:gravity="center|end"
                     android:lineHeight="18sp"
                     android:lines="@integer/collection_details_description_lines"
+                    android:textColor="@{viewModel.collection.colorPalette.onSecondary}"
                     android:text="@{viewModel.collection.description}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                     app:layout_collapseMode="parallax"
