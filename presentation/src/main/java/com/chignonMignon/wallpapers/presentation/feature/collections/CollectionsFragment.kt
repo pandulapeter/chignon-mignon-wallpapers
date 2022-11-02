@@ -54,6 +54,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             }
         }
     }
+    private var shouldAnimateColorTransitions = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +69,9 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             binding.setupBackgroundAnimation()
             binding.setupViewPager()
         }
+        shouldAnimateColorTransitions = false
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
-        viewModel.focusedCollection.observe(viewLifecycleOwner, collectionsColorTransitionManager::updateColors)
+        viewModel.focusedCollection.observe(viewLifecycleOwner, ::onFocusedCollectionChanged)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         postponeEnterTransition()
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
@@ -125,6 +127,13 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                 }
                 else -> Unit
             }
+        }
+    }
+
+    private fun onFocusedCollectionChanged(focusedCollection: Navigator.Collection?) {
+        collectionsColorTransitionManager.updateColors(focusedCollection, shouldAnimateColorTransitions)
+        if (!shouldAnimateColorTransitions) {
+            shouldAnimateColorTransitions = true
         }
     }
 
