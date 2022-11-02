@@ -4,7 +4,12 @@ include(
     ":data:repository",
     ":data:source",
     ":domain",
-    ":presentation"
+    ":presentation:shared",
+    ":presentation:collections",
+    ":presentation:collectionDetails",
+    ":presentation:wallpaperDetails",
+    ":presentation:utilities",
+    ":presentation:debugMenu"
 )
 rootProject.name = "Chignon Mignon Wallpapers"
 enableFeaturePreview("VERSION_CATALOGS")

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.list.CollectionDetailsListItem.WallpaperUiModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/content_padding"
+        android:background="?selectableItemBackground"
+        android:theme="@style/LightTheme"
+        android:transitionName="@{uiModel.wallpaperDestination.id}"
+        app:cardBackgroundColor="@{uiModel.wallpaperDestination.colorPaletteModel.primary}"
+        app:cardCornerRadius="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/content_padding">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{uiModel.wallpaperDestination.url}"
+                app:layout_constraintDimensionRatio="1.2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/on_primary"
+                app:strokeWidth="@dimen/divider"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_padding"
+                android:layout_marginTop="@dimen/content_padding"
+                android:layout_marginEnd="@dimen/content_padding"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:text="@{uiModel.wallpaperDestination.name}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@{uiModel.wallpaperDestination.colorPaletteModel.onSecondary}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/thumbnail"
+                tools:text="Title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>

@@ -1,0 +1,3 @@
+package com.chignonMignon.wallpapers.presentation.debugMenu
+
+interface DebugMenuContract

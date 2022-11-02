@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+
+    <dimen name="divider">1dp</dimen>
+    <dimen name="content_padding">8dp</dimen>
+    <dimen name="double_content_padding">16dp</dimen>
+
+</resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chignonMignon.wallpapers.presentation.collections.implementation.CollectionsViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionGroup="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/LightTheme">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:backgroundColor="@{viewModel.primaryColor}">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetLeft="@{0f}"
+                    app:marginWithInsetTop="@{0f}">
+
+                    <com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
+                        android:id="@+id/view_flipper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:textColor="@{viewModel.onPrimaryColor}"
+                        app:title="@{viewModel.selectedTitle}" />
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+                <ImageView
+                    android:id="@+id/about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/content_padding"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/collections_about"
+                    android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
+                    android:padding="@dimen/content_padding"
+                    android:src="@drawable/ic_about"
+                    android:visibility="@{viewModel.areCollectionsLoaded}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetRight="@{@dimen/double_content_padding}"
+                    app:marginWithInsetTop="@{0f}"
+                    app:tint="@{viewModel.onPrimaryColor}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:backgroundColor="@{viewModel.secondaryColor}"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <ImageView
+                    android:id="@+id/background"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{viewModel.focusedCollectionDestination.thumbnailUrl}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shouldFade="@{true}" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetBottom="@{0f}"
+                    app:marginWithInsetLeft="@{0f}"
+                    app:marginWithInsetRight="@{0f}"
+                    app:userInputEnabled="@{viewModel.isViewPagerSwipeEnabled}" />
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:marginWithInsetBottom="@{@dimen/content_padding}"
+                    app:marginWithInsetLeft="@{@dimen/content_padding}"
+                    app:marginWithInsetRight="@{@dimen/content_padding}">
+
+                    <ImageView
+                        android:id="@+id/previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/collections_previous"
+                        android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
+                        android:padding="@dimen/content_padding"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_previous"
+                        app:tint="@{viewModel.onSecondaryColor}" />
+
+                    <ImageView
+                        android:id="@+id/next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/collections_next"
+                        android:onClick="@{() -> viewModel.onNextButtonPressed()}"
+                        android:padding="@dimen/content_padding"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_next"
+                        android:visibility="@{viewModel.areCollectionsLoaded}"
+                        app:tint="@{viewModel.onSecondaryColor}" />
+
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

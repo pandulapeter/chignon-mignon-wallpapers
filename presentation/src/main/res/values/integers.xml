@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- Collection details -->
-
-    <integer name="collection_details_description_lines">8</integer>
-
-</resources>
