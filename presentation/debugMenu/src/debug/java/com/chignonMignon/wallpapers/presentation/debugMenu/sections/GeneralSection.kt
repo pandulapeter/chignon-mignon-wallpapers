@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.presentation.debugMenu
+package com.chignonMignon.wallpapers.presentation.debugMenu.sections
 
 import com.pandulapeter.beagle.modules.BugReportButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
@@ -6,7 +6,7 @@ import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.TextModule
 
-fun createGeneralSection() = listOf(
+internal fun createGeneralSection() = listOf(
     TextModule(
         text = "General",
         type = TextModule.Type.SECTION_HEADER

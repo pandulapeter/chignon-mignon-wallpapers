@@ -7,6 +7,7 @@ import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdUseCase
 import com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.list.CollectionDetailsListItem
+import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.colorPaletteGenerator.ColorPaletteGenerator
 import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorColorPalette
 import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorTranslatableText
@@ -49,12 +50,15 @@ internal class CollectionDetailsViewModel(
         if (!_shouldShowLoadingIndicator.value) {
             _shouldShowErrorState.value = false
             _shouldShowLoadingIndicator.value = true
+            DebugMenu.log("Loading wallpapers (force refresh: $isForceRefresh)...")
             when (val result = getWallpapersByCollectionId(isForceRefresh, collectionDestination.id)) {
                 is Result.Success -> {
+                    DebugMenu.log("Loaded ${result.data.size} wallpapers.")
                     wallpapers.value = result.data.map { it.toNavigatorWallpaper() }
                     _shouldShowLoadingIndicator.value = false
                 }
                 is Result.Failure -> {
+                    DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
                     if (wallpapers.value == null) {
                         _shouldShowErrorState.value = true
                     } else {

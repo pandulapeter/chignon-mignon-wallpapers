@@ -9,6 +9,7 @@ import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsListItem
+import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.colorPaletteGenerator.ColorPaletteGenerator
 import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorColorPalette
@@ -78,7 +79,13 @@ internal class CollectionsViewModel(
 
     init {
         loadData(false)
-        viewModelScope.launch { getWallpapers(false) } // Pre-fetch, no error handling needed here.
+        viewModelScope.launch {
+            DebugMenu.log("Loading wallpapers (pre-fetch)...")
+            when (val result = getWallpapers(false)) {
+                is Result.Success -> DebugMenu.log("Loaded ${result.data.size} wallpapers.")
+                is Result.Failure -> DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
+            }
+        }
     }
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
@@ -87,12 +94,15 @@ internal class CollectionsViewModel(
             if (collections.value == null) {
                 _events.pushEvent(Event.ScrollToWelcome)
             }
+            DebugMenu.log("Loading collections (force refresh: $isForceRefresh)...")
             when (val result = getCollections(isForceRefresh)) {
                 is Result.Success -> {
+                    DebugMenu.log("Loaded ${result.data.size} collections.")
                     collections.value = result.data.map { it.toNavigatorCollection() }
                     _shouldShowLoadingIndicator.value = false
                 }
                 is Result.Failure -> {
+                    DebugMenu.log("Failed to load collections: ${result.exception.message}.")
                     _events.pushEvent(Event.ShowErrorMessage)
                     _shouldShowLoadingIndicator.value = false
                 }

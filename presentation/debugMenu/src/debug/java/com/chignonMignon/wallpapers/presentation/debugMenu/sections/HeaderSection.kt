@@ -1,9 +1,9 @@
-package com.chignonMignon.wallpapers.presentation.debugMenu
+package com.chignonMignon.wallpapers.presentation.debugMenu.sections
 
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.HeaderModule
 
-fun createHeaderSection(
+internal fun createHeaderSection(
     applicationTitle: String,
     versionName: String,
     versionCode: Int

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.downloadImage
@@ -28,16 +29,20 @@ internal class WallpaperDetailsViewModel(
     fun onSetWallpaperButtonPressed(context: Context) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
             _shouldShowLoadingIndicator.value = true
+            DebugMenu.log("Downloading wallpaper: ${wallpaper.id}...")
             delay(1000)
             _events.pushEvent(
                 context.downloadImage(wallpaper.url).let { bitmap ->
                     if (bitmap == null) {
+                        DebugMenu.log("Error while downloading wallpaper.")
                         Event.ShowErrorMessage
                     } else {
                         context.saveImage(context.getWallpaperFile(wallpaper.id), bitmap).let { uri ->
                             if (uri == null) {
+                                DebugMenu.log("Error while saving wallpaper.")
                                 Event.ShowErrorMessage
                             } else {
+                                DebugMenu.log("Setting wallpaper...")
                                 Event.SetWallpaper(uri)
                             }
                         }

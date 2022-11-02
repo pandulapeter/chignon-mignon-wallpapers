@@ -12,4 +12,8 @@ interface DebugMenuContract {
         versionCode: Int,
         @StyleRes themeResourceId: Int
     ) = Unit
+
+    fun log(
+        text: String
+    ) = Unit
 }
