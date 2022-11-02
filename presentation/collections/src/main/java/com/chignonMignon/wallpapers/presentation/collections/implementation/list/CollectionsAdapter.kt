@@ -89,6 +89,10 @@ internal class CollectionsAdapter(
         binding: ItemCollectionsEmptyBinding
     ) : BaseViewHolder<CollectionsListItem.EmptyUiModel, ItemCollectionsEmptyBinding>(binding) {
 
+        init {
+            binding.root.tag = binding
+        }
+
         override fun bind(listItem: CollectionsListItem.EmptyUiModel) {
             binding.uiModel = listItem
         }

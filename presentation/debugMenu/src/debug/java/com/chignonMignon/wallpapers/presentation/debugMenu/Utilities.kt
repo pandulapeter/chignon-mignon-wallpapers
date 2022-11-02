@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.debugMenu
 
+import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Insets
@@ -16,4 +17,10 @@ internal val insetHandler: (Insets) -> Insets = {
                 )
             }
     } ?: it
+}
+
+internal fun toast(text: String) {
+    Beagle.currentActivity?.run {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
 }

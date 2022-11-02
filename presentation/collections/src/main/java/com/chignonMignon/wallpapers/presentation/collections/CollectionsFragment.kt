@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.chignonMignon.wallpapers.presentation.collections.databinding.FragmentCollectionsBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsAboutBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsCollectionBinding
+import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsEmptyBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsWelcomeBinding
 import com.chignonMignon.wallpapers.presentation.collections.implementation.CollectionsColorTransitionManager
 import com.chignonMignon.wallpapers.presentation.collections.implementation.CollectionsViewModel
@@ -112,14 +113,15 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             when (val pageBinding = page.tag) {
                 is ItemCollectionsAboutBinding -> {
                     pageBinding.animate(position)
-                    binding.next.run {
-                        val adjustedPosition = abs(min(1f, position))
-                        binding.next.animateCollectionsNextButton(adjustedPosition)
-                        binding.about.animateCollectionsAboutButton(adjustedPosition)
-                        binding.background.alpha = adjustedPosition * BACKGROUND_ALPHA
-                    }
+                    val adjustedPosition = abs(min(1f, position))
+                    binding.next.animateCollectionsNextButton(adjustedPosition)
+                    binding.about.animateCollectionsAboutButton(adjustedPosition)
+                    binding.background.alpha = adjustedPosition * BACKGROUND_ALPHA
                 }
                 is ItemCollectionsCollectionBinding -> pageBinding.animate(position)
+                is ItemCollectionsEmptyBinding -> {
+                    binding.next.animateCollectionsNextButton(abs(min(1f, position)))
+                }
                 is ItemCollectionsWelcomeBinding -> {
                     pageBinding.animate(position)
                     val adjustedPosition = -max(-1f, position)

@@ -29,7 +29,6 @@ internal class CollectionDetailsViewModel(
     private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
-
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
     private val wallpapers = MutableStateFlow<List<WallpaperDestination>?>(null)
@@ -51,7 +50,7 @@ internal class CollectionDetailsViewModel(
             _shouldShowErrorState.value = false
             _shouldShowLoadingIndicator.value = true
             DebugMenu.log("Loading wallpapers (force refresh: $isForceRefresh)...")
-            when (val result = getWallpapersByCollectionId(isForceRefresh, collectionDestination.id)) {
+            when (val result = DebugMenu.getMockWallpapers(collectionDestination.id) ?: getWallpapersByCollectionId(isForceRefresh, collectionDestination.id)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} wallpapers.")
                     wallpapers.value = result.data.map { it.toNavigatorWallpaper() }

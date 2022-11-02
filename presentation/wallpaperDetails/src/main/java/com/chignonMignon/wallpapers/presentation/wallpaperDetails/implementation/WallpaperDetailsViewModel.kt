@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 internal class WallpaperDetailsViewModel(
     val wallpaper: WallpaperDestination
 ) : ViewModel() {
-
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
     private val _shouldShowLoadingIndicator = MutableStateFlow(false)

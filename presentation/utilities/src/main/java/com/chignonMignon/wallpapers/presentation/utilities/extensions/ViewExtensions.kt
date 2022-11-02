@@ -25,10 +25,18 @@ fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
                 .allowHardware(false)
                 .crossfade(600)
                 .target(object : TransitionTarget {
+
                     override val drawable get() = this@setImageUrl.drawable
                     override val view get() = this@setImageUrl
+
                     override fun onSuccess(result: Drawable) {
                         val drawable = if (result is Animatable) result else CrossfadeDrawable(this@setImageUrl.drawable, result, durationMillis = 600)
+                        setImageDrawable(drawable)
+                        (drawable as? Animatable)?.start()
+                    }
+
+                    override fun onError(error: Drawable?) {
+                        val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
                         setImageDrawable(drawable)
                         (drawable as? Animatable)?.start()
                     }

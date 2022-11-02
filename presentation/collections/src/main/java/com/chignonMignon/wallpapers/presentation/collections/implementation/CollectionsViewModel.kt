@@ -31,7 +31,6 @@ internal class CollectionsViewModel(
     private val getWallpapers: GetWallpapersUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
-
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
     private val collections = MutableStateFlow<List<CollectionDestination>?>(null)
@@ -50,10 +49,7 @@ internal class CollectionsViewModel(
             when {
                 collections == null -> add(CollectionsListItem.ErrorUiModel())
                 collections.isEmpty() -> add(CollectionsListItem.EmptyUiModel())
-                else -> addAll(collections.map { CollectionsListItem.CollectionUiModel(it) })
-            }
-            if (collections != null) {
-                add(CollectionsListItem.AboutUiModel())
+                else -> addAll(collections.map { CollectionsListItem.CollectionUiModel(it) } + CollectionsListItem.AboutUiModel())
             }
         }
     }
@@ -61,12 +57,15 @@ internal class CollectionsViewModel(
     private val _focusedCollectionDestination = MutableStateFlow<CollectionDestination?>(null)
     val focusedCollectionDestination: StateFlow<CollectionDestination?> = _focusedCollectionDestination
     val areCollectionsLoaded = collections.map { it != null }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+    val shouldShowAboutButton = collections.map { it?.isNotEmpty() == true }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val selectedTitle = combine(
+        collections,
         focusedCollectionDestination,
         isLastPageFocused
-    ) { focusedCollection,
+    ) { collections,
+        focusedCollection,
         isLastPageFocused ->
-        if (focusedCollection == null) if (isLastPageFocused) R.string.collections_about else R.string.collections_welcome else R.string.collections_title
+        if (focusedCollection == null && (!collections.isNullOrEmpty() || !isLastPageFocused)) if (isLastPageFocused) R.string.collections_about else R.string.collections_welcome else R.string.collections_title
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor
@@ -95,7 +94,7 @@ internal class CollectionsViewModel(
                 _events.pushEvent(Event.ScrollToWelcome)
             }
             DebugMenu.log("Loading collections (force refresh: $isForceRefresh)...")
-            when (val result = getCollections(isForceRefresh)) {
+            when (val result = DebugMenu.getMockCollections() ?: getCollections(isForceRefresh)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} collections.")
                     collections.value = result.data.map { it.toNavigatorCollection() }

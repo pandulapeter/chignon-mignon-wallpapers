@@ -57,7 +57,7 @@
                     android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
                     android:padding="@dimen/content_padding"
                     android:src="@drawable/ic_about"
-                    android:visibility="@{viewModel.areCollectionsLoaded}"
+                    android:visibility="@{viewModel.shouldShowAboutButton}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
