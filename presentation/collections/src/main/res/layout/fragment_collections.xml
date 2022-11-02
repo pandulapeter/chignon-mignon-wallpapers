@@ -42,7 +42,6 @@
                         android:id="@+id/view_flipper"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:textColor="@{viewModel.onPrimaryColor}"
                         app:title="@{viewModel.selectedTitle}" />
 
                 </com.google.android.material.appbar.MaterialToolbar>
@@ -62,8 +61,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:marginWithInsetRight="@{@dimen/double_content_padding}"
-                    app:marginWithInsetTop="@{0f}"
-                    app:tint="@{viewModel.onPrimaryColor}" />
+                    app:marginWithInsetTop="@{0f}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

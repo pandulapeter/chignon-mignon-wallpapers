@@ -1,7 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.debugMenu.sections
 
-import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.HeaderModule
+import com.pandulapeter.beagle.modules.PaddingModule
 
 internal fun createHeaderSection(
     applicationTitle: String,
@@ -12,5 +12,5 @@ internal fun createHeaderSection(
         title = applicationTitle,
         subtitle = "v$versionName ($versionCode)"
     ),
-    DividerModule()
+    PaddingModule()
 )

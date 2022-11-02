@@ -18,33 +18,37 @@ import kotlin.math.roundToInt
 
 @BindingAdapter(value = ["imageUrl", "shouldFade"], requireAll = false)
 fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
-    if (shouldFade == true && isLaidOut) {
-        context.imageLoader.enqueue(
-            ImageRequest.Builder(context)
-                .data(imageUrl)
-                .allowHardware(false)
-                .crossfade(600)
-                .target(object : TransitionTarget {
+    if (tag != imageUrl) {
+        tag = imageUrl
+        if (shouldFade == true && isLaidOut) {
+            context.imageLoader.enqueue(
+                ImageRequest.Builder(context)
+                    .data(imageUrl)
+                    .allowHardware(false)
+                    .crossfade(600)
+                    .target(object : TransitionTarget {
 
-                    override val drawable get() = this@setImageUrl.drawable
-                    override val view get() = this@setImageUrl
+                        override val drawable get() = this@setImageUrl.drawable
 
-                    override fun onSuccess(result: Drawable) {
-                        val drawable = if (result is Animatable) result else CrossfadeDrawable(this@setImageUrl.drawable, result, durationMillis = 600)
-                        setImageDrawable(drawable)
-                        (drawable as? Animatable)?.start()
-                    }
+                        override val view get() = this@setImageUrl
 
-                    override fun onError(error: Drawable?) {
-                        val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
-                        setImageDrawable(drawable)
-                        (drawable as? Animatable)?.start()
-                    }
-                })
-                .build()
-        )
-    } else {
-        load(imageUrl) { allowHardware(false) }
+                        override fun onSuccess(result: Drawable) {
+                            val drawable = if (result is Animatable) result else CrossfadeDrawable(this@setImageUrl.drawable, result, durationMillis = 600)
+                            setImageDrawable(drawable)
+                            (drawable as? Animatable)?.start()
+                        }
+
+                        override fun onError(error: Drawable?) {
+                            val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
+                            setImageDrawable(drawable)
+                            (drawable as? Animatable)?.start()
+                        }
+                    })
+                    .build()
+            )
+        } else {
+            load(imageUrl) { allowHardware(false) }
+        }
     }
 }
 

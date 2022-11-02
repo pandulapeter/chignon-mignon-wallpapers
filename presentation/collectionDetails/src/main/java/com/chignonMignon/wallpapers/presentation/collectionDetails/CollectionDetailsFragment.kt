@@ -60,7 +60,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         toolbar.setNavigationOnClickListener { navigator?.navigateBack() }
         appBarLayout.addOnOffsetChangedListener { _, verticalOffset -> animateHeader(-verticalOffset.toFloat() / appBarLayout.totalScrollRange) }
         collectionBackground.foreground =
-            ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collectionDestination.colorPaletteModel.secondary, 240))
+            ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.secondary, 240))
     }
 
     private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {

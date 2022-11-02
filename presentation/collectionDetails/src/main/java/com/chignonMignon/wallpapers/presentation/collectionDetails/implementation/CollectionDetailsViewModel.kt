@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class CollectionDetailsViewModel(
-    val collectionDestination: CollectionDestination,
+    val collection: CollectionDestination,
     private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
@@ -42,6 +42,7 @@ internal class CollectionDetailsViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     init {
+        DebugMenu.log("Opened collection details for ${collection.id}.")
         loadData(false)
     }
 
@@ -50,7 +51,7 @@ internal class CollectionDetailsViewModel(
             _shouldShowErrorState.value = false
             _shouldShowLoadingIndicator.value = true
             DebugMenu.log("Loading wallpapers (force refresh: $isForceRefresh)...")
-            when (val result = DebugMenu.getMockWallpapers(collectionDestination.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collectionDestination.id)) {
+            when (val result = DebugMenu.getMockWallpapers(collection.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collection.id)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} wallpapers.")
                     wallpapers.value = result.data.map { it.toNavigatorWallpaper() }
@@ -83,8 +84,8 @@ internal class CollectionDetailsViewModel(
             name = name.toNavigatorTranslatableText(),
             description = description.toNavigatorTranslatableText(),
             url = url,
-            collectionName = collectionDestination.name,
-            collectionThumbnailUrl = collectionDestination.thumbnailUrl,
+            collectionName = collection.name,
+            collectionThumbnailUrl = collection.thumbnailUrl,
             colorPaletteModel = colorPalette.toNavigatorColorPalette()
         )
     }

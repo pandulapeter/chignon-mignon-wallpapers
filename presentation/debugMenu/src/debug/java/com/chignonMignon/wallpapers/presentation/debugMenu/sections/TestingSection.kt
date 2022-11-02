@@ -9,6 +9,7 @@ import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.modules.AnimationDurationSwitchModule
 import com.pandulapeter.beagle.modules.DividerModule
 import com.pandulapeter.beagle.modules.KeylineOverlaySwitchModule
+import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.SwitchModule
 import com.pandulapeter.beagle.modules.TextModule
 import kotlinx.coroutines.delay
@@ -35,14 +36,17 @@ internal fun createTestingSection() = listOf(
     SwitchModule(
         id = ID_USE_MOCK_DATA,
         text = "Use mock data",
-        onValueChanged = { toast("Refresh the screen to see the changes.") }
+        onValueChanged = { toast("Refresh the screen to see the changes.") },
+        isValuePersisted = true
     ),
+    PaddingModule(),
     DividerModule()
 )
 
 internal suspend fun generateMockCollections(isForceRefresh: Boolean): List<Collection> {
     if (isForceRefresh || mockCollectionCache == null) {
         delay(FAKE_LOADING_TIME)
+        mockCollectionCache = null
     }
     return mockCollectionCache.let { cache ->
         cache ?: (0..generateRandomCount()).map { generateRandomCollection() }.also { mockCollectionCache = it }
@@ -52,6 +56,7 @@ internal suspend fun generateMockCollections(isForceRefresh: Boolean): List<Coll
 internal suspend fun generateMockWallpapers(collectionId: String, isForceRefresh: Boolean): List<Wallpaper> {
     if (isForceRefresh || mockWallpaperCache == null) {
         delay(FAKE_LOADING_TIME)
+        mockWallpaperCache = null
     }
     return mockWallpaperCache.let { cache ->
         (cache ?: (0..generateRandomCount()).map { generateRandomWallpaper() }.also { mockWallpaperCache = it }).map { it.copy(collectionId = collectionId) }

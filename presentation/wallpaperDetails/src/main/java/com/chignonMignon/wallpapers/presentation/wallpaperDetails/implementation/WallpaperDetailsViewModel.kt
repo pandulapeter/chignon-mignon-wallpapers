@@ -25,6 +25,10 @@ internal class WallpaperDetailsViewModel(
     private val _shouldShowLoadingIndicator = MutableStateFlow(false)
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
 
+    init {
+        DebugMenu.log("Opened wallpaper details for ${wallpaper.id}.")
+    }
+
     fun onSetWallpaperButtonPressed(context: Context) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
             _shouldShowLoadingIndicator.value = true

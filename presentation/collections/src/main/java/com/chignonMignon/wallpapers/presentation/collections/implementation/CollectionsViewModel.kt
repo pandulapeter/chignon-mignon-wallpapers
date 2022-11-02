@@ -71,8 +71,6 @@ internal class CollectionsViewModel(
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _secondaryColor = MutableStateFlow<Int?>(null)
     val secondaryColor: StateFlow<Int?> = _secondaryColor
-    private val _onPrimaryColor = MutableStateFlow<Int?>(null)
-    val onPrimaryColor: StateFlow<Int?> = _onPrimaryColor
     private val _onSecondaryColor = MutableStateFlow<Int?>(null)
     val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
 
@@ -80,7 +78,7 @@ internal class CollectionsViewModel(
         loadData(false)
         viewModelScope.launch {
             DebugMenu.log("Loading wallpapers (pre-fetch)...")
-            when (val result = getWallpapers(false)) {
+            when (val result = DebugMenu.getMockWallpapers("", false) ?: getWallpapers(false)) {
                 is Result.Success -> DebugMenu.log("Loaded ${result.data.size} wallpapers.")
                 is Result.Failure -> DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
             }
@@ -119,12 +117,10 @@ internal class CollectionsViewModel(
     fun updateColors(
         @ColorInt primaryColor: Int,
         @ColorInt secondaryColor: Int,
-        @ColorInt onPrimaryColor: Int,
         @ColorInt onSecondaryColor: Int
     ) {
         _primaryColor.value = primaryColor
         _secondaryColor.value = secondaryColor
-        _onPrimaryColor.value = onPrimaryColor
         _onSecondaryColor.value = onSecondaryColor
     }
 

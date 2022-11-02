@@ -3,6 +3,7 @@ package com.chignonMignon.wallpapers.presentation.debugMenu.sections
 import com.pandulapeter.beagle.modules.BugReportButtonModule
 import com.pandulapeter.beagle.modules.DeviceInfoModule
 import com.pandulapeter.beagle.modules.DividerModule
+import com.pandulapeter.beagle.modules.PaddingModule
 import com.pandulapeter.beagle.modules.ScreenCaptureToolboxModule
 import com.pandulapeter.beagle.modules.TextModule
 
@@ -14,5 +15,6 @@ internal fun createGeneralSection() = listOf(
     BugReportButtonModule(),
     ScreenCaptureToolboxModule(),
     DeviceInfoModule(),
+    PaddingModule(),
     DividerModule()
 )

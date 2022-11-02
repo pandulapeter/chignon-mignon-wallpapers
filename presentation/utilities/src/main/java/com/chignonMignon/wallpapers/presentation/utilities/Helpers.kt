@@ -1,7 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.utilities
 
 import android.graphics.Color
-import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.AccelerateDecelerateInterpolator
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.channels.BufferOverflow
@@ -14,11 +14,11 @@ fun <T> eventFlow() = MutableSharedFlow<T>(
 
 fun sharedElementTransition() = MaterialContainerTransform().apply {
     scrimColor = Color.TRANSPARENT
-    fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-    interpolator = AnticipateOvershootInterpolator()
-    duration = 350
+    fadeMode = MaterialContainerTransform.FADE_MODE_IN
+    interpolator = AccelerateDecelerateInterpolator()
+    duration = 300
 }
 
 fun enterTransition(forward: Boolean) = MaterialSharedAxis(MaterialSharedAxis.Y, forward).apply {
-    duration = 700
+    duration = 600
 }
