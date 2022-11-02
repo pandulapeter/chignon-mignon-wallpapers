@@ -8,9 +8,9 @@ import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createGenera
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createHeaderSection
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createLogsSection
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createTestingSection
-import com.chignonMignon.wallpapers.presentation.debugMenu.sections.generateMockCollections
-import com.chignonMignon.wallpapers.presentation.debugMenu.sections.generateMockWallpapers
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.shouldUseMockData
+import com.chignonMignon.wallpapers.presentation.debugMenu.utilities.MockDataGenerator
+import com.chignonMignon.wallpapers.presentation.debugMenu.utilities.insetHandler
 import com.pandulapeter.beagle.Beagle
 import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.common.configuration.Behavior
@@ -57,10 +57,10 @@ object DebugMenu : DebugMenuContract {
 
     override suspend fun getMockCollections(
         isForceRefresh: Boolean
-    ) = if (shouldUseMockData) Result.Success(generateMockCollections(isForceRefresh)) else null
+    ) = if (shouldUseMockData) Result.Success(MockDataGenerator.generateMockCollections(isForceRefresh)) else null
 
     override suspend fun getMockWallpapers(
         collectionId: String,
         isForceRefresh: Boolean
-    ) = if (shouldUseMockData) Result.Success(generateMockWallpapers(collectionId, isForceRefresh)) else null
+    ) = if (shouldUseMockData) Result.Success(MockDataGenerator.generateMockWallpapers(collectionId, isForceRefresh)) else null
 }

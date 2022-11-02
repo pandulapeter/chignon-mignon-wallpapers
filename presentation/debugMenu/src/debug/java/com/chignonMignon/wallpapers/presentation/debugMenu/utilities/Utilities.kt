@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.presentation.debugMenu
+package com.chignonMignon.wallpapers.presentation.debugMenu.utilities
 
 import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
