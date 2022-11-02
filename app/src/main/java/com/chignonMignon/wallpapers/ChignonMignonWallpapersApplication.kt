@@ -6,6 +6,7 @@ import com.chignonMignon.wallpapers.data.source.remote.sourceModule
 import com.chignonMignon.wallpapers.domain.domainModule
 import com.chignonMignon.wallpapers.presentation.collectionDetails.presentationCollectionDetailsModule
 import com.chignonMignon.wallpapers.presentation.collections.presentationCollectionsModule
+import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.presentationSharedModule
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.presentationWallpaperDetailsModule
 import org.koin.android.ext.koin.androidContext
@@ -27,5 +28,12 @@ class ChignonMignonWallpapersApplication : Application() {
                         presentationWallpaperDetailsModule
             )
         }
+        DebugMenu.initialize(
+            application = this,
+            applicationTitle = getString(R.string.chignon_mignon_wallpapers),
+            versionName = BuildConfig.VERSION_NAME,
+            versionCode = BuildConfig.VERSION_CODE,
+            themeResourceId = R.style.ChignonMignon
+        )
     }
 }

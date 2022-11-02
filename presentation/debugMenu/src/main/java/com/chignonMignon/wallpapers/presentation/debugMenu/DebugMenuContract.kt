@@ -1,3 +1,15 @@
 package com.chignonMignon.wallpapers.presentation.debugMenu
 
-interface DebugMenuContract
+import android.app.Application
+import androidx.annotation.StyleRes
+
+interface DebugMenuContract {
+
+    fun initialize(
+        application: Application,
+        applicationTitle: String,
+        versionName: String,
+        versionCode: Int,
+        @StyleRes themeResourceId: Int
+    ) = Unit
+}

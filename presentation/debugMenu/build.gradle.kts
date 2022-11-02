@@ -6,8 +6,8 @@ plugins {
 dependencies {
     implementation(project(":data:model"))
     implementation(libs.androidx.appcompat)
-    implementation(libs.coil)
-    implementation(libs.google.android.material)
+    debugImplementation(libs.beagle)
+    debugImplementation(libs.beagle.crashLogger)
 }
 
 android {
