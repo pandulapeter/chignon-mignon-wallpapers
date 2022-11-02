@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
+import com.chignonMignon.wallpapers.presentation.R
 import com.chignonMignon.wallpapers.presentation.feature.Navigator
 import com.chignonMignon.wallpapers.presentation.feature.collections.list.CollectionsListItem
 import com.chignonMignon.wallpapers.presentation.utilities.ColorPaletteGenerator
@@ -62,7 +63,7 @@ internal class CollectionsViewModel(
         isLastPageFocused
     ) { focusedCollection,
         isLastPageFocused ->
-        if (focusedCollection == null) if (isLastPageFocused) 2 else 0 else 1
+        if (focusedCollection == null) if (isLastPageFocused) R.string.collections_about else R.string.collections_welcome else R.string.collections_title
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor

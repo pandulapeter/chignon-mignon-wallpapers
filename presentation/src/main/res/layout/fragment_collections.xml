@@ -36,35 +36,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ViewFlipper
+                    <com.chignonMignon.wallpapers.presentation.utilities.view.AnimatedTitleView
                         android:id="@+id/view_flipper"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:animateFirstView="false"
-                        android:clipChildren="false"
-                        android:inAnimation="@anim/anim_slide_in"
-                        android:outAnimation="@anim/anim_slide_out"
-                        app:displayedChild="@{viewModel.selectedTitle}">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="@string/collections_welcome"
-                            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="@string/collections_title"
-                            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="@string/collections_about"
-                            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title" />
-
-                    </ViewFlipper>
+                        app:title="@{viewModel.selectedTitle}" />
 
                 </com.google.android.material.appbar.MaterialToolbar>
 

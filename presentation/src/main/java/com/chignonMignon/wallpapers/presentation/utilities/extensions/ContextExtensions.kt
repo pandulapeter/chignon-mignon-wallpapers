@@ -51,7 +51,7 @@ internal fun Context.setWallpaper(uri: Uri) = Intent.createChooser(
     Intent(Intent.ACTION_SET_WALLPAPER, uri).addCategory(Intent.CATEGORY_DEFAULT).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
     getString(R.string.wallpaper_details_set_wallpaper)
 ).let { intent ->
-    val results = packageManager?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).orEmpty()
+    val results = packageManager?.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())).orEmpty()
     if (results.isEmpty()) {
         startActivity(
             Intent.createChooser(
