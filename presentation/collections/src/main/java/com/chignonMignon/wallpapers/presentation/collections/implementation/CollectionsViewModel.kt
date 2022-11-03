@@ -114,13 +114,15 @@ internal class CollectionsViewModel(
         }
     }
 
-    fun updateColors(
-        @ColorInt primaryColor: Int,
-        @ColorInt secondaryColor: Int,
-        @ColorInt onSecondaryColor: Int
-    ) {
+    fun updatePrimaryColor(@ColorInt primaryColor: Int) {
         _primaryColor.value = primaryColor
+    }
+
+    fun updateSecondaryColor(@ColorInt secondaryColor: Int) {
         _secondaryColor.value = secondaryColor
+    }
+
+    fun updateOnSecondaryColor(@ColorInt onSecondaryColor: Int) {
         _onSecondaryColor.value = onSecondaryColor
     }
 

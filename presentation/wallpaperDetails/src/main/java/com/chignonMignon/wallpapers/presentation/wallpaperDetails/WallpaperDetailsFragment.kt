@@ -11,7 +11,9 @@ import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
+import com.chignonMignon.wallpapers.presentation.utilities.ColorTransitionManager
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
 import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
@@ -34,6 +36,10 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
             }
         )
     }
+    private val primaryColorTransitionManager by lazy {
+        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
+    }
+    private var shouldAnimateColorTransitions = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +52,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         binding.viewModel = viewModel
         binding.setupToolbar()
         binding.setupViewPager()
+        viewModel.focusedWallpaper.observe(viewLifecycleOwner, ::onFocusedWallpaperChanged)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         postponeEnterTransition()
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
@@ -70,6 +77,13 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
         is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
         is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper)
+    }
+
+    private fun onFocusedWallpaperChanged(focusedWallpaperDestination: WallpaperDestination?) {
+        primaryColorTransitionManager.fadeToColor(focusedWallpaperDestination?.colorPaletteModel?.primary, shouldAnimateColorTransitions)
+        if (!shouldAnimateColorTransitions) {
+            shouldAnimateColorTransitions = true
+        }
     }
 
     private fun setWallpaper(uri: Uri) = context?.setWallpaper(uri)

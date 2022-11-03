@@ -14,7 +14,6 @@ import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCol
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsCollectionBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsEmptyBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsWelcomeBinding
-import com.chignonMignon.wallpapers.presentation.collections.implementation.CollectionsColorTransitionManager
 import com.chignonMignon.wallpapers.presentation.collections.implementation.CollectionsViewModel
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animate
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsAboutButton
@@ -24,8 +23,11 @@ import com.chignonMignon.wallpapers.presentation.collections.implementation.list
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
+import com.chignonMignon.wallpapers.presentation.utilities.ColorTransitionManager
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,11 +45,14 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         )
     }
     private var binding by autoClearedValue<FragmentCollectionsBinding>()
-    private val collectionsColorTransitionManager by lazy {
-        CollectionsColorTransitionManager(
-            context = requireContext(),
-            updateColors = viewModel::updateColors
-        )
+    private val primaryColorTransitionManager by lazy {
+        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
+    }
+    private val secondaryColorTransitionManager by lazy {
+        ColorTransitionManager(requireContext().colorResource(android.R.attr.windowBackground), viewModel::updateSecondaryColor)
+    }
+    private val onSecondaryColorTransitionManager by lazy {
+        ColorTransitionManager(requireContext().colorResource(android.R.attr.textColorPrimary), viewModel::updateOnSecondaryColor)
     }
     private val onBackPressedCallback by lazy {
         object : OnBackPressedCallback(true) {
@@ -134,7 +139,9 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun onFocusedCollectionChanged(focusedCollectionDestination: CollectionDestination?) {
-        collectionsColorTransitionManager.updateColors(focusedCollectionDestination, shouldAnimateColorTransitions)
+        primaryColorTransitionManager.fadeToColor(focusedCollectionDestination?.colorPaletteModel?.primary, shouldAnimateColorTransitions)
+        secondaryColorTransitionManager.fadeToColor(focusedCollectionDestination?.colorPaletteModel?.secondary, shouldAnimateColorTransitions)
+        onSecondaryColorTransitionManager.fadeToColor(focusedCollectionDestination?.colorPaletteModel?.onSecondary, shouldAnimateColorTransitions)
         if (!shouldAnimateColorTransitions) {
             shouldAnimateColorTransitions = true
         }

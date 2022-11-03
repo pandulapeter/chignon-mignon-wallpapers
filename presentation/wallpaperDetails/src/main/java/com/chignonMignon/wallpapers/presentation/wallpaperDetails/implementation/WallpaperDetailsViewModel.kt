@@ -2,6 +2,7 @@ package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementatio
 
 import android.content.Context
 import android.net.Uri
+import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
@@ -29,6 +30,8 @@ internal class WallpaperDetailsViewModel(
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
     private val _focusedWallpaper = MutableStateFlow(wallpapers[initialWallpaperIndex])
     val focusedWallpaper: StateFlow<WallpaperDestination> = _focusedWallpaper
+    private val _primaryColor = MutableStateFlow<Int?>(null)
+    val primaryColor: StateFlow<Int?> = _primaryColor
 
     init {
         DebugMenu.log("Opened wallpaper details.")
@@ -63,6 +66,10 @@ internal class WallpaperDetailsViewModel(
             )
             _shouldShowLoadingIndicator.value = false
         }
+    }
+
+    fun updatePrimaryColor(@ColorInt primaryColor: Int) {
+        _primaryColor.value = primaryColor
     }
 
     sealed class Event {
