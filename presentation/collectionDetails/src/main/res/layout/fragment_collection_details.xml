@@ -21,7 +21,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/collection_details_header_height"
-            android:theme="@style/LightTheme"
+            android:theme="@style/ChignonMignonLight"
             android:transitionName="@{viewModel.collection.id}"
             app:heightWithTopInset="@{@dimen/collection_details_header_height}">
 
@@ -108,6 +108,7 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?android:windowBackground"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:marginWithInsetLeft="@{@dimen/content_padding}"
             app:marginWithInsetRight="@{@dimen/content_padding}"

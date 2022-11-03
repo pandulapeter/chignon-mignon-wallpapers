@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val presentationWallpaperDetailsModule = module {
-    viewModel { WallpaperDetailsViewModel(it[0]) }
+    viewModel { WallpaperDetailsViewModel(it[0], it[1]) }
 }

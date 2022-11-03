@@ -14,7 +14,7 @@ fun <T> eventFlow() = MutableSharedFlow<T>(
 
 fun sharedElementTransition() = MaterialContainerTransform().apply {
     scrimColor = Color.TRANSPARENT
-    fadeMode = MaterialContainerTransform.FADE_MODE_IN
+    fadeMode = MaterialContainerTransform.FADE_MODE_OUT
     interpolator = AccelerateDecelerateInterpolator()
     duration = 300
 }

@@ -14,7 +14,8 @@ interface Navigator {
     )
 
     fun navigateToWallpaperDetails(
-        wallpaperDestination: WallpaperDestination,
+        wallpapers: List<WallpaperDestination>,
+        selectedWallpaperIndex: Int,
         sharedElements: List<View>
     )
 

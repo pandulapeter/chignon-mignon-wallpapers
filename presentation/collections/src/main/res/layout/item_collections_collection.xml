@@ -24,7 +24,7 @@
             android:foreground="?selectableItemBackground"
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"
-            android:theme="@style/LightTheme"
+            android:theme="@style/ChignonMignonLight"
             android:transitionName="@{uiModel.collectionDestination.id}"
             app:imageUrl="@{uiModel.collectionDestination.thumbnailUrl}"
             app:layout_constraintBottom_toTopOf="@id/guideline"

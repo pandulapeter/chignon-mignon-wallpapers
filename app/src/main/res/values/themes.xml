@@ -19,7 +19,7 @@
 
     <style name="ChignonMignon" parent="ChignonMignonBase" />
 
-    <style name="LightTheme" parent="Theme.Material3.Light.NoActionBar">
+    <style name="ChignonMignonLight" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="colorControlNormal">@color/on_primary</item>

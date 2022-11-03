@@ -74,8 +74,12 @@ internal class CollectionDetailsViewModel(
         _events.pushEvent(Event.NavigateBack)
     }
 
-    fun onItemSelected(wallpaperId: String, sharedElements: List<View>) = wallpapers.value?.firstOrNull { it.id == wallpaperId }?.let {
-        _events.pushEvent(Event.OpenWallpaperDetails(it, sharedElements))
+    fun onItemSelected(wallpaperId: String, sharedElements: List<View>) = wallpapers.value?.let { wallpapers ->
+        wallpapers.indexOfFirst { it.id == wallpaperId }.let { index ->
+            if (index != -1) {
+                _events.pushEvent(Event.OpenWallpaperDetails(wallpapers, index, sharedElements))
+            }
+        }
     }
 
     private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(url).let { colorPalette ->
@@ -92,7 +96,13 @@ internal class CollectionDetailsViewModel(
 
     sealed class Event {
         object NavigateBack : Event()
-        data class OpenWallpaperDetails(val wallpaperDestination: WallpaperDestination, val sharedElements: List<View>) : Event()
+
+        data class OpenWallpaperDetails(
+            val wallpapers: List<WallpaperDestination>,
+            val selectedWallpaperIndex: Int,
+            val sharedElements: List<View>
+        ) : Event()
+
         object ShowErrorMessage : Event()
     }
 }

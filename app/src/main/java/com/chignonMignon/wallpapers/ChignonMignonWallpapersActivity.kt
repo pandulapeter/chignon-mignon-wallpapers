@@ -44,14 +44,18 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
     }
 
     override fun navigateToWallpaperDetails(
-        wallpaperDestination: WallpaperDestination,
+        wallpapers: List<WallpaperDestination>,
+        selectedWallpaperIndex: Int,
         sharedElements: List<View>
     ) = supportFragmentManager.handleReplace(
         containerId = R.id.container,
         sharedElements = sharedElements,
         addToBackStack = true
     ) {
-        WallpaperDetailsFragment.newInstance(wallpaperDestination)
+        WallpaperDetailsFragment.newInstance(
+            wallpapers = wallpapers,
+            selectedWallpaperIndex = selectedWallpaperIndex
+        )
     }
 
     override fun navigateBack() = supportFragmentManager.popBackStack()

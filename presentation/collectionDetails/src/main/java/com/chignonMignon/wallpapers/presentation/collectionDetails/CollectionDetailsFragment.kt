@@ -86,7 +86,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     private fun handleEvent(event: CollectionDetailsViewModel.Event) = when (event) {
         CollectionDetailsViewModel.Event.NavigateBack -> navigateBack()
-        is CollectionDetailsViewModel.Event.OpenWallpaperDetails -> openWallpaperDetails(event.wallpaperDestination, event.sharedElements)
+        is CollectionDetailsViewModel.Event.OpenWallpaperDetails -> openWallpaperDetails(event.wallpapers, event.selectedWallpaperIndex, event.sharedElements)
         CollectionDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage()
     }
 
@@ -94,8 +94,12 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         navigator?.navigateBack()
     }
 
-    private fun openWallpaperDetails(wallpaperDestination: WallpaperDestination, sharedElements: List<View>) {
-        navigator?.navigateToWallpaperDetails(wallpaperDestination, sharedElements)
+    private fun openWallpaperDetails(
+        wallpapers: List<WallpaperDestination>,
+        selectedWallpaperIndex: Int,
+        sharedElements: List<View>
+    ) {
+        navigator?.navigateToWallpaperDetails(wallpapers, selectedWallpaperIndex, sharedElements)
     }
 
     private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }

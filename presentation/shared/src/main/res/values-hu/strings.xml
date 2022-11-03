@@ -17,5 +17,6 @@
 
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Háttérkép beállítása</string>
+    <string name="wallpaper_details_cannot_set_wallpaper">Something went wrong while downloading the wallpaper</string> <!-- TODO -->
 
 </resources>
