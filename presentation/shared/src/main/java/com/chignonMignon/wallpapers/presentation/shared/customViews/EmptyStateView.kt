@@ -10,5 +10,7 @@ class EmptyStateView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding = ViewEmptyStateBinding.inflate(LayoutInflater.from(context), this)
+    init {
+        ViewEmptyStateBinding.inflate(LayoutInflater.from(context), this)
+    }
 }

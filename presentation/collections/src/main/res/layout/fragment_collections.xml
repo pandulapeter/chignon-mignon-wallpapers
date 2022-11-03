@@ -63,6 +63,16 @@
                     app:marginWithInsetRight="@{@dimen/double_content_padding}"
                     app:marginWithInsetTop="@{0f}" />
 
+                <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/collections_pager_progress_bar_height"
+                    android:visibility="@{viewModel.shouldShowProgressBar}"
+                    app:color="@{@color/on_primary}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:progress="@{viewModel.pagerProgress}" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

@@ -67,6 +67,11 @@ internal class CollectionsViewModel(
         isLastPageFocused ->
         if (focusedCollection == null && (!collections.isNullOrEmpty() || !isLastPageFocused)) if (isLastPageFocused) R.string.collections_about else R.string.collections_welcome else R.string.collections_title
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    private val _pagerProgress = MutableStateFlow(0f)
+    val pagerProgress: StateFlow<Float> = _pagerProgress
+    val shouldShowProgressBar = combine(shouldShowAboutButton, pagerProgress) { shouldShowAboutButton, pagerProgress ->
+        shouldShowAboutButton && pagerProgress <= 1f
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _secondaryColor = MutableStateFlow<Int?>(null)
@@ -109,6 +114,9 @@ internal class CollectionsViewModel(
 
     fun onPageSelected(position: Int) {
         collections.value?.let { collections ->
+            if (collections.isNotEmpty()) {
+                _pagerProgress.value = (position.toFloat()) / collections.size.toFloat()
+            }
             isLastPageFocused.value = position == collections.size + 1
             _focusedCollectionDestination.value = if (position >= 1 && position <= collections.size) collections[position - 1] else null
         }

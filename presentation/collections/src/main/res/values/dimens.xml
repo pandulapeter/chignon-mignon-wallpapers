@@ -3,5 +3,6 @@
 
     <dimen name="collections_pager_margin">56dp</dimen>
     <dimen name="collections_logo_max_width">224dp</dimen>
+    <dimen name="collections_pager_progress_bar_height">2dp</dimen>
 
 </resources>
