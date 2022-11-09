@@ -7,4 +7,7 @@
     <dimen name="content_padding">8dp</dimen>
     <dimen name="double_content_padding">16dp</dimen>
 
+    <!-- Custom views -->
+    <dimen name="pager_progress_bar_height">2dp</dimen>
+
 </resources>

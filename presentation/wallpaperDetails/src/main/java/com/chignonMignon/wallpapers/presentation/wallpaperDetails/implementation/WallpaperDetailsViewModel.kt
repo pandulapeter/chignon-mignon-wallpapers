@@ -32,13 +32,16 @@ internal class WallpaperDetailsViewModel(
     val focusedWallpaper: StateFlow<WallpaperDestination> = _focusedWallpaper
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor
+    private val _pagerProgress = MutableStateFlow(getPagerProgress(initialWallpaperIndex))
+    val pagerProgress: StateFlow<Float> = _pagerProgress
 
     init {
         DebugMenu.log("Opened wallpaper details.")
     }
 
-    fun onPageSelected(index: Int) {
-        _focusedWallpaper.value = wallpapers[index]
+    fun onPageSelected(position: Int) {
+        _focusedWallpaper.value = wallpapers[position]
+        _pagerProgress.value = getPagerProgress(position)
     }
 
     fun onSetWallpaperButtonPressed(context: Context, wallpaper: WallpaperDestination) = viewModelScope.launch {
@@ -71,6 +74,8 @@ internal class WallpaperDetailsViewModel(
     fun updatePrimaryColor(@ColorInt primaryColor: Int) {
         _primaryColor.value = primaryColor
     }
+
+    private fun getPagerProgress(position: Int) = if (wallpapers.isNotEmpty()) (position + 1f) / wallpapers.size.toFloat() else 0f
 
     sealed class Event {
         data class SetWallpaper(val uri: Uri) : Event()

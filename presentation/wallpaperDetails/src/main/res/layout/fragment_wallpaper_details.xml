@@ -22,23 +22,41 @@
             android:theme="@style/ChignonMignonLight"
             app:backgroundColor="@{viewModel.primaryColor}">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipChildren="false"
-                app:marginWithInsetLeft="@{0f}"
-                app:marginWithInsetTop="@{0f}"
-                app:navigationIcon="@drawable/ic_close">
+                android:layout_height="wrap_content">
 
-                <com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
-                    android:id="@+id/view_flipper"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:title="@{viewModel.focusedWallpaper.name}" />
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetLeft="@{0f}"
+                    app:marginWithInsetTop="@{0f}"
+                    app:navigationIcon="@drawable/ic_close">
 
-            </com.google.android.material.appbar.MaterialToolbar>
+                    <com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
+                        android:id="@+id/view_flipper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:title="@{viewModel.focusedWallpaper.name}" />
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+                <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/pager_progress_bar_height"
+                    app:color="@{@color/on_primary}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:progress="@{viewModel.pagerProgress}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
