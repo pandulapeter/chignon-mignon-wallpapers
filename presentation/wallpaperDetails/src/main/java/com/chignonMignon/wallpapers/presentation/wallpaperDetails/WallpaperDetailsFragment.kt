@@ -12,6 +12,7 @@ import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.ColorTransitionManager
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
@@ -36,6 +37,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
             }
         )
     }
+    private var binding by autoClearedValue<FragmentWallpaperDetailsBinding>()
     private val primaryColorTransitionManager by lazy {
         ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
     }
@@ -48,7 +50,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = bind<FragmentWallpaperDetailsBinding>(view)
+        binding = bind(view)
         binding.viewModel = viewModel
         binding.setupToolbar()
         binding.setupViewPager()
@@ -58,10 +60,14 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.progressBar.finishAnimation()
+    }
+
     private fun FragmentWallpaperDetailsBinding.setupToolbar() = toolbar.setNavigationOnClickListener {
         navigator?.navigateBack()
     }
-
 
     private fun FragmentWallpaperDetailsBinding.setupViewPager() = viewPager.run {
         val viewModel = this@WallpaperDetailsFragment.viewModel

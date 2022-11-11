@@ -70,12 +70,11 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = bind<FragmentCollectionsBinding>(view).also { binding ->
-            binding.viewModel = viewModel
-            binding.setupSwipeRefreshLayout()
-            binding.setupBackgroundAnimation()
-            binding.setupViewPager()
-        }
+        binding = bind(view)
+        binding.viewModel = viewModel
+        binding.setupSwipeRefreshLayout()
+        binding.setupBackgroundAnimation()
+        binding.setupViewPager()
         shouldAnimateColorTransitions = false
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.focusedCollectionDestination.observe(viewLifecycleOwner, ::onFocusedCollectionChanged)
@@ -88,6 +87,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     override fun onResume() {
         super.onResume()
         binding.background.alpha = if (viewModel.focusedCollectionDestination.value == null) 0f else BACKGROUND_ALPHA
+        binding.progressBar.finishAnimation()
     }
 
     private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {

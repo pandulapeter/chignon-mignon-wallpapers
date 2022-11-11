@@ -64,6 +64,7 @@
                     app:marginWithInsetTop="@{0f}" />
 
                 <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
+                    android:id="@+id/progress_bar"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/pager_progress_bar_height"
                     android:visibility="@{viewModel.shouldShowProgressBar}"

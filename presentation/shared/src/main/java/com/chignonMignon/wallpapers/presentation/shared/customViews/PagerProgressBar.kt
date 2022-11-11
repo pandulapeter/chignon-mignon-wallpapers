@@ -39,6 +39,11 @@ class PagerProgressBar @JvmOverloads constructor(
         setWillNotDraw(false)
     }
 
+    fun finishAnimation() {
+        animatedProgress = progress
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         val difference = progress - animatedProgress
