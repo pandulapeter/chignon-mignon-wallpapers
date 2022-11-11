@@ -30,13 +30,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     private val viewModel by viewModel<WallpaperDetailsViewModel> {
         parametersOf(arguments?.wallpapers, arguments?.selectedWallpaperIndex)
     }
-    private val wallpaperDetailsAdapter by lazy {
-        WallpaperDetailsAdapter(
-            onSetWallpaperButtonClicked = { wallpaperDestination ->
-                context?.let { viewModel.onSetWallpaperButtonPressed(it, wallpaperDestination) }
-            }
-        )
-    }
+    private val wallpaperDetailsAdapter by lazy { WallpaperDetailsAdapter() }
     private var binding by autoClearedValue<FragmentWallpaperDetailsBinding>()
     private val primaryColorTransitionManager by lazy {
         ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
