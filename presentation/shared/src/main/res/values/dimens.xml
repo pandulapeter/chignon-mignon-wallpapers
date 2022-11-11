@@ -9,5 +9,6 @@
 
     <!-- Custom views -->
     <dimen name="pager_progress_bar_height">2dp</dimen>
+    <dimen name="corner_radius">16dp</dimen>
 
 </resources>

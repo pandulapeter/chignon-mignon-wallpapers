@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RoundedCorners">
+        <item name="cornerSizeTopLeft">@dimen/corner_radius</item>
+        <item name="cornerSizeTopRight">@dimen/corner_radius</item>
+        <item name="cornerSizeBottomLeft">@dimen/corner_radius</item>
+        <item name="cornerSizeBottomRight">@dimen/corner_radius</item>
+        <item name="strokeWidth">@dimen/divider</item>
+        <item name="strokeColor">?colorOnPrimary</item>
+    </style>
+
+</resources>

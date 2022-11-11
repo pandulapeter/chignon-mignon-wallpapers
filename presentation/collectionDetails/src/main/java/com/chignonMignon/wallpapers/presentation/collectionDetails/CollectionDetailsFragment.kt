@@ -110,7 +110,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             scaleX = 1f + multiplier * 5f
             scaleY = 1f + multiplier * 3f
             relativeTranslationX(multiplier)
-            alpha = 1f - multiplier
+            alpha = 1f - multiplier * multiplier
         }
         description.run {
             alpha = 1f - multiplier * 2f

@@ -11,14 +11,14 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/RoundedCorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/content_padding"
         android:background="?selectableItemBackground"
         android:theme="@style/ChignonMignonLight"
         android:transitionName="@{uiModel.wallpaperDestination.id}"
-        app:cardBackgroundColor="@{uiModel.wallpaperDestination.colorPaletteModel.primary}"
-        app:cardCornerRadius="0dp">
+        app:cardBackgroundColor="@{uiModel.wallpaperDestination.colorPaletteModel.primary}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
