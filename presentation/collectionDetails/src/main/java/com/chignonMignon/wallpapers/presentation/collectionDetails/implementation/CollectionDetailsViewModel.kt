@@ -86,7 +86,6 @@ internal class CollectionDetailsViewModel(
         WallpaperDestination(
             id = id,
             name = name.toNavigatorTranslatableText(),
-            description = description.toNavigatorTranslatableText(),
             url = url,
             collectionName = collection.name,
             collectionThumbnailUrl = collection.thumbnailUrl,

@@ -10,7 +10,6 @@ internal fun WallpaperResponse.toModel() = try {
         id = id.toWallpaperId(),
         collectionId = collectionId.toCollectionId(),
         name = nameEn.toWallpaperName(nameHu, nameRo),
-        description = descriptionEn.toWallpaperDescription(descriptionHu, descriptionRo),
         url = url.toWallpaperUrl()
     )
 } catch (exception: DataValidationException) {
@@ -23,19 +22,10 @@ private fun String?.toWallpaperId() = if (isNullOrBlank()) throw DataValidationE
 private fun String?.toWallpaperName(
     hungarian: String?,
     romanian: String?
-) = if (isNullOrBlank()) throw DataValidationException("Missing wallpaper ID.") else TranslatableText(
+) = if (isNullOrBlank()) throw DataValidationException("Missing wallpaper name.") else TranslatableText(
     english = this,
     hungarian = if (hungarian.isNullOrBlank()) this else hungarian,
     romanian = if (romanian.isNullOrBlank()) this else romanian
-)
-
-private fun String?.toWallpaperDescription(
-    hungarian: String?,
-    romanian: String?
-) = TranslatableText(
-    english = orEmpty(),
-    hungarian = if (hungarian.isNullOrBlank()) orEmpty() else hungarian,
-    romanian = if (romanian.isNullOrBlank()) orEmpty() else romanian
 )
 
 private fun String?.toWallpaperUrl() = this ?: throw DataValidationException("Missing wallpaper URL.")

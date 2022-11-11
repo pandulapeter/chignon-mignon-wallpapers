@@ -96,7 +96,6 @@ internal object MockDataGenerator {
             id = generateRandomId(),
             collectionId = "",
             name = generateRandomName(index),
-            description = generateRandomDescription(index),
             url = generateRandomImage(generateRandomSeed())
         )
     }

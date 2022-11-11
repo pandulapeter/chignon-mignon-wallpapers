@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class WallpaperDestination(
     val id: String,
     val name: TranslatableTextModel,
-    val description: TranslatableTextModel,
     val url: String,
     val collectionName: TranslatableTextModel,
     val collectionThumbnailUrl: String,
