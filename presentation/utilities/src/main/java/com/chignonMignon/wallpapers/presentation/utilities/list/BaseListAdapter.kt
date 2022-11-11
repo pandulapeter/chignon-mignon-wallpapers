@@ -13,6 +13,10 @@ abstract class BaseListAdapter<LI : ListItem> : ListAdapter<LI, BaseViewHolder<o
     override fun getChangePayload(oldItem: LI, newItem: LI) = ""
 }) {
 
+    init {
+        stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
+
     @CallSuper
     override fun onBindViewHolder(holder: BaseViewHolder<out LI, *>, position: Int) = holder.bindInternal(getItem(position))
 }

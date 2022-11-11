@@ -8,6 +8,8 @@ internal class CollectionRepositoryImpl(
     collectionRemoteSource: CollectionRemoteSource
 ) : BaseRepository<List<Collection>>(collectionRemoteSource::getCategories), CollectionRepository {
 
+    override fun areCollectionsAvailable() = isDataAvailable()
+
     override suspend fun getCollections(isForceRefresh: Boolean) =
         getData(isForceRefresh)
 

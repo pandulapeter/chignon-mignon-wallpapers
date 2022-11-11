@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Collection
+import com.chignonMignon.wallpapers.domain.useCases.AreCollectionsAvailableUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsListItem
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class CollectionsViewModel(
+    private val areCollectionsAvailable: AreCollectionsAvailableUseCase,
     private val getCollections: GetCollectionsUseCase,
     private val getWallpapers: GetWallpapersUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
@@ -45,11 +47,13 @@ internal class CollectionsViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     val items = collections.map { collections ->
         buildList {
-            add(CollectionsListItem.WelcomeUiModel())
-            when {
-                collections == null -> add(CollectionsListItem.ErrorUiModel())
-                collections.isEmpty() -> add(CollectionsListItem.EmptyUiModel())
-                else -> addAll(collections.map { CollectionsListItem.CollectionUiModel(it) } + CollectionsListItem.AboutUiModel())
+            if (!areCollectionsAvailable() || collections != null) {
+                add(CollectionsListItem.WelcomeUiModel())
+                when {
+                    collections == null -> add(CollectionsListItem.ErrorUiModel())
+                    collections.isEmpty() -> add(CollectionsListItem.EmptyUiModel())
+                    else -> addAll(collections.map { CollectionsListItem.CollectionUiModel(it) } + CollectionsListItem.AboutUiModel())
+                }
             }
         }
     }
@@ -93,7 +97,7 @@ internal class CollectionsViewModel(
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
             _shouldShowLoadingIndicator.value = true
-            if (collections.value == null) {
+            if (!areCollectionsAvailable()) {
                 _events.pushEvent(Event.ScrollToWelcome)
             }
             DebugMenu.log("Loading collections (force refresh: $isForceRefresh)...")

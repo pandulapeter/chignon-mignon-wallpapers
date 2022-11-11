@@ -169,7 +169,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun navigateToAboutPage() {
-        binding.viewPager.currentItem = binding.viewPager.adapter?.run { itemCount - 1 } ?: 0
+        binding.viewPager.currentItem = collectionsAdapter.itemCount - 1
     }
 
     private fun showErrorMessage() = context?.let { showSnackbar { viewModel.loadData(true) } }
