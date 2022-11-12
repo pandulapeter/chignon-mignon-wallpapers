@@ -50,7 +50,6 @@
                     android:id="@+id/about"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/content_padding"
                     android:background="?selectableItemBackgroundBorderless"
                     android:contentDescription="@string/collections_about"
                     android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
@@ -60,7 +59,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:marginWithInsetRight="@{@dimen/double_content_padding}"
+                    app:marginWithInsetRight="@{@dimen/content_padding}"
                     app:marginWithInsetTop="@{0f}" />
 
                 <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
