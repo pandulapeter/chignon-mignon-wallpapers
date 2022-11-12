@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/collection_details_header_height"
             android:theme="@style/ChignonMignonLight"
-            android:transitionName="@{viewModel.collection.id}"
             app:heightWithTopInset="@{@dimen/collection_details_header_height}">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
