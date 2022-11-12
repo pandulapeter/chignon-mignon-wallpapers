@@ -54,6 +54,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         postponeEnterTransition()
         (view.parent as? ViewGroup)?.doOnPreDraw { binding.recyclerView.post { startPostponedEnterTransition() } }
+        viewModel.loadData(false)
     }
 
     private fun FragmentCollectionDetailsBinding.setupToolbar() {

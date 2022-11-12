@@ -43,7 +43,6 @@ internal class CollectionDetailsViewModel(
 
     init {
         DebugMenu.log("Opened collection details for ${collection.id}.")
-        loadData(false)
     }
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {

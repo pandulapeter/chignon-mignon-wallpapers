@@ -84,7 +84,6 @@ internal class CollectionsViewModel(
     val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
 
     init {
-        loadData(false)
         viewModelScope.launch {
             DebugMenu.log("Loading wallpapers (pre-fetch)...")
             when (val result = DebugMenu.getMockWallpapers("", false) ?: getWallpapers(false)) {

@@ -71,6 +71,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.focusedCollectionDestination.observe(viewLifecycleOwner, ::onFocusedCollectionChanged)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
+        viewModel.loadData(false)
     }
 
     override fun onResume() {
