@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="collection_details_header_height">256dp</dimen>
+    <dimen name="collection_details_thumbnail_height">128dp</dimen>
+    <dimen name="collection_details_thumbnail_top_margin">72dp</dimen>
+    <dimen name="collection_details_description_start_margin">256dp</dimen>
+    <dimen name="collection_details_wallpaper_item_minimum_width">192dp</dimen>
+
+</resources>

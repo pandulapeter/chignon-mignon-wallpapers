@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+
+    <dimen name="content_padding">12dp</dimen>
+    <dimen name="double_content_padding">24dp</dimen>
+
+</resources>
