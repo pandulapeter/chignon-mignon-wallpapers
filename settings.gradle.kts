@@ -5,6 +5,7 @@ include(
     ":data:source",
     ":domain",
     ":presentation:shared",
+    ":presentation:about",
     ":presentation:collections",
     ":presentation:collectionDetails",
     ":presentation:wallpaperDetails",

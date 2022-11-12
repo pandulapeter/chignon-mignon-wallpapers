@@ -6,6 +6,8 @@ import com.chignonMignon.wallpapers.presentation.shared.navigation.model.Wallpap
 
 interface Navigator {
 
+    fun navigateToAbout()
+
     fun navigateToCollections()
 
     fun navigateToCollectionDetails(

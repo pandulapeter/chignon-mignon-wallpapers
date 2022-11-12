@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/collections_about"
+                    android:contentDescription="@string/about_title"
                     android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
                     android:padding="@dimen/content_padding"
                     android:src="@drawable/ic_about"

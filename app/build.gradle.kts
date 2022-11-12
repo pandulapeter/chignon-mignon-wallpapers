@@ -9,6 +9,7 @@ dependencies {
     implementation(project(":data:source"))
     implementation(project(":domain"))
     implementation(project(":presentation:shared"))
+    implementation(project(":presentation:about"))
     implementation(project(":presentation:collections"))
     implementation(project(":presentation:collectionDetails"))
     implementation(project(":presentation:wallpaperDetails"))

@@ -2,10 +2,8 @@ package com.chignonMignon.wallpapers.presentation.collections
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -29,7 +27,6 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
-import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 import kotlin.math.max
@@ -63,12 +60,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
     private var shouldAnimateColorTransitions = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = sharedElementTransition()
-        sharedElementReturnTransition = sharedElementTransition()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = bind(view)
         binding.viewModel = viewModel
@@ -79,8 +70,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.focusedCollectionDestination.observe(viewLifecycleOwner, ::onFocusedCollectionChanged)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
-        postponeEnterTransition()
-        (view.parent as? ViewGroup)?.doOnPreDraw { binding.viewPager.post { startPostponedEnterTransition() } }
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
@@ -169,7 +158,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun navigateToAboutPage() {
-        binding.viewPager.currentItem = collectionsAdapter.itemCount - 1
+        navigator?.navigateToAbout()
     }
 
     private fun showErrorMessage() = context?.let { showSnackbar { viewModel.loadData(true) } }

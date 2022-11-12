@@ -8,13 +8,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
+        android:textAppearance="@style/TitleTextAppearance"
         tools:text="First" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
+        android:textAppearance="@style/TitleTextAppearance"
         tools:text="Second" />
 
 </merge>

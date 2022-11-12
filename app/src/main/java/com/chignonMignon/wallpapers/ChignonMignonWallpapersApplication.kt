@@ -4,6 +4,7 @@ import android.app.Application
 import com.chignonMignon.wallpapers.data.repository.repositoryModule
 import com.chignonMignon.wallpapers.data.source.remote.sourceModule
 import com.chignonMignon.wallpapers.domain.domainModule
+import com.chignonMignon.wallpapers.presentation.about.presentationAboutModule
 import com.chignonMignon.wallpapers.presentation.collectionDetails.presentationCollectionDetailsModule
 import com.chignonMignon.wallpapers.presentation.collections.presentationCollectionsModule
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
@@ -23,6 +24,7 @@ class ChignonMignonWallpapersApplication : Application() {
                         repositoryModule +
                         domainModule +
                         presentationSharedModule +
+                        presentationAboutModule +
                         presentationCollectionsModule +
                         presentationCollectionDetailsModule +
                         presentationWallpaperDetailsModule

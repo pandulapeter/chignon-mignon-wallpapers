@@ -17,84 +17,11 @@
         android:scrollbars="none"
         android:transitionGroup="true">
 
-        <LinearLayout
+        <com.chignonMignon.wallpapers.presentation.shared.customViews.AboutView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
             android:paddingHorizontal="@dimen/collections_pager_margin"
-            android:paddingVertical="@dimen/double_content_padding">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:importantForAccessibility="no"
-                android:src="@drawable/img_about_01" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:gravity="center"
-                android:text="@string/work_in_progress" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:adjustViewBounds="true"
-                android:importantForAccessibility="no"
-                android:src="@drawable/img_about_02" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:gravity="center"
-                android:text="@string/work_in_progress" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:adjustViewBounds="true"
-                android:importantForAccessibility="no"
-                android:src="@drawable/img_about_03" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:gravity="center"
-                android:text="@string/work_in_progress" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:adjustViewBounds="true"
-                android:importantForAccessibility="no"
-                android:src="@drawable/img_about_04" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:gravity="center"
-                android:text="@string/work_in_progress" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_content_padding"
-                android:adjustViewBounds="true"
-                android:importantForAccessibility="no"
-                android:scaleX="0.8"
-                android:scaleY="0.8"
-                android:src="@drawable/img_logo" />
-
-        </LinearLayout>
+            android:paddingVertical="@dimen/double_content_padding" />
 
     </androidx.core.widget.NestedScrollView>
 

@@ -69,7 +69,7 @@ internal class CollectionsViewModel(
     ) { collections,
         focusedCollection,
         isLastPageFocused ->
-        if (focusedCollection == null && (!collections.isNullOrEmpty() || !isLastPageFocused)) if (isLastPageFocused) R.string.collections_about else R.string.collections_welcome else R.string.collections_title
+        if (focusedCollection == null && (!collections.isNullOrEmpty() || !isLastPageFocused)) if (isLastPageFocused) R.string.about_title else R.string.collections_welcome else R.string.collections_title
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     private val _pagerProgress = MutableStateFlow(0f)
     val pagerProgress: StateFlow<Float> = _pagerProgress
