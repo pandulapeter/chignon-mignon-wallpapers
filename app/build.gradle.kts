@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.fragment)
     implementation(libs.google.android.material)
     implementation(libs.koin.android)
 }

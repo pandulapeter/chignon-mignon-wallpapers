@@ -6,6 +6,7 @@ plugins {
 dependencies {
     api(project(":data:model"))
     implementation(libs.koin.core)
+    implementation(libs.kotlin.coroutines)
     implementation(libs.square.moshi)
     implementation(libs.square.okhttp)
     implementation(libs.square.retrofit)

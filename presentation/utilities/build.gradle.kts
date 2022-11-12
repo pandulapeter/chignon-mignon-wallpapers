@@ -6,10 +6,12 @@ plugins {
 
 dependencies {
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.recyclerview)
     implementation(libs.coil)
     implementation(libs.google.android.material)
+    implementation(libs.kotlin.coroutines)
 }
 
 android {

@@ -6,4 +6,5 @@ dependencies {
     api(project(":data:model"))
     implementation(project(":data:source"))
     implementation(libs.koin.core)
+    implementation(libs.kotlin.coroutines)
 }
