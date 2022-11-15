@@ -47,10 +47,8 @@
             <com.chignonMignon.wallpapers.presentation.shared.customViews.AboutView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/double_content_padding"
                 app:marginWithInsetLeft="@{@dimen/double_content_padding}"
-                app:marginWithInsetRight="@{@dimen/double_content_padding}"
-                app:marginWithInsetTop="@{@dimen/double_content_padding}" />
+                app:marginWithInsetRight="@{@dimen/double_content_padding}" />
 
         </androidx.core.widget.NestedScrollView>
 

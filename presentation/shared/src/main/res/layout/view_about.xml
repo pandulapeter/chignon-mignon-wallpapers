@@ -57,4 +57,34 @@
         android:importantForAccessibility="no"
         android:src="@drawable/img_about_04" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/double_content_padding"
+        android:gravity="center"
+        android:text="@string/work_in_progress" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/double_content_padding"
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:src="@drawable/img_about_03" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/double_content_padding"
+        android:gravity="center"
+        android:text="@string/work_in_progress" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/double_content_padding"
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:src="@drawable/img_about_04" />
+
 </merge>
