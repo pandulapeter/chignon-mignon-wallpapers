@@ -90,7 +90,8 @@ internal object MockDataGenerator {
             thumbnailUrl = generateRandomImage(generateRandomSeed()),
             primaryColorCode = "",
             secondaryColorCode = "",
-            onSecondaryColorCode = ""
+            onSecondaryColorCode = "",
+            isPublic = false
         )
     }
 
@@ -100,7 +101,8 @@ internal object MockDataGenerator {
             collectionId = "",
             name = generateRandomName(index),
             url = generateRandomImage(generateRandomSeed()),
-            primaryColorCode = ""
+            primaryColorCode = "",
+            isPublic = false
         )
     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdUseCase
+import com.chignonMignon.wallpapers.presentation.collectionDetails.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.list.CollectionDetailsListItem
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.colorPaletteGenerator.ColorPaletteGenerator
@@ -53,7 +54,7 @@ internal class CollectionDetailsViewModel(
             when (val result = DebugMenu.getMockWallpapers(collection.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collection.id)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} wallpapers.")
-                    wallpapers.value = result.data.map { it.toNavigatorWallpaper() }
+                    wallpapers.value = result.data.filter { BuildConfig.DEBUG || it.isPublic }.map { it.toNavigatorWallpaper() }
                     _shouldShowLoadingIndicator.value = false
                 }
                 is Result.Failure -> {
@@ -91,7 +92,8 @@ internal class CollectionDetailsViewModel(
             url = url,
             collectionName = collection.name,
             collectionThumbnailUrl = collection.thumbnailUrl,
-            colorPaletteModel = colorPalette.toNavigatorColorPalette()
+            colorPaletteModel = colorPalette.toNavigatorColorPalette(),
+            isPublic = isPublic
         )
     }
 

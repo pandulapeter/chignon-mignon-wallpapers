@@ -9,6 +9,7 @@ import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.AreCollectionsAvailableUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
+import com.chignonMignon.wallpapers.presentation.collections.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsListItem
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.R
@@ -103,7 +104,7 @@ internal class CollectionsViewModel(
             when (val result = DebugMenu.getMockCollections(isForceRefresh) ?: getCollections(isForceRefresh)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} collections.")
-                    collections.value = result.data.map { it.toNavigatorCollection() }
+                    collections.value = result.data.filter { BuildConfig.DEBUG || it.isPublic }.map { it.toNavigatorCollection() }
                     _shouldShowLoadingIndicator.value = false
                 }
                 is Result.Failure -> {
@@ -170,7 +171,8 @@ internal class CollectionsViewModel(
             name = name.toNavigatorTranslatableText(),
             description = description.toNavigatorTranslatableText(),
             thumbnailUrl = thumbnailUrl,
-            colorPaletteModel = colorPalette.toNavigatorColorPalette()
+            colorPaletteModel = colorPalette.toNavigatorColorPalette(),
+            isPublic = isPublic
         )
     }
 

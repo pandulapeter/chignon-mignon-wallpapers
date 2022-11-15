@@ -5,5 +5,6 @@ data class Wallpaper(
     val collectionId: String,
     val name: TranslatableText,
     val url: String,
-    val primaryColorCode: String
+    val primaryColorCode: String,
+    val isPublic: Boolean
 )

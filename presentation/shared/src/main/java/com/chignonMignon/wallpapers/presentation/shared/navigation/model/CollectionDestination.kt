@@ -9,5 +9,6 @@ data class CollectionDestination(
     val name: TranslatableTextModel,
     val description: TranslatableTextModel,
     val thumbnailUrl: String,
-    val colorPaletteModel: ColorPaletteModel
+    val colorPaletteModel: ColorPaletteModel,
+    val isPublic: Boolean
 ) : Parcelable

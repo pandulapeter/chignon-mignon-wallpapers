@@ -10,5 +10,6 @@ data class WallpaperDestination(
     val url: String,
     val collectionName: TranslatableTextModel,
     val collectionThumbnailUrl: String,
-    val colorPaletteModel: ColorPaletteModel
+    val colorPaletteModel: ColorPaletteModel,
+    val isPublic: Boolean
 ) : Parcelable
