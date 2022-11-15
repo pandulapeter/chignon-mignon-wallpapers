@@ -9,4 +9,8 @@
 
     <style name="BodyLargeTextAppearance" parent="TextAppearance.Material3.BodyLarge" />
 
+    <style name="BodyMediumTextAppearance" parent="TextAppearance.Material3.BodyMedium">
+        <item name="lineHeight">18sp</item>
+    </style>
+
 </resources>

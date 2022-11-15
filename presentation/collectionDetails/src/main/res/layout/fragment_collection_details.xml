@@ -50,23 +50,34 @@
                     app:layout_collapseParallaxMultiplier="0.6"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
-                <TextView
-                    android:id="@+id/description"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center|end"
-                    android:lineHeight="18sp"
-                    android:lines="@integer/collection_details_description_lines"
-                    android:text="@{viewModel.collection.description}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:textColor="@{viewModel.collection.colorPaletteModel.onSecondary}"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.9"
                     app:marginWithInsetLeft="@{@dimen/collection_details_description_start_margin}"
                     app:marginWithInsetRight="@{@dimen/double_content_padding}"
-                    app:marginWithInsetTop="@{@dimen/collection_details_description_top_margin}"
-                    tools:text="Description" />
+                    app:marginWithInsetTop="@{@dimen/collection_details_description_top_margin}">
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center|end"
+                        android:lines="@integer/collection_details_description_lines"
+                        android:text="@{viewModel.collection.description}"
+                        android:textAppearance="@style/BodyMediumTextAppearance"
+                        android:textColor="@{viewModel.collection.colorPaletteModel.onSecondary}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_max="@dimen/collection_details_description_max_width"
+                        tools:text="Description" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/collection_thumbnail"
