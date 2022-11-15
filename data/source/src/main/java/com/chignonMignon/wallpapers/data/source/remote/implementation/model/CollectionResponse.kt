@@ -13,7 +13,10 @@ internal data class CollectionResponse(
     @Json(name = KEY_DESCRIPTION_EN) val descriptionEn: String? = null,
     @Json(name = KEY_DESCRIPTION_HU) val descriptionHu: String? = null,
     @Json(name = KEY_DESCRIPTION_RO) val descriptionRo: String? = null,
-    @Json(name = KEY_THUMBNAIL_URL) val thumbnailUrl: String? = null
+    @Json(name = KEY_THUMBNAIL_URL) val thumbnailUrl: String? = null,
+    @Json(name = KEY_PRIMARY_COLOR) val primaryColorCode: String? = null,
+    @Json(name = KEY_SECONDARY_COLOR) val secondaryColorCode: String? = null,
+    @Json(name = KEY_ON_SECONDARY_COLOR) val onSecondaryColorCode: String? = null
 ) {
     companion object {
         const val SHEET_NAME = "collections"
@@ -25,6 +28,9 @@ internal data class CollectionResponse(
         private const val KEY_DESCRIPTION_HU = "description_hu"
         private const val KEY_DESCRIPTION_RO = "description_ro"
         private const val KEY_THUMBNAIL_URL = "thumbnail_url"
+        private const val KEY_PRIMARY_COLOR = "primary_color"
+        private const val KEY_SECONDARY_COLOR = "secondary_color"
+        private const val KEY_ON_SECONDARY_COLOR = "on_secondary_color"
 
         internal fun addSheet(interceptorBuilder: RetrosheetInterceptor.Builder) = interceptorBuilder.addSheet(
             SHEET_NAME,
@@ -35,7 +41,10 @@ internal data class CollectionResponse(
             KEY_DESCRIPTION_EN,
             KEY_DESCRIPTION_HU,
             KEY_DESCRIPTION_RO,
-            KEY_THUMBNAIL_URL
+            KEY_THUMBNAIL_URL,
+            KEY_PRIMARY_COLOR,
+            KEY_SECONDARY_COLOR,
+            KEY_ON_SECONDARY_COLOR
         )
     }
 }

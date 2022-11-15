@@ -81,7 +81,10 @@ internal class CollectionDetailsViewModel(
         }
     }
 
-    private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(url).let { colorPalette ->
+    private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(
+        imageUrl = url,
+        overridePrimaryColorCode = primaryColorCode
+    ).let { colorPalette ->
         WallpaperDestination(
             id = id,
             name = name.toNavigatorTranslatableText(),

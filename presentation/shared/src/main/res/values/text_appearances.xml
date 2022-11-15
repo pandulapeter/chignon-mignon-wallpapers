@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TitleTextAppearance" parent="TextAppearance.Material3.ActionBar.Title" />
+    <style name="TitleTextAppearance" parent="TextAppearance.Material3.ActionBar.Title">
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
+
+    <style name="TitleLargeTextAppearance" parent="TextAppearance.Material3.TitleLarge" />
+
+    <style name="BodyLargeTextAppearance" parent="TextAppearance.Material3.BodyLarge" />
 
 </resources>

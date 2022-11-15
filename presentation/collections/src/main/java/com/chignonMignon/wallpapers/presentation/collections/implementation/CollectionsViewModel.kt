@@ -159,7 +159,12 @@ internal class CollectionsViewModel(
         }
     }
 
-    private suspend fun Collection.toNavigatorCollection() = colorPaletteGenerator.generateColors(thumbnailUrl).let { colorPalette ->
+    private suspend fun Collection.toNavigatorCollection() = colorPaletteGenerator.generateColors(
+        imageUrl = thumbnailUrl,
+        overridePrimaryColorCode = primaryColorCode,
+        overrideSecondaryColorCode = secondaryColorCode,
+        overrideOnSecondaryColorCode = onSecondaryColorCode
+    ).let { colorPalette ->
         CollectionDestination(
             id = id,
             name = name.toNavigatorTranslatableText(),

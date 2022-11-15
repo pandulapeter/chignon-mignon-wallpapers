@@ -19,6 +19,7 @@ import com.chignonMignon.wallpapers.presentation.shared.navigation.model.Collect
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.relativeTranslationX
@@ -119,6 +120,13 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             scale(1f - multiplier)
             relativeTranslationX(multiplier * 0.2f)
         }
+        toolbar.setNavigationIconTint(
+            ColorUtils.blendARGB(
+                this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.onSecondary,
+                toolbar.context.color(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary),
+                multiplier
+            )
+        )
     }
 
     companion object {

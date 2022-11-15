@@ -52,7 +52,7 @@
             android:paddingHorizontal="@dimen/collections_pager_margin"
             android:paddingBottom="@dimen/double_content_padding"
             android:text="@string/collections_welcome_message"
-            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            android:textAppearance="@style/BodyLargeTextAppearance"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

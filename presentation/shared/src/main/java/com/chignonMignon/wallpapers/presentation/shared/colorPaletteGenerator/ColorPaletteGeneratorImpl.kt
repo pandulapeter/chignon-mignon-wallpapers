@@ -13,19 +13,37 @@ internal class ColorPaletteGeneratorImpl(private val context: Context) : ColorPa
     private val defaultBackgroundColor by lazy { context.color(R.color.primary) }
     private val defaultForegroundColor by lazy { context.color(R.color.on_primary) }
 
-    override suspend fun generateColors(url: String) = context.downloadImage(url)?.let { bitmap ->
-        Palette.from(bitmap).generate().let { palette ->
-            val primarySwatch = palette.lightMutedSwatch ?: palette.lightVibrantSwatch ?: palette.vibrantSwatch
-            val secondarySwatch = palette.mutedSwatch ?: palette.darkMutedSwatch ?: palette.darkVibrantSwatch
-            ColorPalette(
-                primary = primarySwatch?.rgb ?: defaultBackgroundColor,
-                secondary = ColorUtils.blendARGB(secondarySwatch?.rgb ?: defaultBackgroundColor, Color.WHITE, 0.2f),
-                onSecondary = secondarySwatch?.bodyTextColor ?: defaultForegroundColor
-            )
+    override suspend fun generateColors(
+        imageUrl: String,
+        overridePrimaryColorCode: String,
+        overrideSecondaryColorCode: String,
+        overrideOnSecondaryColorCode: String
+    ): ColorPalette {
+        val overridePrimaryColor = overridePrimaryColorCode.resolveColor()
+        val overrideSecondaryColor = overrideSecondaryColorCode.resolveColor()
+        val overrideOnSecondaryColor = overrideOnSecondaryColorCode.resolveColor()
+        context.downloadImage(imageUrl).let { bitmap ->
+            if (bitmap == null) {
+                return ColorPalette(
+                    primary = overridePrimaryColor ?: defaultBackgroundColor,
+                    secondary = overrideSecondaryColor ?: defaultBackgroundColor,
+                    onSecondary = overrideOnSecondaryColor ?: defaultForegroundColor
+                )
+            } else {
+                return Palette.from(bitmap).generate().let { palette ->
+                    val primarySwatch = palette.lightMutedSwatch ?: palette.lightVibrantSwatch ?: palette.vibrantSwatch
+                    val secondarySwatch = palette.mutedSwatch ?: palette.darkMutedSwatch ?: palette.darkVibrantSwatch
+                    ColorPalette(
+                        primary = overridePrimaryColor ?: primarySwatch?.rgb ?: defaultBackgroundColor,
+                        secondary = overrideSecondaryColor ?: secondarySwatch?.rgb?.lightenColor() ?: defaultBackgroundColor,
+                        onSecondary = overrideOnSecondaryColor ?: secondarySwatch?.bodyTextColor ?: defaultForegroundColor
+                    )
+                }
+            }
         }
-    } ?: ColorPalette(
-        primary = defaultBackgroundColor,
-        secondary = defaultBackgroundColor,
-        onSecondary = defaultForegroundColor
-    )
+    }
+
+    private fun Int.lightenColor() = ColorUtils.blendARGB(this, Color.WHITE, 0.2f)
+
+    private fun String.resolveColor() = if (isBlank()) null else Color.parseColor(this)
 }

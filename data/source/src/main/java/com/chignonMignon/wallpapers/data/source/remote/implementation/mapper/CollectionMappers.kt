@@ -11,6 +11,9 @@ internal fun CollectionResponse.toModel() = try {
         name = nameEn.toCollectionName(nameHu, nameRo),
         description = descriptionEn.toCollectionDescription(descriptionHu, descriptionRo),
         thumbnailUrl = thumbnailUrl.toCollectionThumbnailUrl(),
+        primaryColorCode = primaryColorCode.toColor(),
+        secondaryColorCode = secondaryColorCode.toColor(),
+        onSecondaryColorCode = onSecondaryColorCode.toColor()
     )
 } catch (exception: DataValidationException) {
     println(exception.message)

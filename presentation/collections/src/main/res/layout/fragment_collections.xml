@@ -60,7 +60,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:marginWithInsetRight="@{@dimen/content_padding}"
-                    app:marginWithInsetTop="@{0f}" />
+                    app:marginWithInsetTop="@{0f}"
+                    app:tint="?colorOnPrimary" />
 
                 <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
                     android:id="@+id/progress_bar"

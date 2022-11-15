@@ -87,7 +87,10 @@ internal object MockDataGenerator {
             id = generateRandomId(),
             name = generateRandomName(index),
             description = generateRandomDescription(index),
-            thumbnailUrl = generateRandomImage(generateRandomSeed())
+            thumbnailUrl = generateRandomImage(generateRandomSeed()),
+            primaryColorCode = "",
+            secondaryColorCode = "",
+            onSecondaryColorCode = ""
         )
     }
 
@@ -96,7 +99,8 @@ internal object MockDataGenerator {
             id = generateRandomId(),
             collectionId = "",
             name = generateRandomName(index),
-            url = generateRandomImage(generateRandomSeed())
+            url = generateRandomImage(generateRandomSeed()),
+            primaryColorCode = ""
         )
     }
 
