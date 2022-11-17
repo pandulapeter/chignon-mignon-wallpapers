@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ChignonMignonLight"
-            app:backgroundColor="@{viewModel.primaryColor}">
+            app:backgroundColor="@{viewModel.primaryColor}"
+            app:liftOnScroll="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

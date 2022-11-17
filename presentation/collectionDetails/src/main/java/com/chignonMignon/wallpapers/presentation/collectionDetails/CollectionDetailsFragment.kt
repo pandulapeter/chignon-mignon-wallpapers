@@ -1,6 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.collectionDetails
 
-import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
@@ -47,6 +47,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentCollectionDetailsBinding>(view)
         binding.viewModel = viewModel
+        binding.setupRoot()
         binding.setupToolbar()
         binding.setupBackgroundAnimation()
         binding.setupSwipeRefreshLayout()
@@ -58,11 +59,19 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         viewModel.loadData(false)
     }
 
+    private fun FragmentCollectionDetailsBinding.setupRoot() = root.run {
+        activity?.window?.decorView?.setBackgroundColor(this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.secondary)
+    }
+
     private fun FragmentCollectionDetailsBinding.setupToolbar() {
         toolbar.setNavigationOnClickListener { navigator?.navigateBack() }
         appBarLayout.addOnOffsetChangedListener { _, verticalOffset -> animateHeader(-verticalOffset.toFloat() / appBarLayout.totalScrollRange) }
-        collectionBackground.foreground =
-            ColorDrawable(ColorUtils.setAlphaComponent(this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.secondary, 240))
+        collectionBackgroundOverlay.foreground = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM,
+            this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.let {
+                intArrayOf(ColorUtils.setAlphaComponent(it.primary, 240), it.secondary)
+            }
+        )
     }
 
     private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {

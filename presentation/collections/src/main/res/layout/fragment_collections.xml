@@ -10,160 +10,163 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionGroup="true">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ChignonMignonLight">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                app:backgroundColor="@{viewModel.primaryColor}">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    style="@style/Widget.MaterialComponents.Toolbar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:clipChildren="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:marginWithInsetLeft="@{0f}"
-                    app:marginWithInsetTop="@{0f}">
-
-                    <com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
-                        android:id="@+id/view_flipper"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:title="@{viewModel.selectedTitle}" />
-
-                </com.google.android.material.appbar.MaterialToolbar>
-
-                <ImageView
-                    android:id="@+id/about"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/about_title"
-                    android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
-                    android:padding="@dimen/content_padding"
-                    android:src="@drawable/ic_about"
-                    android:visibility="@{viewModel.shouldShowAboutButton}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:marginWithInsetRight="@{@dimen/content_padding}"
-                    app:marginWithInsetTop="@{0f}"
-                    app:tint="?colorOnPrimary" />
-
-                <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/pager_progress_bar_height"
-                    android:visibility="@{viewModel.shouldShowProgressBar}"
-                    app:color="@{@color/on_primary}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:progress="@{viewModel.pagerProgress}" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <ImageView
+            android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:backgroundColor="@{viewModel.secondaryColor}"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
+            android:background="@android:color/holo_red_dark"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{viewModel.focusedCollectionDestination.thumbnailUrl}"
+            app:shouldFade="@{true}" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:theme="@style/ChignonMignonLight"
+                app:liftOnScroll="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+
+                    <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/toolbar"
+                        style="@style/Widget.MaterialComponents.Toolbar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clipChildren="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:marginWithInsetLeft="@{0f}"
+                        app:marginWithInsetTop="@{0f}">
+
+                        <com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
+                            android:id="@+id/view_flipper"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:title="@{viewModel.selectedTitle}" />
+
+                    </com.google.android.material.appbar.MaterialToolbar>
+
+                    <ImageView
+                        android:id="@+id/about"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/about_title"
+                        android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
+                        android:padding="@dimen/content_padding"
+                        android:src="@drawable/ic_about"
+                        android:visibility="@{viewModel.shouldShowAboutButton}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:marginWithInsetRight="@{@dimen/content_padding}"
+                        app:marginWithInsetTop="@{0f}"
+                        app:tint="?colorOnPrimary" />
+
+                    <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/pager_progress_bar_height"
+                        android:visibility="@{viewModel.shouldShowProgressBar}"
+                        app:color="@{@color/on_primary}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:progress="@{viewModel.pagerProgress}" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false">
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
 
-                <ImageView
-                    android:id="@+id/background"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:importantForAccessibility="no"
-                    android:scaleType="centerCrop"
-                    app:imageUrl="@{viewModel.focusedCollectionDestination.thumbnailUrl}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shouldFade="@{true}" />
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/view_pager"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:clipChildren="false"
-                    android:clipToPadding="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:marginWithInsetBottom="@{0f}"
-                    app:marginWithInsetLeft="@{0f}"
-                    app:marginWithInsetRight="@{0f}"
-                    app:userInputEnabled="@{viewModel.isViewPagerSwipeEnabled}" />
+                    android:clipToPadding="false">
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:marginWithInsetBottom="@{@dimen/content_padding}"
-                    app:marginWithInsetLeft="@{@dimen/content_padding}"
-                    app:marginWithInsetRight="@{@dimen/content_padding}">
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/view_pager"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:marginWithInsetBottom="@{0f}"
+                        app:marginWithInsetLeft="@{0f}"
+                        app:marginWithInsetRight="@{0f}"
+                        app:userInputEnabled="@{viewModel.isViewPagerSwipeEnabled}" />
 
-                    <ImageView
-                        android:id="@+id/previous"
-                        android:layout_width="wrap_content"
+                    <FrameLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|start"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:contentDescription="@string/collections_previous"
-                        android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
-                        android:padding="@dimen/content_padding"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_previous"
-                        app:tint="@{viewModel.onSecondaryColor}" />
+                        android:animateLayoutChanges="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:marginWithInsetBottom="@{@dimen/content_padding}"
+                        app:marginWithInsetLeft="@{@dimen/content_padding}"
+                        app:marginWithInsetRight="@{@dimen/content_padding}">
 
-                    <ImageView
-                        android:id="@+id/next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|end"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:contentDescription="@string/collections_next"
-                        android:onClick="@{() -> viewModel.onNextButtonPressed()}"
-                        android:padding="@dimen/content_padding"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_next"
-                        android:visibility="@{viewModel.areCollectionsLoaded}"
-                        app:tint="@{viewModel.onSecondaryColor}" />
+                        <ImageView
+                            android:id="@+id/previous"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|start"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/collections_previous"
+                            android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
+                            android:padding="@dimen/content_padding"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_previous"
+                            app:tint="@{viewModel.onSecondaryColor}" />
 
-                </FrameLayout>
+                        <ImageView
+                            android:id="@+id/next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|end"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/collections_next"
+                            android:onClick="@{() -> viewModel.onNextButtonPressed()}"
+                            android:padding="@dimen/content_padding"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_next"
+                            android:visibility="@{viewModel.areCollectionsLoaded}"
+                            app:tint="@{viewModel.onSecondaryColor}" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    </FrameLayout>
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </FrameLayout>
 
 </layout>

@@ -77,12 +77,11 @@ internal class CollectionsViewModel(
     val shouldShowProgressBar = combine(shouldShowAboutButton, pagerProgress) { shouldShowAboutButton, pagerProgress ->
         shouldShowAboutButton && pagerProgress <= 1f
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
-    private val _primaryColor = MutableStateFlow<Int?>(null)
-    val primaryColor: StateFlow<Int?> = _primaryColor
-    private val _secondaryColor = MutableStateFlow<Int?>(null)
-    val secondaryColor: StateFlow<Int?> = _secondaryColor
+    private val primaryColor = MutableStateFlow<Int?>(null)
+    private val secondaryColor = MutableStateFlow<Int?>(null)
     private val _onSecondaryColor = MutableStateFlow<Int?>(null)
     val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
+    val backgroundColor = combine(primaryColor, secondaryColor) { primaryColor, secondaryColor -> primaryColor to secondaryColor }
 
     init {
         viewModelScope.launch {
@@ -127,11 +126,11 @@ internal class CollectionsViewModel(
     }
 
     fun updatePrimaryColor(@ColorInt primaryColor: Int) {
-        _primaryColor.value = primaryColor
+        this.primaryColor.value = primaryColor
     }
 
     fun updateSecondaryColor(@ColorInt secondaryColor: Int) {
-        _secondaryColor.value = secondaryColor
+        this.secondaryColor.value = secondaryColor
     }
 
     fun updateOnSecondaryColor(@ColorInt onSecondaryColor: Int) {

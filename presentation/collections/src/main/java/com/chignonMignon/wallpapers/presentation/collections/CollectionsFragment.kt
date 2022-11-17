@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.collections
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -43,13 +44,13 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
     private var binding by autoClearedValue<FragmentCollectionsBinding>()
     private val primaryColorTransitionManager by lazy {
-        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
+        ColorTransitionManager(requireContext().colorResource(android.R.attr.windowBackground), viewModel::updatePrimaryColor)
     }
     private val secondaryColorTransitionManager by lazy {
-        ColorTransitionManager(requireContext().colorResource(android.R.attr.windowBackground), viewModel::updateSecondaryColor)
+        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updateSecondaryColor)
     }
     private val onSecondaryColorTransitionManager by lazy {
-        ColorTransitionManager(requireContext().colorResource(android.R.attr.textColorPrimary), viewModel::updateOnSecondaryColor)
+        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary), viewModel::updateOnSecondaryColor)
     }
     private val onBackPressedCallback by lazy {
         object : OnBackPressedCallback(true) {
@@ -59,15 +60,23 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
     }
     private var shouldAnimateColorTransitions = false
+    private val backgroundGradient by lazy {
+        GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM,
+            requireContext().colorResource(android.R.attr.windowBackground).let { intArrayOf(it, it) }
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = bind(view)
         binding.viewModel = viewModel
+        binding.setupRoot()
         binding.setupSwipeRefreshLayout()
         binding.setupBackgroundAnimation()
         binding.setupViewPager()
         shouldAnimateColorTransitions = false
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
+        viewModel.backgroundColor.observe(viewLifecycleOwner, ::updateSwipeRefreshLayoutBackground)
         viewModel.focusedCollectionDestination.observe(viewLifecycleOwner, ::onFocusedCollectionChanged)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
@@ -78,6 +87,10 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         super.onResume()
         binding.background.alpha = if (viewModel.focusedCollectionDestination.value == null) 0f else BACKGROUND_ALPHA
         binding.progressBar.finishAnimation()
+    }
+
+    private fun FragmentCollectionsBinding.setupRoot() = root.run {
+        background = backgroundGradient
     }
 
     private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
@@ -125,6 +138,14 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                 }
                 else -> Unit
             }
+        }
+    }
+
+    private fun updateSwipeRefreshLayoutBackground(colors: Pair<Int?, Int?>) {
+        val primaryColor = colors.first
+        val secondaryColor = colors.second
+        if (primaryColor != null && secondaryColor != null) {
+            backgroundGradient.colors = intArrayOf(primaryColor, secondaryColor)
         }
     }
 
