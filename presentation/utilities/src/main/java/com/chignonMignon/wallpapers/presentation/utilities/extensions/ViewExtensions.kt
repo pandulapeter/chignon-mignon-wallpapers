@@ -14,10 +14,13 @@ import coil.drawable.CrossfadeDrawable
 import coil.imageLoader
 import coil.load
 import coil.request.ImageRequest
+import coil.transform.RoundedCornersTransformation
 import coil.transition.TransitionTarget
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlin.math.roundToInt
+
+private const val ROUNDED_CORNER_FIX = 0.75f
 
 data class ImageViewTag(
     val url: String? = null,
@@ -27,8 +30,13 @@ data class ImageViewTag(
 
 private val ImageView.imageViewTag get() = tag as? ImageViewTag
 
-@BindingAdapter(value = ["imageUrl", "shouldFade"], requireAll = false)
-fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
+@BindingAdapter(value = ["imageUrl", "shouldFade", "topCornerRadius", "bottomCornerRadius"], requireAll = false)
+fun ImageView.setImageUrl(
+    imageUrl: String?,
+    shouldFade: Boolean? = null,
+    topCornerRadius: Float? = null,
+    bottomCornerRadius: Float? = null
+) {
     if (imageViewTag?.url != imageUrl) {
         tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
         imageViewTag?.loadingIndicator?.isVisible = true
@@ -63,6 +71,16 @@ fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
         } else {
             load(imageUrl) {
                 crossfade(250)
+                if (topCornerRadius != null || bottomCornerRadius != null) {
+                    transformations(
+                        RoundedCornersTransformation(
+                            topLeft = (topCornerRadius ?: 0f) * ROUNDED_CORNER_FIX,
+                            topRight = (topCornerRadius ?: 0f) * ROUNDED_CORNER_FIX,
+                            bottomLeft = (bottomCornerRadius ?: 0f) * ROUNDED_CORNER_FIX,
+                            bottomRight = (bottomCornerRadius ?: 0f) * ROUNDED_CORNER_FIX
+                        )
+                    )
+                }
                 listener { _, result ->
                     (result.drawable as? BitmapDrawable)?.bitmap?.let {
                         imageViewTag?.loadingIndicator?.isVisible = false

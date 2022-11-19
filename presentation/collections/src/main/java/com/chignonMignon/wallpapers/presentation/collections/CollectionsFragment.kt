@@ -27,6 +27,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoCleare
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.delaySharedElementTransition
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,8 +57,10 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private val onBackPressedCallback by lazy {
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                onIsLastPageFocusedChanged(false)
-                onFocusedCollectionChanged(viewModel.focusedCollectionDestination.value)
+                if (viewModel.isLastPageFocused.value) {
+                    onIsLastPageFocusedChanged(false)
+                    onFocusedCollectionChanged(viewModel.focusedCollectionDestination.value)
+                }
                 binding.viewPager.currentItem = 0
             }
         }
@@ -89,6 +92,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.focusedCollectionDestination.observe(viewLifecycleOwner, ::onFocusedCollectionChanged)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
+        delaySharedElementTransition(binding.viewPager)
         viewModel.loadData(false)
     }
 

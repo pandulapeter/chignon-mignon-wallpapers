@@ -73,12 +73,18 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     override fun onStart() {
         super.onStart()
-        activity?.window?.decorView?.setBackgroundColor(this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.primary)
+        updateActivityWindowBackground()
     }
 
     override fun onStop() {
         super.onStop()
-        activity?.window?.decorView?.setBackgroundColor(this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.secondary)
+        updateActivityWindowBackground()
+    }
+
+    private fun updateActivityWindowBackground() {
+        activity?.window?.decorView?.background = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM, viewModel.collection.colorPaletteModel.let { intArrayOf(it.primary, it.secondary) }
+        )
     }
 
     private fun FragmentCollectionDetailsBinding.setupToolbar() {

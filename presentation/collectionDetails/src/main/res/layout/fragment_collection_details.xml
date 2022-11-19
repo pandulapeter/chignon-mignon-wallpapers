@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@{viewModel.collection.colorPaletteModel.secondary}"
-        android:transitionGroup="true">
+        android:transitionGroup="true"
+        android:transitionName="@{viewModel.collection.id}">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_layout"
@@ -99,12 +100,14 @@
                     app:marginWithInsetLeft="@{@dimen/double_content_padding}"
                     app:marginWithInsetTop="@{@dimen/collection_details_thumbnail_top_margin}">
 
-                    <com.google.android.material.imageview.ShapeableImageView
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:importantForAccessibility="no"
                         android:scaleType="centerCrop"
+                        app:bottomCornerRadius="@{@dimen/corner_radius}"
                         app:imageUrl="@{viewModel.collection.thumbnailUrl}"
+                        app:topCornerRadius="@{@dimen/corner_radius}"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
                 </com.google.android.material.card.MaterialCardView>
