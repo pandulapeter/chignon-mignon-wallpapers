@@ -5,7 +5,6 @@ import androidx.annotation.IdRes
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.chignonMignon.wallpapers.presentation.utilities.enterTransition
 
 inline fun <reified T : Fragment> FragmentManager.handleReplace(
     @IdRes containerId: Int,
@@ -15,13 +14,7 @@ inline fun <reified T : Fragment> FragmentManager.handleReplace(
     crossinline newInstance: () -> T
 ) {
     beginTransaction().apply {
-        findFragmentById(containerId)?.run {
-            exitTransition = enterTransition(true)
-            reenterTransition = enterTransition(false)
-        }
         val newFragment = findFragmentByTag(tag) ?: newInstance()
-        newFragment.enterTransition = enterTransition(true)
-        newFragment.returnTransition = enterTransition(false)
         sharedElements?.forEach { sharedElement -> ViewCompat.getTransitionName(sharedElement)?.let { addSharedElement(sharedElement, it) } }
         replace(containerId, newFragment, tag)
         if (addToBackStack) {

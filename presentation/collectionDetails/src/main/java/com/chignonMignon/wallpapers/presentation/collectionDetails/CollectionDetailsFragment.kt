@@ -4,10 +4,8 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chignonMignon.wallpapers.presentation.collectionDetails.databinding.FragmentCollectionDetailsBinding
@@ -20,12 +18,13 @@ import com.chignonMignon.wallpapers.presentation.shared.navigation.model.Wallpap
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.delaySharedElementTransition
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.relativeTranslationX
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.scale
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
-import com.chignonMignon.wallpapers.presentation.utilities.sharedElementTransition
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -40,8 +39,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = sharedElementTransition()
-        sharedElementReturnTransition = sharedElementTransition()
+        setupTransitions()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,8 +51,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         binding.setupRecyclerView()
         viewModel.items.observe(viewLifecycleOwner, collectionDetailsAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
-        postponeEnterTransition()
-        (view.parent as? ViewGroup)?.doOnPreDraw { binding.recyclerView.post { startPostponedEnterTransition() } }
+        delaySharedElementTransition(binding.recyclerView)
         viewModel.loadData(false)
     }
 

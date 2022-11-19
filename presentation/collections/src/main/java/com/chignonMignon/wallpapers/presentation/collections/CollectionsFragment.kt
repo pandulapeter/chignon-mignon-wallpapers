@@ -28,6 +28,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 import kotlin.math.max
@@ -65,6 +66,11 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             GradientDrawable.Orientation.TOP_BOTTOM,
             requireContext().colorResource(android.R.attr.windowBackground).let { intArrayOf(it, it) }
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupTransitions()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

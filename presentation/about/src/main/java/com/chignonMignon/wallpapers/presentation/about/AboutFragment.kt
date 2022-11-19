@@ -8,11 +8,17 @@ import com.chignonMignon.wallpapers.presentation.about.implementation.AboutViewM
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutFragment : Fragment(R.layout.fragment_about) {
 
     private val viewModel by viewModel<AboutViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupTransitions()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentAboutBinding>(view)
