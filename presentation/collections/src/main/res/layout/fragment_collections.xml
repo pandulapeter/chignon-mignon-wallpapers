@@ -37,8 +37,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.appbar.MaterialToolbar
                         android:id="@+id/toolbar"
@@ -87,6 +86,15 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:progress="@{viewModel.pagerProgress}" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/divider"
+                        android:background="?colorOnPrimary"
+                        android:visibility="@{viewModel.isLastPageFocused}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

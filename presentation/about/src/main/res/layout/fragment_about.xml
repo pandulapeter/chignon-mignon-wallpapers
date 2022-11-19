@@ -22,51 +22,51 @@
             android:background="@null"
             app:liftOnScroll="false">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:marginWithInsetLeft="@{0f}"
-                app:marginWithInsetTop="@{0f}"
-                app:navigationIcon="@drawable/ic_close"
-                app:title="@string/about_title"
-                app:titleTextAppearance="@style/TitleTextAppearance" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:marginWithInsetLeft="@{0f}"
+                    app:marginWithInsetTop="@{0f}"
+                    app:navigationIcon="@drawable/ic_close"
+                    app:title="@string/about_title"
+                    app:titleTextAppearance="@style/TitleTextAppearance" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider"
+                    android:layout_gravity="bottom"
+                    android:background="?colorOnPrimary" />
+
+            </FrameLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:marginWithInsetBottom="@{0f}">
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scroll_view"
+            <com.chignonMignon.wallpapers.presentation.shared.customViews.AboutView
+                android:id="@+id/about_view"
                 android:layout_width="match_parent"
-                app:marginWithInsetBottom="@{0f}"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollbars="none">
+                android:layout_height="wrap_content"
+                app:marginWithInsetLeft="@{@dimen/double_content_padding}"
+                app:marginWithInsetRight="@{@dimen/double_content_padding}" />
 
-                <com.chignonMignon.wallpapers.presentation.shared.customViews.AboutView
-                    android:id="@+id/about_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:marginWithInsetLeft="@{@dimen/double_content_padding}"
-                    app:marginWithInsetRight="@{@dimen/double_content_padding}" />
-
-            </androidx.core.widget.NestedScrollView>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/about_shadow_height"
-                android:background="@drawable/bg_shadow_gradient" />
-
-        </FrameLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

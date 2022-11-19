@@ -138,6 +138,9 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
                 multiplier
             )
         )
+        divider.run {
+            alpha = multiplier
+        }
     }
 
     companion object {
