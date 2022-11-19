@@ -9,19 +9,32 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:windowBackground"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:transitionGroup="true">
+        android:layout_height="match_parent">
 
-        <com.chignonMignon.wallpapers.presentation.shared.customViews.AboutView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/collections_pager_margin" />
+            android:layout_height="match_parent"
+            android:background="?android:windowBackground"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:transitionGroup="true">
 
-    </androidx.core.widget.NestedScrollView>
+            <com.chignonMignon.wallpapers.presentation.shared.customViews.AboutView
+                android:id="@+id/about_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/collections_pager_margin" />
+
+        </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/about_shadow_height"
+            android:background="@drawable/bg_shadow_gradient" />
+
+    </FrameLayout>
 
 </layout>

@@ -5,7 +5,7 @@ import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 
 class ColorTransitionManager(
-    @ColorInt val defaultColor: Int,
+    @ColorInt var defaultColor: Int,
     private val onColorChanged: (color: Int) -> Unit
 ) {
     private var currentColor = defaultColor

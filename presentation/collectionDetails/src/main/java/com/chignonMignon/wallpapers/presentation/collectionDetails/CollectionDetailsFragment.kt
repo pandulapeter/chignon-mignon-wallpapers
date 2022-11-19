@@ -47,7 +47,6 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = bind<FragmentCollectionDetailsBinding>(view)
         binding.viewModel = viewModel
-        binding.setupRoot()
         binding.setupToolbar()
         binding.setupBackgroundAnimation()
         binding.setupSwipeRefreshLayout()
@@ -59,7 +58,13 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         viewModel.loadData(false)
     }
 
-    private fun FragmentCollectionDetailsBinding.setupRoot() = root.run {
+    override fun onStart() {
+        super.onStart()
+        activity?.window?.decorView?.setBackgroundColor(this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.primary)
+    }
+
+    override fun onStop() {
+        super.onStop()
         activity?.window?.decorView?.setBackgroundColor(this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.secondary)
     }
 

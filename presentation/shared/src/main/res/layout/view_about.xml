@@ -1,90 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:layout_height="match_parent"
     tools:layout_width="match_parent"
-    tools:parentTag="android.widget.LinearLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <ImageView
+        android:id="@+id/view_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/img_about_01" />
+        android:src="@drawable/img_about_01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/view_2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:gravity="center"
-        android:text="@string/work_in_progress" />
+        android:text="@string/work_in_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_1" />
 
     <ImageView
+        android:id="@+id/view_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/img_about_02" />
+        android:src="@drawable/img_about_02"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_2" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/view_4"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:gravity="center"
-        android:text="@string/work_in_progress" />
+        android:text="@string/work_in_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_3" />
 
     <ImageView
+        android:id="@+id/view_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/img_about_03" />
+        android:src="@drawable/img_about_03"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_4" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/view_6"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:gravity="center"
-        android:text="@string/work_in_progress" />
+        android:text="@string/work_in_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_5" />
 
     <ImageView
+        android:id="@+id/view_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/img_about_04" />
+        android:src="@drawable/img_about_04"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_6" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/view_8"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:gravity="center"
-        android:text="@string/work_in_progress" />
+        android:text="@string/work_in_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_7" />
 
     <ImageView
+        android:id="@+id/view_9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/img_about_03" />
+        android:src="@drawable/img_about_03"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_8" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/view_10"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:gravity="center"
-        android:text="@string/work_in_progress" />
+        android:text="@string/work_in_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_9" />
 
     <ImageView
+        android:id="@+id/view_11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/double_content_padding"
         android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/img_about_04" />
+        android:src="@drawable/img_about_04"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_10" />
 
 </merge>

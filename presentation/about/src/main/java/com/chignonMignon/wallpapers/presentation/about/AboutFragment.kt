@@ -7,6 +7,7 @@ import com.chignonMignon.wallpapers.presentation.about.databinding.FragmentAbout
 import com.chignonMignon.wallpapers.presentation.about.implementation.AboutViewModel
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutFragment : Fragment(R.layout.fragment_about) {
@@ -17,6 +18,7 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         val binding = bind<FragmentAboutBinding>(view)
         binding.viewModel = viewModel
         binding.setupToolbar()
+        activity?.window?.decorView?.setBackgroundColor(requireContext().colorResource(android.R.attr.windowBackground))
     }
 
     private fun FragmentAboutBinding.setupToolbar() = toolbar.setNavigationOnClickListener {

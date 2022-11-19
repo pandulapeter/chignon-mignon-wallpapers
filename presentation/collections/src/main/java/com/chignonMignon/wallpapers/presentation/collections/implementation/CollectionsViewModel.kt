@@ -58,7 +58,8 @@ internal class CollectionsViewModel(
             }
         }
     }
-    private val isLastPageFocused = MutableStateFlow(false)
+    private val _isLastPageFocused = MutableStateFlow(false)
+    val isLastPageFocused: StateFlow<Boolean> = _isLastPageFocused
     private val _focusedCollectionDestination = MutableStateFlow<CollectionDestination?>(null)
     val focusedCollectionDestination: StateFlow<CollectionDestination?> = _focusedCollectionDestination
     val areCollectionsLoaded = collections.map { it != null }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -66,7 +67,7 @@ internal class CollectionsViewModel(
     val selectedTitle = combine(
         collections,
         focusedCollectionDestination,
-        isLastPageFocused
+        _isLastPageFocused
     ) { collections,
         focusedCollection,
         isLastPageFocused ->
@@ -120,7 +121,7 @@ internal class CollectionsViewModel(
             if (collections.isNotEmpty()) {
                 _pagerProgress.value = (position.toFloat()) / collections.size.toFloat()
             }
-            isLastPageFocused.value = position == collections.size + 1
+            _isLastPageFocused.value = position == collections.size + 1
             _focusedCollectionDestination.value = if (position >= 1 && position <= collections.size) collections[position - 1] else null
         }
     }
@@ -148,13 +149,13 @@ internal class CollectionsViewModel(
     }
 
     fun onPreviousButtonPressed() {
-        if (focusedCollectionDestination.value != null || isLastPageFocused.value) {
+        if (focusedCollectionDestination.value != null || _isLastPageFocused.value) {
             _events.pushEvent(Event.NavigateToPreviousPage)
         }
     }
 
     fun onNextButtonPressed() {
-        if (collections.value != null && (focusedCollectionDestination.value != null || !isLastPageFocused.value)) {
+        if (collections.value != null && (focusedCollectionDestination.value != null || !_isLastPageFocused.value)) {
             _events.pushEvent(Event.NavigateToNextPage)
         }
     }

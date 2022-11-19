@@ -77,6 +77,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         shouldAnimateColorTransitions = false
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.backgroundColor.observe(viewLifecycleOwner, ::updateSwipeRefreshLayoutBackground)
+        viewModel.isLastPageFocused.observe(viewLifecycleOwner, ::onIsLastPageFocusedChanged)
         viewModel.focusedCollectionDestination.observe(viewLifecycleOwner, ::onFocusedCollectionChanged)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
@@ -142,10 +143,20 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun updateSwipeRefreshLayoutBackground(colors: Pair<Int?, Int?>) {
-        val primaryColor = colors.first
-        val secondaryColor = colors.second
-        if (primaryColor != null && secondaryColor != null) {
-            backgroundGradient.colors = intArrayOf(primaryColor, secondaryColor)
+        val topColor = colors.first
+        val bottomColor = colors.second
+        if (topColor != null && bottomColor != null) {
+            backgroundGradient.colors = intArrayOf(topColor, bottomColor)
+        }
+    }
+
+    private fun onIsLastPageFocusedChanged(isLastPageFocused: Boolean) {
+        context?.run {
+            secondaryColorTransitionManager.defaultColor = if (isLastPageFocused) {
+                colorResource(android.R.attr.windowBackground)
+            } else {
+                color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary)
+            }
         }
     }
 
