@@ -15,7 +15,6 @@ class AboutView @JvmOverloads constructor(
     init {
         ViewAboutBinding.inflate(LayoutInflater.from(context), this)
         context.dimension(R.dimen.double_content_padding).let {
-            // TODO: Bottom padding should take into account the bottom inset
             setPadding(paddingLeft, it, paddingRight, it)
         }
     }
