@@ -41,7 +41,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private val collectionsAdapter by lazy {
         CollectionsAdapter(
             onItemSelected = viewModel::onItemSelected,
-            onTryAgainButtonClicked = { viewModel.loadData(true) }
+            onTryAgainButtonClicked = { viewModel.loadData(true, requireContext()) }
         )
     }
     private var binding by autoClearedValue<FragmentCollectionsBinding>()
@@ -93,7 +93,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
         delaySharedElementTransition(binding.viewPager)
-        viewModel.loadData(false)
+        viewModel.loadData(false, requireContext())
     }
 
     override fun onResume() {
@@ -107,7 +107,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
-        setOnRefreshListener { this@CollectionsFragment.viewModel.loadData(true) }
+        setOnRefreshListener { this@CollectionsFragment.viewModel.loadData(true, requireContext()) }
         setColorSchemeResources(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary)
     }
 
@@ -207,7 +207,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         navigator?.navigateToAbout()
     }
 
-    private fun showErrorMessage() = context?.let { showSnackbar { viewModel.loadData(true) } }
+    private fun showErrorMessage() = context?.let { showSnackbar { viewModel.loadData(true, requireContext()) } }
 
     private fun scrollToWelcome() {
         binding.viewPager.currentItem = 0
