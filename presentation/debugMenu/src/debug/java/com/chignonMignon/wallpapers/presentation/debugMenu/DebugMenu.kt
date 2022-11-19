@@ -7,6 +7,7 @@ import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createGeneralSection
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createHeaderSection
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createLogsSection
+import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createShortcutsSection
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.createTestingSection
 import com.chignonMignon.wallpapers.presentation.debugMenu.sections.shouldUseMockData
 import com.chignonMignon.wallpapers.presentation.debugMenu.utilities.MockDataGenerator
@@ -43,6 +44,7 @@ object DebugMenu : DebugMenuContract {
                 versionName = versionName,
                 versionCode = versionCode
             ) + createGeneralSection(
+            ) + createShortcutsSection(
             ) + createTestingSection(
             ) + createLogsSection(
             )).toTypedArray()
