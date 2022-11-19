@@ -9,6 +9,5 @@ data class WallpaperDestination(
     val name: TranslatableTextModel,
     val url: String,
     val colorPaletteModel: ColorPaletteModel,
-    val isPublic: Boolean,
-    val isColorPaletteReady: Boolean
+    val isPublic: Boolean
 ) : Parcelable

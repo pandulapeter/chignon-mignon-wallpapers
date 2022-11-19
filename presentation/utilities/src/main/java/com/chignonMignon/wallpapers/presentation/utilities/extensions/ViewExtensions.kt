@@ -31,6 +31,7 @@ private val ImageView.imageViewTag get() = tag as? ImageViewTag
 fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
     if (imageViewTag?.url != imageUrl) {
         tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
+        imageViewTag?.loadingIndicator?.isVisible = true
         if (shouldFade == true && isLaidOut) {
             context.imageLoader.enqueue(
                 ImageRequest.Builder(context)

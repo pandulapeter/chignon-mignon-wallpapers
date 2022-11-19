@@ -89,6 +89,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         setHasFixedSize(true)
         layoutManager = GridLayoutManager(context, getSpanCount())
         adapter = collectionDetailsAdapter
+        itemAnimator = null
     }
 
     private fun getSpanCount(): Int {

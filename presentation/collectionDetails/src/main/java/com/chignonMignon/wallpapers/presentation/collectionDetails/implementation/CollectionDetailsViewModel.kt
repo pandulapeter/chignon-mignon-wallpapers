@@ -18,6 +18,8 @@ import com.chignonMignon.wallpapers.presentation.shared.navigation.model.Wallpap
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -58,12 +60,28 @@ internal class CollectionDetailsViewModel(
             when (val result = DebugMenu.getMockWallpapers(collection.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collection.id)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} wallpapers.")
-                    val filteredResults = result.data.filter { BuildConfig.DEBUG || it.isPublic }
-                    wallpapers.value = filteredResults.map { it.toPlaceholderNavigatorWallpaper() }
-                    _shouldShowLoadingIndicator.value = false
                     colorPaletteGeneratorJob?.cancel()
+                    val filteredResults = result.data.filter { BuildConfig.DEBUG || it.isPublic }
+                    if (wallpapers.value?.map { it.url } != filteredResults.map { it.url }) {
+                        wallpapers.value = filteredResults.map { it.toPlaceholderNavigatorWallpaper() }
+                    }
+                    _shouldShowLoadingIndicator.value = false
                     colorPaletteGeneratorJob = launch {
-                        wallpapers.value = filteredResults.map { it.toNavigatorWallpaper() }
+                        filteredResults.map { wallpaper ->
+                            async {
+                                wallpaper.toNavigatorWallpaper().let { wallpaperWithFinalColorPalette ->
+                                    if (wallpapers.value?.contains(wallpaperWithFinalColorPalette) == false) {
+                                        wallpapers.value = wallpapers.value?.toMutableList()?.apply {
+                                            val index = indexOfFirst { it.id == wallpaperWithFinalColorPalette.id }
+                                            if (index != -1) {
+                                                removeAt(index)
+                                                add(index, wallpaperWithFinalColorPalette)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }.awaitAll()
                     }
                 }
                 is Result.Failure -> {
@@ -96,8 +114,7 @@ internal class CollectionDetailsViewModel(
         name = name.toNavigatorTranslatableText(),
         url = "",
         colorPaletteModel = collection.colorPaletteModel,
-        isPublic = isPublic,
-        isColorPaletteReady = false
+        isPublic = isPublic
     )
 
     private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(
@@ -109,8 +126,7 @@ internal class CollectionDetailsViewModel(
             name = name.toNavigatorTranslatableText(),
             url = url,
             colorPaletteModel = colorPalette.toNavigatorColorPalette(),
-            isPublic = isPublic,
-            isColorPaletteReady = true
+            isPublic = isPublic
         )
     }
 
