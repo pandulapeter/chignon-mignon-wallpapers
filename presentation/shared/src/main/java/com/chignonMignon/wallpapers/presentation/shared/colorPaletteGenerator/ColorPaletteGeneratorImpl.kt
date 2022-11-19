@@ -12,6 +12,7 @@ internal class ColorPaletteGeneratorImpl(private val context: Context) : ColorPa
 
     private val defaultBackgroundColor by lazy { context.color(R.color.primary) }
     private val defaultForegroundColor by lazy { context.color(R.color.on_primary) }
+    private val cache = mutableMapOf<String, ColorPalette>()
 
     override suspend fun generateColors(
         imageUrl: String,
@@ -19,6 +20,7 @@ internal class ColorPaletteGeneratorImpl(private val context: Context) : ColorPa
         overrideSecondaryColorCode: String,
         overrideOnSecondaryColorCode: String
     ): ColorPalette {
+        cache[imageUrl]?.let { return it }
         val overridePrimaryColor = overridePrimaryColorCode.resolveColor()
         val overrideSecondaryColor = overrideSecondaryColorCode.resolveColor()
         val overrideOnSecondaryColor = overrideOnSecondaryColorCode.resolveColor()
@@ -37,7 +39,9 @@ internal class ColorPaletteGeneratorImpl(private val context: Context) : ColorPa
                         primary = overridePrimaryColor ?: primarySwatch?.rgb ?: defaultBackgroundColor,
                         secondary = overrideSecondaryColor ?: secondarySwatch?.rgb?.lightenColor() ?: defaultBackgroundColor,
                         onSecondary = overrideOnSecondaryColor ?: secondarySwatch?.bodyTextColor ?: defaultForegroundColor
-                    )
+                    ).also {
+                        cache[imageUrl] = it
+                    }
                 }
             }
         }
