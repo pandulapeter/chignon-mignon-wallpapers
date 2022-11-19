@@ -4,6 +4,8 @@ import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
 
 interface WallpaperRepository {
 
+    fun areWallpapersAvailable() : Boolean
+
     suspend fun getWallpapers(isForceRefresh: Boolean): List<Wallpaper>
 
     suspend fun getWallpaperById(isForceRefresh: Boolean, wallpaperId: String): Wallpaper

@@ -8,6 +8,8 @@ internal class WallpaperRepositoryImpl(
     wallpaperRemoteSource: WallpaperRemoteSource
 ) : BaseRepository<List<Wallpaper>>(wallpaperRemoteSource::getWallpapers), WallpaperRepository {
 
+    override fun areWallpapersAvailable() = isDataAvailable()
+
     override suspend fun getWallpapers(isForceRefresh: Boolean) =
         getData(isForceRefresh)
 

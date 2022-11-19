@@ -96,8 +96,9 @@ internal class CollectionsViewModel(
 
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
-            _shouldShowLoadingIndicator.value = true
-            if (!areCollectionsAvailable()) {
+            val areCollectionsAvailable = areCollectionsAvailable()
+            _shouldShowLoadingIndicator.value = isForceRefresh || !areCollectionsAvailable
+            if (!areCollectionsAvailable) {
                 _events.pushEvent(Event.ScrollToWelcome)
             }
             DebugMenu.log("Loading collections (force refresh: $isForceRefresh)...")

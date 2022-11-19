@@ -1,6 +1,7 @@
 package com.chignonMignon.wallpapers.domain
 
 import com.chignonMignon.wallpapers.domain.useCases.AreCollectionsAvailableUseCase
+import com.chignonMignon.wallpapers.domain.useCases.AreWallpapersAvailableUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionByIdUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpaperByIdUseCase
@@ -10,6 +11,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
     factory { AreCollectionsAvailableUseCase(get()) }
+    factory { AreWallpapersAvailableUseCase(get()) }
     factory { GetCollectionByIdUseCase(get()) }
     factory { GetCollectionsUseCase(get()) }
     factory { GetWallpaperByIdUseCase(get()) }

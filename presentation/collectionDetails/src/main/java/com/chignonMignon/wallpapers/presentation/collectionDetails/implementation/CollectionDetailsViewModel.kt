@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
+import com.chignonMignon.wallpapers.domain.useCases.AreWallpapersAvailableUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdUseCase
 import com.chignonMignon.wallpapers.presentation.collectionDetails.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.list.CollectionDetailsListItem
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 
 internal class CollectionDetailsViewModel(
     val collection: CollectionDestination,
+    private val areWallpapersAvailable: AreWallpapersAvailableUseCase,
     private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
@@ -49,7 +51,7 @@ internal class CollectionDetailsViewModel(
     fun loadData(isForceRefresh: Boolean) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
             _shouldShowErrorState.value = false
-            _shouldShowLoadingIndicator.value = true
+            _shouldShowLoadingIndicator.value = isForceRefresh || !areWallpapersAvailable()
             DebugMenu.log("Loading wallpapers (force refresh: $isForceRefresh)...")
             when (val result = DebugMenu.getMockWallpapers(collection.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collection.id)) {
                 is Result.Success -> {
