@@ -37,7 +37,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
 
                     <com.google.android.material.appbar.MaterialToolbar
                         android:id="@+id/toolbar"
@@ -76,25 +77,28 @@
                         app:marginWithInsetTop="@{0f}"
                         app:tint="?colorOnPrimary" />
 
-                    <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
-                        android:id="@+id/progress_bar"
+                    <FrameLayout
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/pager_progress_bar_height"
-                        android:visibility="@{viewModel.shouldShowProgressBar}"
-                        app:color="@{@color/on_primary}"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:progress="@{viewModel.pagerProgress}" />
+                        app:layout_constraintStart_toStartOf="parent">
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/divider"
-                        android:background="?colorOnPrimary"
-                        android:visibility="@{viewModel.isLastPageFocused}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divider"
+                            android:background="?colorOnPrimary"
+                            android:visibility="@{viewModel.isLastPageFocused}" />
+
+                        <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
+                            android:id="@+id/progress_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/pager_progress_bar_height"
+                            android:visibility="@{viewModel.shouldShowProgressBar}"
+                            app:color="@{@color/on_primary}"
+                            app:progress="@{viewModel.pagerProgress}" />
+
+                    </FrameLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

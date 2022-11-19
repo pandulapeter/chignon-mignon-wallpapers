@@ -68,12 +68,10 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     private fun FragmentCollectionDetailsBinding.setupToolbar() {
         toolbar.setNavigationOnClickListener { navigator?.navigateBack() }
         appBarLayout.addOnOffsetChangedListener { _, verticalOffset -> animateHeader(-verticalOffset.toFloat() / appBarLayout.totalScrollRange) }
-        collectionBackgroundOverlay.foreground = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM,
-            this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.let {
+        collectionBackgroundOverlay.foreground =
+            GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.let {
                 intArrayOf(ColorUtils.setAlphaComponent(it.primary, 240), it.secondary)
-            }
-        )
+            })
     }
 
     private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {
@@ -89,7 +87,6 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         setHasFixedSize(true)
         layoutManager = GridLayoutManager(context, getSpanCount())
         adapter = collectionDetailsAdapter
-        itemAnimator = null
     }
 
     private fun getSpanCount(): Int {
@@ -109,9 +106,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     }
 
     private fun openWallpaperDetails(
-        wallpapers: List<WallpaperDestination>,
-        selectedWallpaperIndex: Int,
-        sharedElements: List<View>
+        wallpapers: List<WallpaperDestination>, selectedWallpaperIndex: Int, sharedElements: List<View>
     ) {
         navigator?.navigateToWallpaperDetails(wallpapers, selectedWallpaperIndex, sharedElements)
     }
