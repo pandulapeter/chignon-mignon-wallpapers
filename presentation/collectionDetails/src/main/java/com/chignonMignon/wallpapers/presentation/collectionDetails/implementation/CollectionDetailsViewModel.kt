@@ -17,6 +17,7 @@ import com.chignonMignon.wallpapers.presentation.shared.navigation.model.Collect
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -43,6 +44,7 @@ internal class CollectionDetailsViewModel(
     val shouldShowEmptyState = combine(wallpapers, shouldShowLoadingIndicator) { wallpapers, shouldShowLoadingIndicator ->
         wallpapers?.isEmpty() == true && !shouldShowLoadingIndicator
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+    private var colorPaletteGeneratorJob: Job? = null
 
     init {
         DebugMenu.log("Opened collection details for ${collection.id}.")
@@ -56,8 +58,13 @@ internal class CollectionDetailsViewModel(
             when (val result = DebugMenu.getMockWallpapers(collection.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collection.id)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} wallpapers.")
-                    wallpapers.value = result.data.filter { BuildConfig.DEBUG || it.isPublic }.map { it.toNavigatorWallpaper() }
+                    val filteredResults = result.data.filter { BuildConfig.DEBUG || it.isPublic }
+                    wallpapers.value = filteredResults.map { it.toPlaceholderNavigatorWallpaper() }
                     _shouldShowLoadingIndicator.value = false
+                    colorPaletteGeneratorJob?.cancel()
+                    colorPaletteGeneratorJob = launch {
+                        wallpapers.value = filteredResults.map { it.toNavigatorWallpaper() }
+                    }
                 }
                 is Result.Failure -> {
                     DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
@@ -84,6 +91,17 @@ internal class CollectionDetailsViewModel(
         }
     }
 
+    private fun Wallpaper.toPlaceholderNavigatorWallpaper() = WallpaperDestination(
+        id = id,
+        name = name.toNavigatorTranslatableText(),
+        url = url,
+        collectionName = collection.name,
+        collectionThumbnailUrl = collection.thumbnailUrl,
+        colorPaletteModel = collection.colorPaletteModel,
+        isPublic = isPublic,
+        isColorPaletteReady = false
+    )
+
     private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(
         imageUrl = url,
         overridePrimaryColorCode = primaryColorCode
@@ -95,7 +113,8 @@ internal class CollectionDetailsViewModel(
             collectionName = collection.name,
             collectionThumbnailUrl = collection.thumbnailUrl,
             colorPaletteModel = colorPalette.toNavigatorColorPalette(),
-            isPublic = isPublic
+            isPublic = isPublic,
+            isColorPaletteReady = true
         )
     }
 

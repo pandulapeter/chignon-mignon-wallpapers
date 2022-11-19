@@ -16,18 +16,21 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/content_padding"
         android:background="?selectableItemBackground"
+        android:clickable="@{uiModel.wallpaperDestination.colorPaletteReady}"
         android:transitionName="@{uiModel.wallpaperDestination.id}"
         app:cardBackgroundColor="@{uiModel.wallpaperDestination.colorPaletteModel.primary}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:paddingBottom="@dimen/content_padding">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/thumbnail"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@{uiModel.wallpaperDestination.colorPaletteModel.primary}"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{uiModel.wallpaperDestination.url}"
@@ -38,6 +41,17 @@
                 app:strokeColor="@color/on_primary"
                 app:strokeWidth="@dimen/divider"
                 tools:src="@tools:sample/backgrounds/scenic" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="@{!uiModel.wallpaperDestination.colorPaletteReady}"
+                app:indicatorColor="@{uiModel.wallpaperDestination.colorPaletteModel.secondary}"
+                app:layout_constraintBottom_toBottomOf="@id/thumbnail"
+                app:layout_constraintEnd_toEndOf="@id/thumbnail"
+                app:layout_constraintStart_toStartOf="@id/thumbnail"
+                app:layout_constraintTop_toTopOf="@id/thumbnail" />
 
             <TextView
                 android:id="@+id/name"

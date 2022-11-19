@@ -48,7 +48,10 @@ fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
                     .build()
             )
         } else {
-            load(imageUrl) { allowHardware(false) }
+            load(imageUrl) {
+                crossfade(250)
+                allowHardware(false)
+            }
         }
     }
 }
