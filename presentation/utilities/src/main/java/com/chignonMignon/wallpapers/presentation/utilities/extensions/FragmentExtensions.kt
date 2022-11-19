@@ -33,5 +33,5 @@ fun Fragment.setupTransitions() {
 
 fun Fragment.delaySharedElementTransition(waitForPreDrawView: View) {
     postponeEnterTransition()
-    (view?.parent as? ViewGroup)?.doOnPreDraw { waitForPreDrawView.postDelayed( { startPostponedEnterTransition() } , 100L) }
+    (view?.parent as? ViewGroup)?.doOnPreDraw { waitForPreDrawView.post { startPostponedEnterTransition() } }
 }

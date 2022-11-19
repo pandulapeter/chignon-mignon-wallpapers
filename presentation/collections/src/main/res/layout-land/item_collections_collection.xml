@@ -36,12 +36,22 @@
             app:layout_constraintWidth_max="@dimen/collections_collection_thumbnail_width">
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/thumbnail_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@{uiModel.collectionDestination.colorPaletteModel.primary}"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{uiModel.collectionDestination.thumbnailUrl}"
                 tools:src="@tools:sample/backgrounds/scenic" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/loading_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                app:indicatorColor="@{uiModel.collectionDestination.colorPaletteModel.secondary}" />
 
         </com.google.android.material.card.MaterialCardView>
 

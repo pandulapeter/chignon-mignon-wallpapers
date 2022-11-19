@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chignonMignon.wallpapers.presentation.collectionDetails.databinding.ItemCollectionDetailsWallpaperBinding
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseListAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseViewHolder
 
@@ -26,6 +27,9 @@ internal class CollectionDetailsAdapter(
                     binding.uiModel?.wallpaperDestination?.id?.let { onItemSelected(it, listOf(binding.root)) }
                 }
             }
+            binding.thumbnail.tag = ImageViewTag(
+                loadingIndicator = binding.loadingIndicator
+            )
         }
 
         override fun bind(listItem: CollectionDetailsListItem.WallpaperUiModel) {

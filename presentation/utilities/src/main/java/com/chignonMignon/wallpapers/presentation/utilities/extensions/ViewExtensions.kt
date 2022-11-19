@@ -1,7 +1,9 @@
 package com.chignonMignon.wallpapers.presentation.utilities.extensions
 
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.graphics.drawable.Animatable
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +19,18 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlin.math.roundToInt
 
+data class ImageViewTag(
+    val url: String? = null,
+    val bitmap: Bitmap? = null,
+    val loadingIndicator: View? = null
+)
+
+private val ImageView.imageViewTag get() = tag as? ImageViewTag
+
 @BindingAdapter(value = ["imageUrl", "shouldFade"], requireAll = false)
 fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
-    if (tag != imageUrl) {
-        tag = imageUrl
+    if (imageViewTag?.url != imageUrl) {
+        tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
         if (shouldFade == true && isLaidOut) {
             context.imageLoader.enqueue(
                 ImageRequest.Builder(context)
@@ -37,12 +47,14 @@ fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
                             val drawable = if (result is Animatable) result else CrossfadeDrawable(this@setImageUrl.drawable, result, durationMillis = 600)
                             setImageDrawable(drawable)
                             (drawable as? Animatable)?.start()
+                            imageViewTag?.loadingIndicator?.isVisible = false
                         }
 
                         override fun onError(error: Drawable?) {
                             val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
                             setImageDrawable(drawable)
                             (drawable as? Animatable)?.start()
+                            imageViewTag?.loadingIndicator?.isVisible = false
                         }
                     })
                     .build()
@@ -50,6 +62,12 @@ fun ImageView.setImageUrl(imageUrl: String?, shouldFade: Boolean? = null) {
         } else {
             load(imageUrl) {
                 crossfade(250)
+                listener { _, result ->
+                    (result.drawable as? BitmapDrawable)?.bitmap?.let {
+                        imageViewTag?.loadingIndicator?.isVisible = false
+                        tag = imageViewTag?.copy(bitmap = it)
+                    }
+                }
                 allowHardware(false)
             }
         }

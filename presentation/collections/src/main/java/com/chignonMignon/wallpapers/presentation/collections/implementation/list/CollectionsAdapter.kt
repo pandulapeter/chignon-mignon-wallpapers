@@ -10,6 +10,7 @@ import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCol
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsEmptyBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsErrorBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsWelcomeBinding
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseListAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseViewHolder
 
@@ -63,6 +64,9 @@ internal class CollectionsAdapter(
 
         init {
             binding.root.tag = binding
+            binding.thumbnailImage.tag = ImageViewTag(
+                loadingIndicator = binding.loadingIndicator
+            )
             binding.thumbnail.setOnClickListener {
                 if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     binding.uiModel?.collectionDestination?.id?.let { onItemSelected(it, listOf(binding.thumbnail)) }

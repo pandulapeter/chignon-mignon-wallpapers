@@ -94,9 +94,7 @@ internal class CollectionDetailsViewModel(
     private fun Wallpaper.toPlaceholderNavigatorWallpaper() = WallpaperDestination(
         id = id,
         name = name.toNavigatorTranslatableText(),
-        url = url,
-        collectionName = collection.name,
-        collectionThumbnailUrl = collection.thumbnailUrl,
+        url = "",
         colorPaletteModel = collection.colorPaletteModel,
         isPublic = isPublic,
         isColorPaletteReady = false
@@ -110,8 +108,6 @@ internal class CollectionDetailsViewModel(
             id = id,
             name = name.toNavigatorTranslatableText(),
             url = url,
-            collectionName = collection.name,
-            collectionThumbnailUrl = collection.thumbnailUrl,
             colorPaletteModel = colorPalette.toNavigatorColorPalette(),
             isPublic = isPublic,
             isColorPaletteReady = true

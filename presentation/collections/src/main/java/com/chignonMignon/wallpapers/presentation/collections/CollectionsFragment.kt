@@ -112,14 +112,15 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private fun FragmentCollectionsBinding.setupViewPager() = viewPager.run {
         adapter = collectionsAdapter
         offscreenPageLimit = 1
+        val viewModel = this@CollectionsFragment.viewModel
         registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                this@CollectionsFragment.viewModel.onPageSelected(position)
+                viewModel.onPageSelected(position)
                 onBackPressedCallback.isEnabled = position != 0
             }
 
             override fun onPageScrollStateChanged(state: Int) {
-                if (!this@CollectionsFragment.viewModel.shouldShowLoadingIndicator.value) {
+                if (!viewModel.shouldShowLoadingIndicator.value) {
                     swipeRefreshLayout.isEnabled = state == ViewPager2.SCROLL_STATE_IDLE
                 }
             }
