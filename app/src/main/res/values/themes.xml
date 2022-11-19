@@ -15,6 +15,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="colorControlNormal">@color/on_primary</item>
+        <item name="fontFamily">@font/barlow_regular</item>
     </style>
 
     <style name="ChignonMignon" parent="ChignonMignonBase" />

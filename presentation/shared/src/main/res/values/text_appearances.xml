@@ -3,6 +3,8 @@
 
     <style name="TitleTextAppearance" parent="TextAppearance.Material3.ActionBar.Title">
         <item name="android:textColor">?colorOnPrimary</item>
+        <item name="fontFamily">@font/barlow_regular</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TitleLargeTextAppearance" parent="TextAppearance.Material3.TitleLarge" />
