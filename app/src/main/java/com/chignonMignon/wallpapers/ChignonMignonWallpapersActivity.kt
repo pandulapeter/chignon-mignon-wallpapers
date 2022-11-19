@@ -18,6 +18,8 @@ import com.chignonMignon.wallpapers.presentation.wallpaperDetails.WallpaperDetai
 
 class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chignon_mignon_wallpapers), Navigator {
 
+    override var selectedWallpaperIndex = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         handleSplashScreen()
         super.onCreate(savedInstanceState)
@@ -43,12 +45,15 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
     override fun navigateToCollectionDetails(
         collectionDestination: CollectionDestination,
         sharedElements: List<View>
-    ) = supportFragmentManager.handleReplace(
-        containerId = R.id.container,
-        sharedElements = sharedElements,
-        addToBackStack = true
     ) {
-        CollectionDetailsFragment.newInstance(collectionDestination)
+        selectedWallpaperIndex = 0
+        supportFragmentManager.handleReplace(
+            containerId = R.id.container,
+            sharedElements = sharedElements,
+            addToBackStack = true
+        ) {
+            CollectionDetailsFragment.newInstance(collectionDestination)
+        }
     }
 
     override fun navigateToWallpaperDetails(

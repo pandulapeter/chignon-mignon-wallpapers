@@ -4,7 +4,9 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.View.OnLayoutChangeListener
 import android.view.animation.AnimationUtils
+import androidx.core.app.SharedElementCallback
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,6 +18,7 @@ import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.delaySharedElementTransition
@@ -28,6 +31,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArgume
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+
 class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details) {
 
     private val viewModel by viewModel<CollectionDetailsViewModel> { parametersOf(arguments?.collectionDestination) }
@@ -36,14 +40,26 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             onItemSelected = viewModel::onItemSelected
         )
     }
+    private var binding by autoClearedValue<FragmentCollectionDetailsBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupTransitions()
+        setExitSharedElementCallback(
+            object : SharedElementCallback() {
+                override fun onMapSharedElements(names: List<String?>, sharedElements: MutableMap<String?, View?>) {
+                    navigator?.selectedWallpaperIndex?.let { selectedWallpaperIndex ->
+                        binding.recyclerView.findViewHolderForAdapterPosition(selectedWallpaperIndex)?.let { selectedViewHolder ->
+                            sharedElements[names[0]] = selectedViewHolder.itemView
+                        }
+                    }
+                }
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = bind<FragmentCollectionDetailsBinding>(view)
+        binding = bind(view)
         binding.viewModel = viewModel
         binding.setupToolbar()
         binding.setupBackgroundAnimation()
@@ -68,10 +84,11 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     private fun FragmentCollectionDetailsBinding.setupToolbar() {
         toolbar.setNavigationOnClickListener { navigator?.navigateBack() }
         appBarLayout.addOnOffsetChangedListener { _, verticalOffset -> animateHeader(-verticalOffset.toFloat() / appBarLayout.totalScrollRange) }
-        collectionBackgroundOverlay.foreground =
-            GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.let {
+        collectionBackgroundOverlay.foreground = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM, this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.let {
                 intArrayOf(ColorUtils.setAlphaComponent(it.primary, 240), it.secondary)
-            })
+            }
+        )
     }
 
     private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {
@@ -85,8 +102,24 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     private fun FragmentCollectionDetailsBinding.setupRecyclerView() = recyclerView.run {
         setHasFixedSize(true)
-        layoutManager = GridLayoutManager(context, getSpanCount())
+        val gridLayoutManager = GridLayoutManager(context, getSpanCount())
+        layoutManager = gridLayoutManager
         adapter = collectionDetailsAdapter
+        navigator?.selectedWallpaperIndex?.let { selectedWallpaperIndex ->
+            addOnLayoutChangeListener(
+                object : OnLayoutChangeListener {
+                    override fun onLayoutChange(view: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                        removeOnLayoutChangeListener(this)
+                        gridLayoutManager.findViewByPosition(selectedWallpaperIndex)?.let { viewAtPosition ->
+                            if (gridLayoutManager.isViewPartiallyVisible(viewAtPosition, false, true)) {
+                                post { gridLayoutManager.scrollToPosition(selectedWallpaperIndex) }
+                                appBarLayout.setExpanded(false, false)
+                            }
+                        }
+                    }
+                }
+            )
+        }
     }
 
     private fun getSpanCount(): Int {
@@ -108,7 +141,10 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     private fun openWallpaperDetails(
         wallpapers: List<WallpaperDestination>, selectedWallpaperIndex: Int, sharedElements: List<View>
     ) {
-        navigator?.navigateToWallpaperDetails(wallpapers, selectedWallpaperIndex, sharedElements)
+        navigator?.let {
+            it.selectedWallpaperIndex = selectedWallpaperIndex
+            it.navigateToWallpaperDetails(wallpapers, selectedWallpaperIndex, sharedElements)
+        }
     }
 
     private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }

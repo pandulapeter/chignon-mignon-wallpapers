@@ -3,6 +3,7 @@ package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
@@ -24,6 +25,7 @@ import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+
 class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
     private val viewModel by viewModel<WallpaperDetailsViewModel> {
@@ -39,6 +41,13 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupTransitions()
+        setEnterSharedElementCallback(
+            object : SharedElementCallback() {
+                override fun onMapSharedElements(names: List<String?>, sharedElements: MutableMap<String?, View?>) {
+                    sharedElements[names[0]] = binding.root
+                }
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,6 +63,11 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     override fun onResume() {
         super.onResume()
         binding.progressBar.finishAnimation()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        navigator?.selectedWallpaperIndex = binding.viewPager.currentItem
     }
 
     private fun FragmentWallpaperDetailsBinding.setupToolbar() = toolbar.setNavigationOnClickListener {
