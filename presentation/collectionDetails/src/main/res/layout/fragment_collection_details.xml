@@ -22,7 +22,6 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/collection_details_header_height"
-            android:theme="@style/ChignonMignonLight"
             app:heightWithTopInset="@{@dimen/collection_details_header_height}"
             app:liftOnScroll="false">
 

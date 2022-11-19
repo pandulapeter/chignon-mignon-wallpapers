@@ -19,7 +19,6 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ChignonMignonLight"
             app:backgroundColor="@{viewModel.primaryColor}"
             app:liftOnScroll="false">
 
@@ -85,7 +84,6 @@
                 android:text="@string/wallpaper_details_set_wallpaper"
                 android:textColor="?colorOnPrimary"
                 android:textStyle="bold"
-                android:theme="@style/ChignonMignonLight"
                 app:backgroundColor="@{viewModel.primaryColor}"
                 app:icon="@drawable/ic_set_wallpaper"
                 app:iconTint="?colorOnPrimary"
