@@ -13,8 +13,10 @@ import androidx.annotation.DimenRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.ImageLoader
+import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import kotlinx.coroutines.delay
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -36,12 +38,19 @@ fun Context.getWallpapersFolder() = File(filesDir, "wallpapers").also { it.mkdir
 
 fun Context.getWallpaperFile(id: String) = File("${getWallpapersFolder().path}/${id}.png")
 
-fun Context.getUriForFile(file: File) =
+fun Context.getUriForFile(file: File): Uri =
     FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".fileProvider", file)
 
-suspend fun Context.downloadImage(url: String) = ((ImageLoader(this).execute(
-    ImageRequest.Builder(this).data(url).allowHardware(false).build()
-) as? SuccessResult)?.drawable as? BitmapDrawable)?.bitmap
+suspend fun Context.downloadImage(url: String, shouldRetry: Boolean = true): Bitmap? {
+    val result = ImageLoader(this).execute(
+        ImageRequest.Builder(this).data(url).allowHardware(false).build()
+    )
+    if (shouldRetry && (result as? ErrorResult)?.throwable?.message == "closed") {
+        delay(500)
+        return downloadImage(url, false)
+    }
+    return ((result as? SuccessResult)?.drawable as? BitmapDrawable)?.bitmap
+}
 
 fun Context.saveImage(file: File, bitmap: Bitmap): Uri? {
     val outputBytes = ByteArrayOutputStream()

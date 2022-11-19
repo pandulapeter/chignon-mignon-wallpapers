@@ -28,7 +28,7 @@ data class ImageViewTag(
     val loadingIndicator: View? = null
 )
 
-private val ImageView.imageViewTag get() = tag as? ImageViewTag
+val ImageView.imageViewTag get() = tag as? ImageViewTag
 
 @BindingAdapter(value = ["imageUrl", "shouldFade", "topCornerRadius", "bottomCornerRadius"], requireAll = false)
 fun ImageView.setImageUrl(
@@ -37,7 +37,7 @@ fun ImageView.setImageUrl(
     topCornerRadius: Float? = null,
     bottomCornerRadius: Float? = null
 ) {
-    if (imageViewTag?.url != imageUrl) {
+    if (imageUrl?.isNotBlank() == true && imageViewTag?.url != imageUrl) {
         tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
         imageViewTag?.loadingIndicator?.isVisible = true
         if (shouldFade == true && isLaidOut) {
@@ -81,6 +81,7 @@ fun ImageView.setImageUrl(
                         )
                     )
                 }
+                // TODO: fallback(), error()
                 listener { _, result ->
                     (result.drawable as? BitmapDrawable)?.bitmap?.let {
                         imageViewTag?.loadingIndicator?.isVisible = false

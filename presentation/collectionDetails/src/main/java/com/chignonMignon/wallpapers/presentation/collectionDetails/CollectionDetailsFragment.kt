@@ -18,11 +18,13 @@ import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.delaySharedElementTransition
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.relativeTranslationX
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.scale
@@ -95,6 +97,9 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
                 intArrayOf(ColorUtils.setAlphaComponent(it.primary, 240), it.secondary)
             }
         )
+        collectionThumbnailImage.run {
+            tag = imageViewTag?.copy(loadingIndicator = binding.loadingIndicator) ?: ImageViewTag(loadingIndicator = binding.loadingIndicator)
+        }
     }
 
     private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {
