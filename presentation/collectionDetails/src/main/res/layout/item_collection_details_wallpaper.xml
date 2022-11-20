@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                app:indicatorColor="@{uiModel.wallpaperDestination.colorPaletteModel.secondary}"
+                app:indicatorColor="?colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="@id/thumbnail"
                 app:layout_constraintEnd_toEndOf="@id/thumbnail"
                 app:layout_constraintStart_toStartOf="@id/thumbnail"

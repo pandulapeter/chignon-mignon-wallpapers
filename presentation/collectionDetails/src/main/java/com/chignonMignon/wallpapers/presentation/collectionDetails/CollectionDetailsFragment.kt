@@ -43,6 +43,9 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         )
     }
     private var binding by autoClearedValue<FragmentCollectionDetailsBinding>()
+    private val backgroundGradient by lazy {
+        GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(viewModel.collection.colorPaletteModel.secondary))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +110,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     }
 
     private fun FragmentCollectionDetailsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
+        background = backgroundGradient
         setOnRefreshListener { this@CollectionDetailsFragment.viewModel.loadData(true) }
         setColorSchemeResources(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary)
     }
@@ -161,6 +165,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     private fun showErrorMessage() = showSnackbar { viewModel.loadData(true) }
 
     private fun FragmentCollectionDetailsBinding.animateHeader(multiplier: Float) {
+        val viewModel = this@CollectionDetailsFragment.viewModel
         overlay.alpha = multiplier
         collectionThumbnail.run {
             scaleX = 1f + multiplier * 5f
@@ -176,13 +181,18 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         }
         toolbar.setNavigationIconTint(
             ColorUtils.blendARGB(
-                this@CollectionDetailsFragment.viewModel.collection.colorPaletteModel.onSecondary,
+                viewModel.collection.colorPaletteModel.onSecondary,
                 toolbar.context.color(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary),
                 multiplier
             )
         )
         divider.run {
             alpha = multiplier
+        }
+        swipeRefreshLayout.background = (backgroundGradient.mutate() as GradientDrawable).apply {
+            viewModel.collection.colorPaletteModel.let {
+                colors = intArrayOf(ColorUtils.blendARGB(it.primary, it.secondary, 1f - multiplier), it.secondary)
+            }
         }
     }
 
