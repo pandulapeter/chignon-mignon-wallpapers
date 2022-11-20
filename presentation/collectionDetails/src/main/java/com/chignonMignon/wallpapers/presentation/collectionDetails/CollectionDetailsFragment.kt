@@ -54,8 +54,12 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             object : SharedElementCallback() {
                 override fun onMapSharedElements(names: List<String?>, sharedElements: MutableMap<String?, View?>) {
                     navigator?.selectedWallpaperIndex?.let { selectedWallpaperIndex ->
-                        binding.recyclerView.findViewHolderForAdapterPosition(selectedWallpaperIndex)?.let { selectedViewHolder ->
-                            sharedElements[names[0]] = selectedViewHolder.itemView
+                        binding.recyclerView.findViewHolderForAdapterPosition(selectedWallpaperIndex)?.itemView?.let { sharedElementView ->
+                            if (names.isEmpty() || sharedElementView.transitionName == null) {
+                                sharedElements.clear()
+                            } else {
+                                sharedElements[names[0]] = sharedElementView
+                            }
                         }
                     }
                 }

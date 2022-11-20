@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.doOnNextLayout
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -22,6 +24,7 @@ import com.chignonMignon.wallpapers.presentation.collections.implementation.list
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
+import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.ColorTransitionManager
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
@@ -39,10 +42,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val viewModel by viewModel<CollectionsViewModel>()
     private val collectionsAdapter by lazy {
-        CollectionsAdapter(
-            onItemSelected = viewModel::onItemSelected,
-            onTryAgainButtonClicked = { viewModel.loadData(true, requireContext()) }
-        )
+        CollectionsAdapter(onItemSelected = viewModel::onItemSelected, onTryAgainButtonClicked = { viewModel.loadData(true, requireContext()) })
     }
     private var binding by autoClearedValue<FragmentCollectionsBinding>()
     private val primaryColorTransitionManager by lazy {
@@ -67,11 +67,9 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
     private var shouldAnimateColorTransitions = false
     private val backgroundGradient by lazy {
-        GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM,
-            requireContext().colorResource(android.R.attr.windowBackground).let { intArrayOf(it, it) }
-        )
+        GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, requireContext().colorResource(android.R.attr.windowBackground).let { intArrayOf(it, it) })
     }
+    private var currentItem: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,12 +92,31 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
         delaySharedElementTransition(binding.viewPager)
         viewModel.loadData(false, requireContext())
+        currentItem = currentItem ?: savedInstanceState?.currentItem
     }
 
     override fun onResume() {
         super.onResume()
-        binding.background.alpha = if (viewModel.focusedCollectionDestination.value == null) 0f else BACKGROUND_ALPHA
-        binding.progressBar.finishAnimation()
+        fun updateUi() {
+            binding.background.alpha = if (viewModel.focusedCollectionDestination.value == null) 0f else BACKGROUND_ALPHA
+            binding.progressBar.finishAnimation()
+        }
+        currentItem?.let { currentItem ->
+            binding.viewPager.doOnPreDraw {
+                binding.viewPager.setCurrentItem(currentItem, false)
+                onPageSelected(currentItem)
+                onFocusedCollectionChanged(viewModel.focusedCollectionDestination.value)
+                updateUi()
+            }
+        }
+        updateUi()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        currentItem?.let { currentItem ->
+            outState.currentItem = currentItem
+        }
     }
 
     private fun FragmentCollectionsBinding.setupRoot() = root.run {
@@ -115,15 +132,23 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         startAnimation(AnimationUtils.loadAnimation(context, com.chignonMignon.wallpapers.presentation.shared.R.anim.anim_background))
     }
 
+    private fun onPageSelected(position: Int) {
+        currentItem = position
+        if (position == collectionsAdapter.itemCount - 1) {
+            binding.progressBar.run {
+                progress = 1f
+                finishAnimation()
+            }
+        }
+        viewModel.onPageSelected(position)
+        onBackPressedCallback.isEnabled = position != 0
+    }
+
     private fun FragmentCollectionsBinding.setupViewPager() = viewPager.run {
         adapter = collectionsAdapter
-        offscreenPageLimit = 1
         val viewModel = this@CollectionsFragment.viewModel
         registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                viewModel.onPageSelected(position)
-                onBackPressedCallback.isEnabled = position != 0
-            }
+            override fun onPageSelected(position: Int) = this@CollectionsFragment.onPageSelected(position)
 
             override fun onPageScrollStateChanged(state: Int) {
                 if (!viewModel.shouldShowLoadingIndicator.value) {
@@ -215,6 +240,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     companion object {
         private const val BACKGROUND_ALPHA = 0.1f
+        private var Bundle.currentItem by BundleDelegate.Int("currentItem")
 
         fun newInstance() = CollectionsFragment()
     }

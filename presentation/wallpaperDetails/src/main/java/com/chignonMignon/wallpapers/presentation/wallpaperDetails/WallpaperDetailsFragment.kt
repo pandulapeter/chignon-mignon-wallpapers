@@ -44,7 +44,13 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         setEnterSharedElementCallback(
             object : SharedElementCallback() {
                 override fun onMapSharedElements(names: List<String?>, sharedElements: MutableMap<String?, View?>) {
-                    sharedElements[names[0]] = binding.root
+                    binding.root.let { sharedElementView ->
+                        if (names.isEmpty() || sharedElementView.transitionName == null) {
+                            sharedElements.clear()
+                        } else {
+                            sharedElements[names[0]] = sharedElementView
+                        }
+                    }
                 }
             }
         )

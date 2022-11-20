@@ -30,7 +30,11 @@ class PagerProgressBar @JvmOverloads constructor(
         set(value) {
             if (field != value) {
                 field = value
-                postInvalidateOnAnimation()
+                if (!isLaidOut) {
+                    finishAnimation()
+                } else {
+                    postInvalidateOnAnimation()
+                }
             }
         }
     private var animatedProgress = progress

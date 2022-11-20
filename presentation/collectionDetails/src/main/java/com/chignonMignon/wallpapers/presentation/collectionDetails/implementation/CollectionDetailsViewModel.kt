@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
 import com.chignonMignon.wallpapers.domain.useCases.AreWallpapersAvailableUseCase
+import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdUseCase
 import com.chignonMignon.wallpapers.presentation.collectionDetails.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.list.CollectionDetailsListItem
@@ -31,6 +32,7 @@ import kotlinx.coroutines.launch
 
 internal class CollectionDetailsViewModel(
     val collection: CollectionDestination,
+    private val getCollections: GetCollectionsUseCase,
     private val areWallpapersAvailable: AreWallpapersAvailableUseCase,
     private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
@@ -57,6 +59,7 @@ internal class CollectionDetailsViewModel(
             _shouldShowErrorState.value = false
             _shouldShowLoadingIndicator.value = isForceRefresh || !areWallpapersAvailable()
             DebugMenu.log("Loading wallpapers (force refresh: $isForceRefresh)...")
+            getCollections(false) // Needed for state restoration, in case the process has been killed while in the background
             when (val result = DebugMenu.getMockWallpapers(collection.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collection.id)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} wallpapers.")
