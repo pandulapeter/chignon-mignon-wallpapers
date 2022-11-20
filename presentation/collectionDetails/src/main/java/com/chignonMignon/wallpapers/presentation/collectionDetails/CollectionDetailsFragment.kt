@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.collectionDetails
 
+import android.animation.LayoutTransition
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -104,6 +105,9 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
                 intArrayOf(ColorUtils.setAlphaComponent(it.primary, 240), it.secondary)
             }
         )
+        collectionThumbnail.layoutTransition = LayoutTransition().apply {
+            setAnimateParentHierarchy(false)
+        }
         collectionThumbnailImage.run {
             tag = imageViewTag?.copy(loadingIndicator = binding.loadingIndicator) ?: ImageViewTag(loadingIndicator = binding.loadingIndicator)
         }

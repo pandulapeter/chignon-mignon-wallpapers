@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.list
 
+import android.animation.LayoutTransition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,9 @@ internal class CollectionDetailsAdapter(
             binding.thumbnail.tag = ImageViewTag(
                 loadingIndicator = binding.loadingIndicator
             )
+            binding.constraintLayout.layoutTransition = LayoutTransition().apply {
+                setAnimateParentHierarchy(false)
+            }
         }
 
         override fun bind(listItem: CollectionDetailsListItem.WallpaperUiModel) {

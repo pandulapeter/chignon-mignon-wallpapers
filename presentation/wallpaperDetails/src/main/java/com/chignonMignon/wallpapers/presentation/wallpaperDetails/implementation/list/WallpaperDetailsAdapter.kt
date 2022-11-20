@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.list
 
+import android.animation.LayoutTransition
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
@@ -21,6 +22,9 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
             binding.preview.tag = ImageViewTag(
                 loadingIndicator = binding.loadingIndicator
             )
+            binding.container.layoutTransition = LayoutTransition().apply {
+                setAnimateParentHierarchy(false)
+            }
         }
 
         override fun bind(listItem: WallpaperDetailsListItem.WallpaperUiModel) {

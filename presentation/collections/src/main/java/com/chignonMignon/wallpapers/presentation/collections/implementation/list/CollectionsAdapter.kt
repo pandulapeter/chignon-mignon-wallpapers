@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.collections.implementation.list
 
+import android.animation.LayoutTransition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,6 +72,10 @@ internal class CollectionsAdapter(
                 if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     binding.uiModel?.collectionDestination?.id?.let { onItemSelected(it, listOf(binding.thumbnail)) }
                 }
+            }
+
+            binding.thumbnail.layoutTransition = LayoutTransition().apply {
+                setAnimateParentHierarchy(false)
             }
         }
 
