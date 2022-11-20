@@ -76,9 +76,10 @@ class ChignonMignonWallpapersActivity : AppCompatActivity(R.layout.activity_chig
     private fun handleSplashScreen() =
         installSplashScreen().setOnExitAnimationListener { splashScreen ->
             splashScreen.view.animate()
-                .scaleX(2f)
-                .scaleY(2f)
+                .scaleX(3f)
+                .scaleY(3f)
                 .alpha(0f)
+                .apply { duration = 500 }
                 .setInterpolator(AccelerateInterpolator())
                 .setListener(
                     object : Animator.AnimatorListener {

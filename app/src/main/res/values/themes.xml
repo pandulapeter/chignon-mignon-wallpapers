@@ -2,8 +2,8 @@
 <resources>
 
     <style name="Splash" parent="Theme.SplashScreen.IconBackground">
-        <item name="windowSplashScreenIconBackgroundColor">@color/primary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="windowSplashScreenBackground">@color/primary</item>
         <item name="postSplashScreenTheme">@style/ChignonMignon</item>
     </style>
 
