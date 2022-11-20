@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:indeterminate="true"
-                        app:indicatorColor="@{viewModel.collection.colorPaletteModel.secondary}" />
+                        app:indicatorColor="?colorOnPrimary" />
 
                 </com.google.android.material.card.MaterialCardView>
 

@@ -41,13 +41,13 @@ fun Context.getWallpaperFile(id: String) = File("${getWallpapersFolder().path}/$
 fun Context.getUriForFile(file: File): Uri =
     FileProvider.getUriForFile(applicationContext, applicationContext.packageName + ".fileProvider", file)
 
-suspend fun Context.downloadImage(url: String, shouldRetry: Boolean = true): Bitmap? {
+suspend fun Context.downloadImage(url: String, retryCount: Int = 3): Bitmap? {
     val result = ImageLoader(this).execute(
         ImageRequest.Builder(this).data(url).allowHardware(false).build()
     )
-    if (shouldRetry && (result as? ErrorResult)?.throwable?.message == "closed") {
-        delay(500)
-        return downloadImage(url, false)
+    if (retryCount > 0 && (result is ErrorResult)) {
+        delay(200)
+        return downloadImage(url, retryCount - 1)
     }
     return ((result as? SuccessResult)?.drawable as? BitmapDrawable)?.bitmap
 }

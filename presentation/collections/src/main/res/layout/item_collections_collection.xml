@@ -22,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/double_content_padding"
+            android:clickable="@{!uiModel.collectionDestination.thumbnailUrl.isEmpty()}"
             android:foreground="?selectableItemBackground"
             android:transitionName="@{uiModel.collectionDestination.id}"
             app:layout_constraintBottom_toTopOf="@id/guideline"
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:indeterminate="true"
-                app:indicatorColor="@{uiModel.collectionDestination.colorPaletteModel.secondary}" />
+                app:indicatorColor="?colorOnPrimary" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -73,7 +74,6 @@
             android:paddingHorizontal="@dimen/double_content_padding"
             android:text="@{uiModel.collectionDestination.name}"
             android:textAppearance="@style/TitleLargeTextAppearance"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            app:indicatorColor="@{uiModel.wallpaper.colorPaletteModel.secondary}" />
+            app:indicatorColor="?colorOnPrimary" />
 
     </FrameLayout>
 

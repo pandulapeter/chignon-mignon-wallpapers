@@ -169,7 +169,9 @@ internal class CollectionsViewModel(
     }
 
     fun onItemSelected(collectionId: String, sharedElements: List<View>) = collections.value?.firstOrNull { it.id == collectionId }?.let {
-        _events.pushEvent(Event.OpenCollectionDetails(it, sharedElements))
+        if (it.thumbnailUrl.isNotBlank()) {
+            _events.pushEvent(Event.OpenCollectionDetails(it, sharedElements))
+        }
     }
 
     fun onAboutButtonPressed() {

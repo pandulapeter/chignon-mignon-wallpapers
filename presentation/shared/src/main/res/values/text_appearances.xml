@@ -7,7 +7,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TitleLargeTextAppearance" parent="TextAppearance.Material3.TitleLarge" />
+    <style name="TitleLargeTextAppearance" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="BodyLargeTextAppearance" parent="TextAppearance.Material3.BodyLarge" />
 

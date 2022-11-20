@@ -30,13 +30,16 @@ data class ImageViewTag(
 
 val ImageView.imageViewTag get() = tag as? ImageViewTag
 
-@BindingAdapter(value = ["imageUrl", "shouldFade", "topCornerRadius", "bottomCornerRadius"], requireAll = false)
+@BindingAdapter(value = ["imageUrl", "shouldFade", "topCornerRadius", "bottomCornerRadius", "retryCount"], requireAll = false)
 fun ImageView.setImageUrl(
     imageUrl: String?,
     shouldFade: Boolean? = null,
     topCornerRadius: Float? = null,
-    bottomCornerRadius: Float? = null
+    bottomCornerRadius: Float? = null,
+    retryCount: Int = 3
 ) {
+    fun retryLoading() = postDelayed({ setImageUrl(imageUrl, shouldFade, topCornerRadius, bottomCornerRadius, retryCount - 1) }, 200)
+
     if (imageUrl?.isNotBlank() == true && imageViewTag?.url != imageUrl) {
         tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
         imageViewTag?.loadingIndicator?.isVisible = true
@@ -60,10 +63,15 @@ fun ImageView.setImageUrl(
                         }
 
                         override fun onError(error: Drawable?) {
-                            val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
-                            setImageDrawable(drawable)
-                            (drawable as? Animatable)?.start()
-                            imageViewTag?.loadingIndicator?.isVisible = false
+                            tag = imageViewTag?.copy(url = "")
+                            if (retryCount > 0) {
+                                retryLoading()
+                            } else {
+                                val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
+                                setImageDrawable(drawable)
+                                (drawable as? Animatable)?.start()
+                                imageViewTag?.loadingIndicator?.isVisible = false
+                            }
                         }
                     })
                     .build()
@@ -82,12 +90,22 @@ fun ImageView.setImageUrl(
                     )
                 }
                 // TODO: fallback(), error()
-                listener { _, result ->
-                    (result.drawable as? BitmapDrawable)?.bitmap?.let {
+                listener(
+                    onError = { _, _ ->
+                        tag = imageViewTag?.copy(url = "")
+                        if (retryCount > 0) {
+                            retryLoading()
+                        } else {
+                            imageViewTag?.loadingIndicator?.isVisible = false
+                        }
+                    },
+                    onSuccess = { _, result ->
+                        (result.drawable as? BitmapDrawable)?.bitmap?.let {
+                            tag = imageViewTag?.copy(bitmap = it)
+                        }
                         imageViewTag?.loadingIndicator?.isVisible = false
-                        tag = imageViewTag?.copy(bitmap = it)
                     }
-                }
+                )
                 allowHardware(false)
             }
         }
