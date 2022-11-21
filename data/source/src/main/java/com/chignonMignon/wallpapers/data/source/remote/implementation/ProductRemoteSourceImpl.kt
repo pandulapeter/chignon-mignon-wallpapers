@@ -1,12 +1,12 @@
 package com.chignonMignon.wallpapers.data.source.remote.implementation
 
-import com.chignonMignon.wallpapers.data.source.remote.api.WallpaperRemoteSource
+import com.chignonMignon.wallpapers.data.source.remote.api.ProductRemoteSource
 import com.chignonMignon.wallpapers.data.source.remote.implementation.mapper.toModel
 import com.chignonMignon.wallpapers.data.source.remote.implementation.networking.NetworkingService
 
-internal class WallpaperRemoteSourceImpl(
+internal class ProductRemoteSourceImpl(
     private val networkingService: NetworkingService
-) : WallpaperRemoteSource {
+) : ProductRemoteSource {
 
-    override suspend fun getWallpapers() = networkingService.getWallpapers().mapNotNull { it.toModel() }.distinctBy { it.id }
+    override suspend fun getProducts() = networkingService.getProducts().mapNotNull { it.toModel() }.distinctBy { it.id }
 }

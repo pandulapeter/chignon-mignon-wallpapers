@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chignonMignon.wallpapers.domain.useCases.GetProductsByWallpaperIdUseCase
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
@@ -21,7 +22,8 @@ import kotlinx.coroutines.launch
 
 internal class WallpaperDetailsViewModel(
     private val wallpapers: List<WallpaperDestination>,
-    initialWallpaperIndex: Int
+    initialWallpaperIndex: Int,
+    private val getProductsByWallpaperId: GetProductsByWallpaperIdUseCase
 ) : ViewModel() {
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
@@ -37,6 +39,10 @@ internal class WallpaperDetailsViewModel(
 
     init {
         DebugMenu.log("Opened wallpaper details.")
+    }
+
+    fun loadData(isForceRefresh: Boolean) {
+        // TODO: getProductsByWallpaperId()
     }
 
     fun onPageSelected(position: Int) {

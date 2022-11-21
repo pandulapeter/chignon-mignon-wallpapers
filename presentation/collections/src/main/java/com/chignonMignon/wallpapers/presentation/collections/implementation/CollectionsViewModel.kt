@@ -9,6 +9,7 @@ import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.domain.useCases.AreCollectionsAvailableUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
+import com.chignonMignon.wallpapers.domain.useCases.GetProductsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
 import com.chignonMignon.wallpapers.presentation.collections.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsListItem
@@ -38,6 +39,7 @@ import kotlinx.coroutines.launch
 internal class CollectionsViewModel(
     private val areCollectionsAvailable: AreCollectionsAvailableUseCase,
     private val getCollections: GetCollectionsUseCase,
+    private val getProducts: GetProductsUseCase,
     private val getWallpapers: GetWallpapersUseCase,
     private val colorPaletteGenerator: ColorPaletteGenerator
 ) : ViewModel() {
@@ -94,11 +96,22 @@ internal class CollectionsViewModel(
 
     init {
         viewModelScope.launch {
-            DebugMenu.log("Loading wallpapers (pre-fetch)...")
-            when (val result = DebugMenu.getMockWallpapers("", false) ?: getWallpapers(false)) {
-                is Result.Success -> DebugMenu.log("Loaded ${result.data.size} wallpapers.")
-                is Result.Failure -> DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
-            }
+            listOf(
+                async {
+                    DebugMenu.log("Loading wallpapers (pre-fetch)...")
+                    when (val result = DebugMenu.getMockWallpapers("", false) ?: getWallpapers(false)) {
+                        is Result.Success -> DebugMenu.log("Loaded ${result.data.size} wallpapers.")
+                        is Result.Failure -> DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
+                    }
+                },
+                async {
+                    DebugMenu.log("Loading products (pre-fetch)...")
+                    when (val result = getProducts(false)) {
+                        is Result.Success -> DebugMenu.log("Loaded ${result.data.size} products.")
+                        is Result.Failure -> DebugMenu.log("Failed to load products: ${result.exception.message}.")
+                    }
+                }
+            ).awaitAll()
         }
     }
 

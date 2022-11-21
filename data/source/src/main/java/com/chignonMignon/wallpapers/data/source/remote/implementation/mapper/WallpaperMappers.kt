@@ -19,7 +19,7 @@ internal fun WallpaperResponse.toModel() = try {
     null
 }
 
-private fun String?.toWallpaperId() = if (isNullOrBlank()) throw DataValidationException("Missing wallpaper ID.") else this
+internal fun String?.toWallpaperId() = if (isNullOrBlank()) throw DataValidationException("Missing wallpaper ID.") else this
 
 private fun String?.toWallpaperName(
     hungarian: String?,

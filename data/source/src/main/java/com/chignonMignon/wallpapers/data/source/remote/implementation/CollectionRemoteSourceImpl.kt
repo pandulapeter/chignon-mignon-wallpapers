@@ -8,5 +8,5 @@ internal class CollectionRemoteSourceImpl(
     private val networkingService: NetworkingService
 ) : CollectionRemoteSource {
 
-    override suspend fun getCategories() = networkingService.getCollections().mapNotNull { it.toModel() }
+    override suspend fun getCategories() = networkingService.getCollections().mapNotNull { it.toModel() }.distinctBy { it.id }
 }
