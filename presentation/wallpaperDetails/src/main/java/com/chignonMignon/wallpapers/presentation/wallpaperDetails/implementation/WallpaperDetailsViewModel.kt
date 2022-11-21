@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chignonMignon.wallpapers.data.model.domain.Product
 import com.chignonMignon.wallpapers.domain.useCases.GetProductsByWallpaperIdUseCase
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
@@ -13,11 +14,13 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.downloadIm
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.getWallpaperFile
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.saveImage
-import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.list.WallpaperDetailsListItem
+import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.productList.WallpaperDetailsProductListItem
+import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperDetailsListItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 internal class WallpaperDetailsViewModel(
@@ -36,13 +39,18 @@ internal class WallpaperDetailsViewModel(
     val primaryColor: StateFlow<Int?> = _primaryColor
     private val _pagerProgress = MutableStateFlow(getPagerProgress(initialWallpaperIndex))
     val pagerProgress: StateFlow<Float> = _pagerProgress
+    val productListItems = focusedWallpaper.map { wallpaper ->
+        getProductsByWallpaperId(wallpaper.id).let { products ->
+            if (products.isEmpty()) {
+                listOf(WallpaperDetailsProductListItem.EmptyUiModel())
+            } else {
+                products.map { WallpaperDetailsProductListItem.ProductUiModel(it) }
+            }
+        }
+    }
 
     init {
         DebugMenu.log("Opened wallpaper details.")
-    }
-
-    fun loadData(isForceRefresh: Boolean) {
-        // TODO: getProductsByWallpaperId()
     }
 
     fun onPageSelected(position: Int) {
@@ -81,10 +89,13 @@ internal class WallpaperDetailsViewModel(
         _primaryColor.value = primaryColor
     }
 
+    fun onProductSelected(product: Product) = _events.pushEvent(Event.OpenUrl(product.url))
+
     private fun getPagerProgress(position: Int) = if (wallpapers.isNotEmpty()) (position + 1f) / wallpapers.size.toFloat() else 0f
 
     sealed class Event {
         data class SetWallpaper(val uri: Uri) : Event()
         data class ShowErrorMessage(val wallpaper: WallpaperDestination) : Event()
+        data class OpenUrl(val url: String) : Event()
     }
 }

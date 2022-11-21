@@ -3,7 +3,8 @@ package com.chignonMignon.wallpapers.data.repository.implementation
 internal abstract class BaseRepository<T>(
     private val getDataFromSource: suspend () -> T
 ) {
-    private var cache: T? = null
+    protected var cache: T? = null
+        private set
 
     protected fun isDataAvailable() = cache != null
 

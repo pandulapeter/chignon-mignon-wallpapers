@@ -15,7 +15,8 @@
         android:layout_height="match_parent"
         android:transitionGroup="true"
         android:transitionName="@{viewModel.focusedWallpaper.id}"
-        app:backgroundColor="@{viewModel.primaryColor}">
+        app:backgroundColor="@{viewModel.primaryColor}"
+        app:paddingBottomWithBottomOffset="@{@dimen/content_padding}">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -72,7 +73,7 @@
                 android:id="@+id/view_pager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -81,6 +82,7 @@
                 android:id="@+id/floating_action_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/double_content_padding"
                 android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context, viewModel.focusedWallpaper)}"
                 android:text="@string/wallpaper_details_set_wallpaper"
                 android:textColor="?colorOnPrimary"
@@ -88,9 +90,8 @@
                 app:backgroundColor="@{viewModel.primaryColor}"
                 app:icon="@drawable/ic_set_wallpaper"
                 app:iconTint="?colorOnPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:marginWithInsetBottom="@{@dimen/double_content_padding}"
                 app:marginWithInsetRight="@{@dimen/double_content_padding}"
                 app:rippleColor="?colorControlHighlight" />
 
@@ -114,6 +115,17 @@
                     app:indicatorColor="?colorOnPrimary" />
 
             </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/wallpaper_details_products_carousel_size"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/content_padding"
+                app:horizontalPaddingWithInset="@{@dimen/content_padding}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

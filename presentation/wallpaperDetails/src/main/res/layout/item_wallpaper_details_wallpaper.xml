@@ -7,7 +7,7 @@
 
         <variable
             name="uiModel"
-            type="com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.list.WallpaperDetailsListItem.WallpaperUiModel" />
+            type="com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperDetailsListItem.WallpaperUiModel" />
 
     </data>
 

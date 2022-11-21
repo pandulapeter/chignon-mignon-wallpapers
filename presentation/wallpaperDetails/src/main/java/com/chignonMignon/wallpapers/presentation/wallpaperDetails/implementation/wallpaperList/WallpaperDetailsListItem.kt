@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.list
+package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList
 
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.list.ListItem

@@ -6,5 +6,5 @@ interface ProductRepository {
 
     suspend fun getProducts(isForceRefresh: Boolean): List<Product>
 
-    suspend fun getProductsByWallpaperId(isForceRefresh: Boolean, wallpaperId: String): List<Product>
+    fun getProductsByWallpaperId(wallpaperId: String): List<Product>
 }

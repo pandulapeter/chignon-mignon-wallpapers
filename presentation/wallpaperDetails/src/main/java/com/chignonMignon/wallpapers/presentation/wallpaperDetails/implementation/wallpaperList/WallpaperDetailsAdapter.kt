@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.list
+package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList
 
 import android.animation.LayoutTransition
 import android.view.LayoutInflater

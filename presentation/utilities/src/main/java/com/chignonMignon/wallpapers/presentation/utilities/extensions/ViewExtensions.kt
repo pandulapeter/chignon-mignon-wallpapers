@@ -163,7 +163,6 @@ fun View.setPaddingInsets(
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
     layoutParams = (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
         val systemBarInsets = windowInsets.toInsets()
-
         if (horizontalPaddingWithInset != null) {
             setPadding(horizontalPaddingWithInset.roundToInt() + systemBarInsets.left, paddingTop, horizontalPaddingWithInset.roundToInt() + systemBarInsets.right, paddingBottom)
         }

@@ -10,5 +10,5 @@ internal class ProductRepositoryImpl(
 
     override suspend fun getProducts(isForceRefresh: Boolean): List<Product> = getData(isForceRefresh)
 
-    override suspend fun getProductsByWallpaperId(isForceRefresh: Boolean, wallpaperId: String) = getProducts(isForceRefresh).filter { it.wallpaperId == wallpaperId }
+    override fun getProductsByWallpaperId(wallpaperId: String) = cache?.filter { it.wallpaperId == wallpaperId } ?: emptyList()
 }

@@ -1,10 +1,12 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
@@ -20,8 +22,9 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTrans
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.databinding.FragmentWallpaperDetailsBinding
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.WallpaperDetailsViewModel
-import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.list.WallpaperDetailsAdapter
+import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.productList.WallpaperDetailsProductAdapter
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.setWallpaper
+import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperDetailsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -37,6 +40,11 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
     }
     private var shouldAnimateColorTransitions = false
+    private val productAdapter by lazy {
+        WallpaperDetailsProductAdapter(
+            onProductSelected = viewModel::onProductSelected
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +69,9 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         binding.viewModel = viewModel
         binding.setupToolbar()
         binding.setupViewPager()
+        binding.setupRecyclerView()
         viewModel.focusedWallpaper.observe(viewLifecycleOwner, ::onFocusedWallpaperChanged)
+        viewModel.productListItems.observe(viewLifecycleOwner, productAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
         delaySharedElementTransition(binding.viewPager)
     }
@@ -91,9 +101,16 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         })
     }
 
+    private fun FragmentWallpaperDetailsBinding.setupRecyclerView() = recyclerView.run {
+        setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(requireContext())
+        adapter = productAdapter
+    }
+
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
         is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
         is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper)
+        is WallpaperDetailsViewModel.Event.OpenUrl -> openUrl(event.url)
     }
 
     private fun onFocusedWallpaperChanged(focusedWallpaperDestination: WallpaperDestination?) {
@@ -111,6 +128,8 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
             action = { viewModel.onSetWallpaperButtonPressed(it, wallpaper) }
         )
     }
+
+    private fun openUrl(url: String) = startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) // TODO: Improve + add error handling
 
     companion object {
         private var Bundle.wallpapers by BundleDelegate.ParcelableList<WallpaperDestination>("wallpapers")
