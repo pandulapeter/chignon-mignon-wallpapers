@@ -23,20 +23,13 @@ import kotlin.math.roundToInt
 private const val ROUNDED_CORNER_FIX = 0.75f
 
 data class ImageViewTag(
-    val url: String? = null,
-    val bitmap: Bitmap? = null,
-    val loadingIndicator: View? = null
+    val url: String? = null, val bitmap: Bitmap? = null, val loadingIndicator: View? = null
 )
 
 val ImageView.imageViewTag get() = tag as? ImageViewTag
 
-@BindingAdapter(value = ["imageUrl", "shouldFade", "topCornerRadius", "bottomCornerRadius", "retryCount"], requireAll = false)
-fun ImageView.setImageUrl(
-    imageUrl: String?,
-    shouldFade: Boolean? = null,
-    topCornerRadius: Float? = null,
-    bottomCornerRadius: Float? = null,
-    retryCount: Int = 3
+@BindingAdapter(value = ["imageUrl", "shouldFade", "topCornerRadius", "bottomCornerRadius", "retryCount"], requireAll = false) fun ImageView.setImageUrl(
+    imageUrl: String?, shouldFade: Boolean? = null, topCornerRadius: Float? = null, bottomCornerRadius: Float? = null, retryCount: Int = 3
 ) {
     fun retryLoading() = postDelayed({ setImageUrl(imageUrl, shouldFade, topCornerRadius, bottomCornerRadius, retryCount - 1) }, 200)
 
@@ -45,36 +38,31 @@ fun ImageView.setImageUrl(
         imageViewTag?.loadingIndicator?.isVisible = true
         if (shouldFade == true && isLaidOut) {
             context.imageLoader.enqueue(
-                ImageRequest.Builder(context)
-                    .data(imageUrl)
-                    .allowHardware(false)
-                    .crossfade(600)
-                    .target(object : TransitionTarget {
+                ImageRequest.Builder(context).data(imageUrl).allowHardware(false).crossfade(600).target(object : TransitionTarget {
 
-                        override val drawable get() = this@setImageUrl.drawable
+                    override val drawable get() = this@setImageUrl.drawable
 
-                        override val view get() = this@setImageUrl
+                    override val view get() = this@setImageUrl
 
-                        override fun onSuccess(result: Drawable) {
-                            val drawable = if (result is Animatable) result else CrossfadeDrawable(this@setImageUrl.drawable, result, durationMillis = 600)
+                    override fun onSuccess(result: Drawable) {
+                        val drawable = if (result is Animatable) result else CrossfadeDrawable(this@setImageUrl.drawable, result, durationMillis = 600)
+                        setImageDrawable(drawable)
+                        (drawable as? Animatable)?.start()
+                        imageViewTag?.loadingIndicator?.isVisible = false
+                    }
+
+                    override fun onError(error: Drawable?) {
+                        tag = imageViewTag?.copy(url = "")
+                        if (retryCount > 0) {
+                            retryLoading()
+                        } else {
+                            val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
                             setImageDrawable(drawable)
                             (drawable as? Animatable)?.start()
                             imageViewTag?.loadingIndicator?.isVisible = false
                         }
-
-                        override fun onError(error: Drawable?) {
-                            tag = imageViewTag?.copy(url = "")
-                            if (retryCount > 0) {
-                                retryLoading()
-                            } else {
-                                val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
-                                setImageDrawable(drawable)
-                                (drawable as? Animatable)?.start()
-                                imageViewTag?.loadingIndicator?.isVisible = false
-                            }
-                        }
-                    })
-                    .build()
+                    }
+                }).build()
             )
         } else {
             load(imageUrl) {
@@ -90,22 +78,19 @@ fun ImageView.setImageUrl(
                     )
                 }
                 // TODO: fallback(), error()
-                listener(
-                    onError = { _, _ ->
-                        tag = imageViewTag?.copy(url = "")
-                        if (retryCount > 0) {
-                            retryLoading()
-                        } else {
-                            imageViewTag?.loadingIndicator?.isVisible = false
-                        }
-                    },
-                    onSuccess = { _, result ->
-                        (result.drawable as? BitmapDrawable)?.bitmap?.let {
-                            tag = imageViewTag?.copy(bitmap = it)
-                        }
+                listener(onError = { _, _ ->
+                    tag = imageViewTag?.copy(url = "")
+                    if (retryCount > 0) {
+                        retryLoading()
+                    } else {
                         imageViewTag?.loadingIndicator?.isVisible = false
                     }
-                )
+                }, onSuccess = { _, result ->
+                    (result.drawable as? BitmapDrawable)?.bitmap?.let {
+                        tag = imageViewTag?.copy(bitmap = it)
+                    }
+                    imageViewTag?.loadingIndicator?.isVisible = false
+                })
                 allowHardware(false)
             }
         }
@@ -125,19 +110,14 @@ fun View.relativeTranslationY(factor: Float) {
     translationY = height * factor
 }
 
-@BindingAdapter("tint")
-fun ImageView.setTint(color: Int?) = color?.let {
+@BindingAdapter("tint") fun ImageView.setTint(color: Int?) = color?.let {
     imageTintList = ColorStateList.valueOf(color)
 }
-@BindingAdapter("indicatorColor")
-fun CircularProgressIndicator.setTint(color: Int?) = color?.let { setIndicatorColor(color) }
 
-@BindingAdapter(value = ["marginWithInsetLeft", "marginWithInsetTop", "marginWithInsetRight", "marginWithInsetBottom"], requireAll = false)
-fun View.setInsets(
-    insetLeft: Float? = null,
-    insetTop: Float? = null,
-    insetRight: Float? = null,
-    insetBottom: Float? = null
+@BindingAdapter("indicatorColor") fun CircularProgressIndicator.setTint(color: Int?) = color?.let { setIndicatorColor(color) }
+
+@BindingAdapter(value = ["marginWithInsetLeft", "marginWithInsetTop", "marginWithInsetRight", "marginWithInsetBottom"], requireAll = false) fun View.setInsets(
+    insetLeft: Float? = null, insetTop: Float? = null, insetRight: Float? = null, insetBottom: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
     layoutParams = (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
         val systemBarInsets = windowInsets.toInsets()
@@ -157,21 +137,24 @@ fun View.setInsets(
     windowInsets
 }
 
-@BindingAdapter(value = ["horizontalPaddingWithInset"], requireAll = false)
-fun View.setPaddingInsets(
-    horizontalPaddingWithInset: Float? = null
+@BindingAdapter(value = ["horizontalPaddingWithInset", "verticalPaddingWithInset"], requireAll = false) fun View.setPaddingInsets(
+    horizontalPaddingWithInset: Float? = null, verticalPaddingWithInset: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
     layoutParams = (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
         val systemBarInsets = windowInsets.toInsets()
-        if (horizontalPaddingWithInset != null) {
-            setPadding(horizontalPaddingWithInset.roundToInt() + systemBarInsets.left, paddingTop, horizontalPaddingWithInset.roundToInt() + systemBarInsets.right, paddingBottom)
+        if (horizontalPaddingWithInset != null || verticalPaddingWithInset != null) {
+            setPadding(
+                horizontalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.left } ?: paddingLeft,
+                verticalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.top } ?: paddingTop,
+                horizontalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.right } ?: paddingRight,
+                verticalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.bottom } ?: paddingBottom
+            )
         }
     }
     windowInsets
 }
 
-@BindingAdapter("heightWithTopInset")
-fun View.setHeightWithTopInset(
+@BindingAdapter("heightWithTopInset") fun View.setHeightWithTopInset(
     heightWithTopInset: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
     layoutParams = layoutParams?.apply {
@@ -183,8 +166,7 @@ fun View.setHeightWithTopInset(
     insets
 }
 
-@BindingAdapter("paddingBottomWithBottomOffset")
-fun View.setPaddingBottomWithBottomOffset(
+@BindingAdapter("paddingBottomWithBottomOffset") fun View.setPaddingBottomWithBottomOffset(
     paddingBottomWithBottomOffset: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
     val windowInsets = insets.toInsets()
@@ -194,16 +176,24 @@ fun View.setPaddingBottomWithBottomOffset(
     insets
 }
 
-@BindingAdapter("expandedTitleMarginStart")
-fun CollapsingToolbarLayout.updateExpandedTitleMargin(
+@BindingAdapter("paddingRightWithRightOffset") fun View.setPaddingRightWithRightOffset(
+    paddingRightWithRightOffset: Float? = null
+) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
+    val windowInsets = insets.toInsets()
+    if (paddingRightWithRightOffset != null) {
+        setPadding(paddingLeft, paddingTop, windowInsets.right + paddingRightWithRightOffset.roundToInt(), paddingBottom)
+    }
+    insets
+}
+
+@BindingAdapter("expandedTitleMarginStart") fun CollapsingToolbarLayout.updateExpandedTitleMargin(
     expandedTitleMarginStart: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
     setExpandedTitleMarginStart(((expandedTitleMarginStart ?: 0f) + insets.toInsets().left.toFloat()).roundToInt())
     insets
 }
 
-@set:BindingAdapter("android:visibility")
-var View.isVisible: Boolean
+@set:BindingAdapter("android:visibility") var View.isVisible: Boolean
     get() = visibility == View.VISIBLE
     set(value) {
         visibility = if (value) View.VISIBLE else View.GONE

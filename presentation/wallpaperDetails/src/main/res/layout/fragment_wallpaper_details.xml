@@ -38,6 +38,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:marginWithInsetLeft="@{0f}"
+                    app:marginWithInsetRight="@{0f}"
                     app:marginWithInsetTop="@{0f}"
                     app:navigationIcon="@drawable/ic_close">
 
@@ -126,6 +127,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/divider"
+                android:background="?colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/recycler_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

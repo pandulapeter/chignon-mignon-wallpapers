@@ -103,7 +103,11 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
     private fun FragmentWallpaperDetailsBinding.setupRecyclerView() = recyclerView.run {
         setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(requireContext())
+        layoutManager = LinearLayoutManager(
+            context,
+            if (context.resources.getBoolean(com.chignonMignon.wallpapers.presentation.shared.R.bool.is_landscape)) LinearLayoutManager.VERTICAL else LinearLayoutManager.HORIZONTAL,
+            false
+        )
         adapter = productAdapter
     }
 

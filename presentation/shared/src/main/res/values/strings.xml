@@ -20,6 +20,6 @@
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Set wallpaper</string>
     <string name="wallpaper_details_cannot_set_wallpaper">Something went wrong while downloading the wallpaper</string>
-    <string name="wallpaper_details_products_empty">No products related to this pattern yet.</string>
+    <string name="wallpaper_details_products_empty">No products related\nto this pattern yet.</string>
 
 </resources>
