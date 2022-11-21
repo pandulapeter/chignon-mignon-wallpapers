@@ -57,11 +57,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private val onBackPressedCallback by lazy {
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (viewModel.isLastPageFocused.value) {
-                    onIsLastPageFocusedChanged(false)
-                    onFocusedCollectionChanged(viewModel.focusedCollectionDestination.value)
-                }
-                binding.viewPager.currentItem = 0
+                navigateToPreviousPage()
             }
         }
     }
