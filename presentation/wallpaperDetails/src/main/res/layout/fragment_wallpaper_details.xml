@@ -102,7 +102,7 @@
                 android:background="@color/dark_overlay"
                 android:elevation="@dimen/double_content_padding"
                 android:visibility="@{viewModel.shouldShowLoadingIndicator}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

@@ -17,7 +17,6 @@ import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import coil.transition.TransitionTarget
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlin.math.roundToInt
 
 private const val ROUNDED_CORNER_FIX = 0.75f
@@ -28,8 +27,21 @@ data class ImageViewTag(
 
 val ImageView.imageViewTag get() = tag as? ImageViewTag
 
-@BindingAdapter(value = ["imageUrl", "shouldFade", "topCornerRadius", "bottomCornerRadius", "retryCount"], requireAll = false) fun ImageView.setImageUrl(
-    imageUrl: String?, shouldFade: Boolean? = null, topCornerRadius: Float? = null, bottomCornerRadius: Float? = null, retryCount: Int = 3
+@BindingAdapter(
+    value = [
+        "imageUrl",
+        "shouldFade",
+        "topCornerRadius",
+        "bottomCornerRadius",
+        "retryCount"
+    ],
+    requireAll = false
+)
+fun ImageView.setImageUrl(
+    imageUrl: String?,
+    shouldFade: Boolean? = null, topCornerRadius: Float? = null,
+    bottomCornerRadius: Float? = null,
+    retryCount: Int = 3
 ) {
     fun retryLoading() = postDelayed({ setImageUrl(imageUrl, shouldFade, topCornerRadius, bottomCornerRadius, retryCount - 1) }, 200)
 
@@ -110,14 +122,25 @@ fun View.relativeTranslationY(factor: Float) {
     translationY = height * factor
 }
 
-@BindingAdapter("tint") fun ImageView.setTint(color: Int?) = color?.let {
+@BindingAdapter("tint")
+fun ImageView.setTint(color: Int?) = color?.let {
     imageTintList = ColorStateList.valueOf(color)
 }
 
-@BindingAdapter("indicatorColor") fun CircularProgressIndicator.setTint(color: Int?) = color?.let { setIndicatorColor(color) }
-
-@BindingAdapter(value = ["marginWithInsetLeft", "marginWithInsetTop", "marginWithInsetRight", "marginWithInsetBottom"], requireAll = false) fun View.setInsets(
-    insetLeft: Float? = null, insetTop: Float? = null, insetRight: Float? = null, insetBottom: Float? = null
+@BindingAdapter(
+    value = [
+        "marginWithInsetLeft",
+        "marginWithInsetTop",
+        "marginWithInsetRight",
+        "marginWithInsetBottom"
+    ],
+    requireAll = false
+)
+fun View.setMarginInsets(
+    insetLeft: Float? = null,
+    insetTop: Float? = null,
+    insetRight: Float? = null,
+    insetBottom: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
     layoutParams = (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
         val systemBarInsets = windowInsets.toInsets()
@@ -137,24 +160,39 @@ fun View.relativeTranslationY(factor: Float) {
     windowInsets
 }
 
-@BindingAdapter(value = ["horizontalPaddingWithInset", "verticalPaddingWithInset"], requireAll = false) fun View.setPaddingInsets(
-    horizontalPaddingWithInset: Float? = null, verticalPaddingWithInset: Float? = null
+@BindingAdapter(
+    value = [
+        "paddingLeftWithTopOffset",
+        "paddingRightWithTopOffset",
+        "paddingRightWithRightOffset",
+        "paddingBottomWithBottomOffset",
+        "horizontalPaddingWithInset",
+        "verticalPaddingWithInset"
+    ],
+    requireAll = false
+)
+fun View.setPaddingInsets(
+    paddingLeftWithTopOffset: Float? = null,
+    paddingRightWithTopOffset: Float? = null,
+    paddingRightWithRightOffset: Float? = null,
+    paddingBottomWithBottomOffset: Float? = null,
+    horizontalPaddingWithInset: Float? = null,
+    verticalPaddingWithInset: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
     layoutParams = (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
         val systemBarInsets = windowInsets.toInsets()
-        if (horizontalPaddingWithInset != null || verticalPaddingWithInset != null) {
-            setPadding(
-                horizontalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.left } ?: paddingLeft,
-                verticalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.top } ?: paddingTop,
-                horizontalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.right } ?: paddingRight,
-                verticalPaddingWithInset?.let { it.roundToInt() + systemBarInsets.bottom } ?: paddingBottom
-            )
-        }
+        setPadding(
+            (paddingLeftWithTopOffset ?: horizontalPaddingWithInset)?.let { it.roundToInt() + systemBarInsets.left } ?: paddingLeft,
+            (paddingRightWithTopOffset ?: verticalPaddingWithInset)?.let { it.roundToInt() + systemBarInsets.top } ?: paddingTop,
+            (paddingRightWithRightOffset ?: horizontalPaddingWithInset)?.let { it.roundToInt() + systemBarInsets.right } ?: paddingRight,
+            (paddingBottomWithBottomOffset ?: verticalPaddingWithInset)?.let { it.roundToInt() + systemBarInsets.bottom } ?: paddingBottom
+        )
     }
     windowInsets
 }
 
-@BindingAdapter("heightWithTopInset") fun View.setHeightWithTopInset(
+@BindingAdapter("heightWithTopInset")
+fun View.setHeightWithTopInset(
     heightWithTopInset: Float? = null
 ) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
     layoutParams = layoutParams?.apply {
@@ -162,26 +200,6 @@ fun View.relativeTranslationY(factor: Float) {
         if (heightWithTopInset != null) {
             height = (windowInsets.top + heightWithTopInset).roundToInt()
         }
-    }
-    insets
-}
-
-@BindingAdapter("paddingBottomWithBottomOffset") fun View.setPaddingBottomWithBottomOffset(
-    paddingBottomWithBottomOffset: Float? = null
-) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
-    val windowInsets = insets.toInsets()
-    if (paddingBottomWithBottomOffset != null) {
-        setPadding(paddingLeft, paddingTop, paddingRight, windowInsets.bottom + paddingBottomWithBottomOffset.roundToInt())
-    }
-    insets
-}
-
-@BindingAdapter("paddingRightWithRightOffset") fun View.setPaddingRightWithRightOffset(
-    paddingRightWithRightOffset: Float? = null
-) = ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
-    val windowInsets = insets.toInsets()
-    if (paddingRightWithRightOffset != null) {
-        setPadding(paddingLeft, paddingTop, windowInsets.right + paddingRightWithRightOffset.roundToInt(), paddingBottom)
     }
     insets
 }

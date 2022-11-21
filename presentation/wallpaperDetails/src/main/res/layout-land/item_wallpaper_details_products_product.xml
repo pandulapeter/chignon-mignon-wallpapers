@@ -27,6 +27,7 @@
                 android:layout_height="0dp"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
+                app:bottomCornerRadius="@{@dimen/corner_radius}"
                 app:imageUrl="@{uiModel.product.thumbnailUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1"
