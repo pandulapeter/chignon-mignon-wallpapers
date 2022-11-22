@@ -17,6 +17,7 @@ import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import coil.transition.TransitionTarget
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlin.math.roundToInt
 
 private const val ROUNDED_CORNER_FIX = 0.75f
@@ -126,6 +127,8 @@ fun View.relativeTranslationY(factor: Float) {
 fun ImageView.setTint(color: Int?) = color?.let {
     imageTintList = ColorStateList.valueOf(color)
 }
+@BindingAdapter("indicatorColor")
+fun CircularProgressIndicator.setTint(color: Int?) = color?.let { setIndicatorColor(color) }
 
 @BindingAdapter(
     value = [
