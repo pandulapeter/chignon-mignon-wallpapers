@@ -9,7 +9,7 @@ import com.chignonMignon.wallpapers.data.repository.implementation.WallpaperRepo
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<CollectionRepository> { CollectionRepositoryImpl(get()) }
-    single<ProductRepository> { ProductRepositoryImpl(get()) }
-    single<WallpaperRepository> { WallpaperRepositoryImpl(get()) }
+    single<CollectionRepository> { CollectionRepositoryImpl(get(), get()) }
+    single<ProductRepository> { ProductRepositoryImpl(get(), get()) }
+    single<WallpaperRepository> { WallpaperRepositoryImpl(get(), get()) }
 }

@@ -1,7 +1,7 @@
 package com.chignonMignon.wallpapers.data.repository.implementation
 
 internal abstract class BaseRepository<T>(
-    private val getDataFromSource: suspend () -> T
+    private val getDataFromRemoteSource: suspend () -> T
 ) {
     protected var cache: T? = null
         private set
@@ -10,7 +10,7 @@ internal abstract class BaseRepository<T>(
 
     protected suspend fun getData(isForceRefresh: Boolean) = cache.let { currentCache ->
         if (isForceRefresh || currentCache == null) {
-            getDataFromSource().also { cache = it }
+            getDataFromRemoteSource().also { cache = it }
         } else {
             currentCache
         }

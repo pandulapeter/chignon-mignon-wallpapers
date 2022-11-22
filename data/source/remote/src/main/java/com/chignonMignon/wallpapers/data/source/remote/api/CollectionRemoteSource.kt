@@ -4,5 +4,5 @@ import com.chignonMignon.wallpapers.data.model.domain.Collection
 
 interface CollectionRemoteSource {
 
-    suspend fun getCategories(): List<Collection>
+    suspend fun getCollections(): List<Collection>
 }
