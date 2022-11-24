@@ -6,6 +6,7 @@
     <string name="something_went_wrong">Something went wrong.\nCheck your network connection</string>
     <string name="empty_state">Looks like there\'s no content here…\nCheck back later!</string>
     <string name="work_in_progress">Work in progress…</string>
+    <string name="no_browser_installed">No browser installed on the device</string> <!-- TODO -->
 
     <!-- About -->
     <string name="about_title">About</string>

@@ -1,5 +1,6 @@
 [versions]
 androidx-appcompat = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-browser = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/browser
 androidx-constraintlayout = "2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-core = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/core
 androidx-core-splashscreen = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/core
@@ -25,6 +26,7 @@ theapache64-retrosheet = "2.0.0" # https://github.com/theapache64/retrosheet/rel
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }

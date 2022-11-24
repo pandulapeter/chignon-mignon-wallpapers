@@ -1,9 +1,10 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 
-import android.content.Intent
+import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -133,7 +134,18 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         )
     }
 
-    private fun openUrl(url: String) = startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) // TODO: Improve + add error handling
+    private fun openUrl(url: String) = context?.run {
+        try {
+            CustomTabsIntent.Builder()
+                .setColorScheme(CustomTabsIntent.COLOR_SCHEME_LIGHT)
+                .build()
+                .launchUrl(this, Uri.parse(url))
+        } catch (_: ActivityNotFoundException) {
+            showSnackbar(
+                messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.no_browser_installed
+            )
+        }
+    }
 
     companion object {
         private var Bundle.wallpapers by BundleDelegate.ParcelableList<WallpaperDestination>("wallpapers")

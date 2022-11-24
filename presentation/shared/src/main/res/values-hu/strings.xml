@@ -6,6 +6,7 @@
     <string name="something_went_wrong">Hiba történt.\nEllenőrízd az internetkapcsolatot</string>
     <string name="empty_state">Úgy tűnik itt nincs tartalom…\nNézz erre később!</string>
     <string name="work_in_progress">Még készül…</string>
+    <string name="no_browser_installed">No browser installed on the device</string> <!-- TODO -->
 
     <!-- Collections -->
     <string name="collections_title">Kollekciók</string>
