@@ -23,7 +23,6 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewT
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.delaySharedElementTransition
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
@@ -55,11 +54,13 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             object : SharedElementCallback() {
                 override fun onMapSharedElements(names: List<String?>, sharedElements: MutableMap<String?, View?>) {
                     navigator?.selectedWallpaperIndex?.let { selectedWallpaperIndex ->
-                        binding.recyclerView.findViewHolderForAdapterPosition(selectedWallpaperIndex)?.itemView?.let { sharedElementView ->
-                            if (names.isEmpty() || sharedElementView.transitionName == null) {
-                                sharedElements.clear()
-                            } else {
-                                sharedElements[names[0]] = sharedElementView
+                        binding.recyclerView.run {
+                            findViewHolderForAdapterPosition(selectedWallpaperIndex)?.itemView?.let { sharedElementView ->
+                                if (names.isEmpty() || sharedElementView.transitionName == null) {
+                                    sharedElements.clear()
+                                } else {
+                                    sharedElements[names[0]] = sharedElementView
+                                }
                             }
                         }
                     }
@@ -77,8 +78,8 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         binding.setupRecyclerView()
         viewModel.items.observe(viewLifecycleOwner, collectionDetailsAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
-        delaySharedElementTransition(binding.recyclerView)
         viewModel.loadData(false)
+        postponeEnterTransition()
     }
 
     override fun onStart() {
@@ -133,11 +134,12 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
                 object : OnLayoutChangeListener {
                     override fun onLayoutChange(view: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                         removeOnLayoutChangeListener(this)
-                        gridLayoutManager.findViewByPosition(selectedWallpaperIndex)?.let { viewAtPosition ->
-                            if (gridLayoutManager.isViewPartiallyVisible(viewAtPosition, false, true)) {
-                                post { gridLayoutManager.scrollToPosition(selectedWallpaperIndex) }
-                                appBarLayout.setExpanded(false, false)
+                        gridLayoutManager.scrollToPositionWithOffset(selectedWallpaperIndex, context.dimension(R.dimen.collection_details_wallpaper_item_minimum_width))
+                        post {
+                            if (computeVerticalScrollOffset() > 0) {
+                                binding.appBarLayout.setExpanded(false, false)
                             }
+                            startPostponedEnterTransition()
                         }
                     }
                 }
