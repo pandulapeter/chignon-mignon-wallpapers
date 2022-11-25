@@ -94,27 +94,6 @@ internal class CollectionsViewModel(
     val backgroundColor = combine(primaryColor, secondaryColor) { primaryColor, secondaryColor -> primaryColor to secondaryColor }
     private var colorPaletteGeneratorJob: Job? = null
 
-    init {
-        viewModelScope.launch {
-            listOf(
-                async {
-                    DebugMenu.log("Loading wallpapers (pre-fetch)...")
-                    when (val result = DebugMenu.getMockWallpapers("", false) ?: getWallpapers(false)) {
-                        is Result.Success -> DebugMenu.log("Loaded ${result.data.size} wallpapers.")
-                        is Result.Failure -> DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
-                    }
-                },
-                async {
-                    DebugMenu.log("Loading products (pre-fetch)...")
-                    when (val result = getProducts(false)) {
-                        is Result.Success -> DebugMenu.log("Loaded ${result.data.size} products.")
-                        is Result.Failure -> DebugMenu.log("Failed to load products: ${result.exception.message}.")
-                    }
-                }
-            ).awaitAll()
-        }
-    }
-
     fun loadData(isForceRefresh: Boolean, context: Context) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
             val areCollectionsAvailable = areCollectionsAvailable()
@@ -122,39 +101,40 @@ internal class CollectionsViewModel(
             if (!areCollectionsAvailable) {
                 _events.pushEvent(Event.ScrollToWelcome)
             }
-            DebugMenu.log("Loading collections (force refresh: $isForceRefresh)...")
-            when (val result = DebugMenu.getMockCollections(isForceRefresh) ?: getCollections(isForceRefresh)) {
-                is Result.Success -> {
-                    DebugMenu.log("Loaded ${result.data.size} collections.")
-                    colorPaletteGeneratorJob?.cancel()
-                    val filteredResults = result.data.filter { BuildConfig.DEBUG || it.isPublic }
-                    if (collections.value?.map { it.thumbnailUrl } != filteredResults.map { it.thumbnailUrl }) {
-                        collections.value = filteredResults.map { it.toPlaceholderNavigatorCollection(context) }
-                    }
-                    colorPaletteGeneratorJob = launch {
-                        filteredResults.map { collection ->
-                            async {
-                                collection.toNavigatorCollection().let { collectionWithFinalColorPalette ->
-                                    if (collections.value?.contains(collectionWithFinalColorPalette) == false) {
-                                        collections.value = collections.value?.toMutableList()?.apply {
-                                            val index = indexOfFirst { it.id == collectionWithFinalColorPalette.id }
-                                            if (index != -1) {
-                                                removeAt(index)
-                                                add(index, collectionWithFinalColorPalette)
-                                            }
+            val loadResult = listOf(
+                async { loadCollections(isForceRefresh) },
+                async { loadProducts(isForceRefresh) },
+                async { loadWallpapers(isForceRefresh) }
+            ).awaitAll()
+            @Suppress("UNCHECKED_CAST")
+            val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
+            if (loadResult.all { it.first } && collectionsData != null) {
+                colorPaletteGeneratorJob?.cancel()
+                val filteredResults = collectionsData.filter { BuildConfig.DEBUG || it.isPublic }
+                if (collections.value?.map { it.thumbnailUrl } != filteredResults.map { it.thumbnailUrl }) {
+                    collections.value = filteredResults.map { it.toPlaceholderNavigatorCollection(context) }
+                }
+                colorPaletteGeneratorJob = launch {
+                    filteredResults.map { collection ->
+                        async {
+                            collection.toNavigatorCollection().let { collectionWithFinalColorPalette ->
+                                if (collections.value?.contains(collectionWithFinalColorPalette) == false) {
+                                    collections.value = collections.value?.toMutableList()?.apply {
+                                        val index = indexOfFirst { it.id == collectionWithFinalColorPalette.id }
+                                        if (index != -1) {
+                                            removeAt(index)
+                                            add(index, collectionWithFinalColorPalette)
                                         }
                                     }
                                 }
                             }
-                        }.awaitAll()
-                    }
-                    _shouldShowLoadingIndicator.value = false
+                        }
+                    }.awaitAll()
                 }
-                is Result.Failure -> {
-                    DebugMenu.log("Failed to load collections: ${result.exception.message}.")
-                    _events.pushEvent(Event.ShowErrorMessage)
-                    _shouldShowLoadingIndicator.value = false
-                }
+                _shouldShowLoadingIndicator.value = false
+            } else {
+                _events.pushEvent(Event.ShowErrorMessage)
+                _shouldShowLoadingIndicator.value = false
             }
         }
     }
@@ -203,6 +183,30 @@ internal class CollectionsViewModel(
         if (collections.value != null && (focusedCollectionDestination.value != null || !_isLastPageFocused.value)) {
             _events.pushEvent(Event.NavigateToNextPage)
         }
+    }
+
+    private suspend fun loadCollections(isForceRefresh: Boolean): Pair<Boolean, List<Collection>?> {
+        DebugMenu.log("Loading collections...")
+        return when (val result = DebugMenu.getMockCollections(isForceRefresh) ?: getCollections(isForceRefresh)) {
+            is Result.Success -> true.also { DebugMenu.log("Loaded ${result.data.size} collections.") } to result.data
+            is Result.Failure -> false.also { DebugMenu.log("Failed to load collections: ${result.exception.message}.") } to null
+        }
+    }
+
+    private suspend fun loadProducts(isForceRefresh: Boolean): Pair<Boolean, Any?> {
+        DebugMenu.log("Loading products...")
+        return when (val result = getProducts(isForceRefresh)) {
+            is Result.Success -> true.also { DebugMenu.log("Loaded ${result.data.size} products.") }
+            is Result.Failure -> false.also { DebugMenu.log("Failed to load products: ${result.exception.message}.") }
+        } to null
+    }
+
+    private suspend fun loadWallpapers(isForceRefresh: Boolean): Pair<Boolean, Any?> {
+        DebugMenu.log("Loading wallpapers...")
+        return when (val result = DebugMenu.getMockWallpapers("", isForceRefresh) ?: getWallpapers(isForceRefresh)) {
+            is Result.Success -> true.also { DebugMenu.log("Loaded ${result.data.size} wallpapers.") }
+            is Result.Failure -> false.also { DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.") }
+        } to null
     }
 
     private fun Collection.toPlaceholderNavigatorCollection(context: Context) = CollectionDestination(
