@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.doOnNextLayout
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -228,7 +227,11 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         navigator?.navigateToAbout()
     }
 
-    private fun showErrorMessage() = context?.let { showSnackbar { viewModel.loadData(true, requireContext()) } }
+    private fun showErrorMessage() = context?.let { context ->
+        showSnackbar(anchor = binding.coordinatorLayout) {
+            viewModel.loadData(true, context)
+        }
+    }
 
     private fun scrollToWelcome() {
         binding.viewPager.currentItem = 0

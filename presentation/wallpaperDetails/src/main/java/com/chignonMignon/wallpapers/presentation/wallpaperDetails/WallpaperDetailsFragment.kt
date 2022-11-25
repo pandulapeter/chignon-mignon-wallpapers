@@ -129,6 +129,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
     private fun showErrorMessage(wallpaper: WallpaperDestination) = context?.let {
         showSnackbar(
+            anchor = binding.coordinatorLayout,
             messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper,
             action = { viewModel.onSetWallpaperButtonPressed(it, wallpaper) }
         )
@@ -142,6 +143,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
                 .launchUrl(this, Uri.parse(url))
         } catch (_: ActivityNotFoundException) {
             showSnackbar(
+                anchor = binding.coordinatorLayout,
                 messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.no_browser_installed
             )
         }
