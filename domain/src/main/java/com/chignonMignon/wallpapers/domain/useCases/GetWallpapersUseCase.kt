@@ -9,8 +9,6 @@ class GetWallpapersUseCase internal constructor(
     suspend operator fun invoke(
         isForceRefresh: Boolean
     ) = resultOf {
-        wallpaperRepository.getWallpapers(
-            isForceRefresh = isForceRefresh
-        )
+        wallpaperRepository.getWallpapers(isForceRefresh)
     }
 }

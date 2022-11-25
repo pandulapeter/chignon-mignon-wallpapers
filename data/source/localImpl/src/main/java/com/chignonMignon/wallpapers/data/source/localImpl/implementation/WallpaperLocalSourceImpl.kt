@@ -6,7 +6,9 @@ import com.chignonMignon.wallpapers.data.source.local.api.WallpaperLocalSource
 internal class WallpaperLocalSourceImpl(
 ) : WallpaperLocalSource {
 
-    override suspend fun getWallpapers(collectionId: String) = TODO("Not yet implemented")
+    override suspend fun getWallpapers() = TODO("Not yet implemented")
 
-    override suspend fun saveWallpapers(wallpapers: List<Wallpaper>) = TODO("Not yet implemented")
+    override suspend fun saveWallpapers(wallpapers: List<Wallpaper>) {
+        // TODO("Not yet implemented")
+    }
 }

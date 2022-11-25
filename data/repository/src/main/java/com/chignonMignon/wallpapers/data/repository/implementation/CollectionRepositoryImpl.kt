@@ -8,13 +8,21 @@ import com.chignonMignon.wallpapers.data.source.remote.api.CollectionRemoteSourc
 internal class CollectionRepositoryImpl(
     collectionLocalSource: CollectionLocalSource,
     collectionRemoteSource: CollectionRemoteSource
-) : BaseRepository<List<Collection>>(collectionRemoteSource::getCollections), CollectionRepository {
+) : BaseRepository<List<Collection>>(
+    getDataFromLocalSource = collectionLocalSource::getCollections,
+    getDataFromRemoteSource = collectionRemoteSource::getCollections,
+    saveDataToLocalSource = collectionLocalSource::saveCollections,
+), CollectionRepository {
+
+    override fun isDataValid(data: List<Collection>) = data.isNotEmpty()
 
     override fun areCollectionsAvailable() = isDataAvailable()
 
-    override suspend fun getCollections(isForceRefresh: Boolean) =
-        getData(isForceRefresh)
+    override suspend fun getCollections(isForceRefresh: Boolean) = getData(
+        isForceRefresh = isForceRefresh
+    )
 
-    override suspend fun getCollectionById(isForceRefresh: Boolean, collectionId: String) =
-        getCollections(isForceRefresh).first { it.id == collectionId }
+    override suspend fun getCollectionById(isForceRefresh: Boolean, collectionId: String) = getCollections(
+        isForceRefresh = isForceRefresh
+    ).first { it.id == collectionId }
 }

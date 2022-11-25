@@ -8,11 +8,19 @@ import com.chignonMignon.wallpapers.data.source.remote.api.ProductRemoteSource
 internal class ProductRepositoryImpl(
     productLocalSource: ProductLocalSource,
     productRemoteSource: ProductRemoteSource
-) : BaseRepository<List<Product>>(productRemoteSource::getProducts), ProductRepository {
+) : BaseRepository<List<Product>>(
+    getDataFromLocalSource = productLocalSource::getProducts,
+    getDataFromRemoteSource = productRemoteSource::getProducts,
+    saveDataToLocalSource = productLocalSource::saveProducts
+), ProductRepository {
 
-    override suspend fun getProducts(isForceRefresh: Boolean): List<Product> =
-        getData(isForceRefresh)
+    override fun isDataValid(data: List<Product>) = data.isNotEmpty()
 
-    override suspend fun getProductsByWallpaperId(isForceRefresh: Boolean, wallpaperId: String) =
-        getProducts(isForceRefresh).filter { it.wallpaperId == wallpaperId }
+    override suspend fun getProducts(isForceRefresh: Boolean): List<Product> = getData(
+        isForceRefresh = isForceRefresh
+    )
+
+    override suspend fun getProductsByWallpaperId(isForceRefresh: Boolean, wallpaperId: String) = getProducts(
+        isForceRefresh = isForceRefresh
+    ).filter { it.wallpaperId == wallpaperId }
 }

@@ -9,8 +9,6 @@ class GetCollectionsUseCase internal constructor(
     suspend operator fun invoke(
         isForceRefresh: Boolean
     ) = resultOf {
-        collectionRepository.getCollections(
-            isForceRefresh = isForceRefresh
-        )
+        collectionRepository.getCollections(isForceRefresh)
     }
 }

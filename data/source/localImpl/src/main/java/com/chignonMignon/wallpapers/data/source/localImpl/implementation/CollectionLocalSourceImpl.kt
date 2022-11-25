@@ -8,5 +8,7 @@ internal class CollectionLocalSourceImpl(
 
     override suspend fun getCollections() = TODO("Not yet implemented")
 
-    override suspend fun saveCollections(collections: List<Collection>) = TODO("Not yet implemented")
+    override suspend fun saveCollections(collections: List<Collection>) {
+        // TODO("Not yet implemented")
+    }
 }

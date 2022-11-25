@@ -9,8 +9,6 @@ class GetProductsUseCase internal constructor(
     suspend operator fun invoke(
         isForceRefresh: Boolean
     ) = resultOf {
-        productRepository.getProducts(
-            isForceRefresh = isForceRefresh
-        )
+        productRepository.getProducts(isForceRefresh)
     }
 }
