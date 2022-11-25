@@ -156,6 +156,7 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:enabled="@{viewModel.shouldShowLoadingIndicator}"
             app:horizontalPaddingWithInset="@{@dimen/content_padding}"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
