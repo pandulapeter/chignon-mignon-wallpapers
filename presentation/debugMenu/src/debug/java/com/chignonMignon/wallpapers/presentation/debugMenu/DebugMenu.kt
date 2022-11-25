@@ -61,6 +61,11 @@ object DebugMenu : DebugMenuContract {
         isForceRefresh: Boolean
     ) = if (shouldUseMockData) Result.Success(MockDataGenerator.generateMockCollections(isForceRefresh)) else null
 
+    override suspend fun getMockProducts(
+        wallpaperId: String,
+        isForceRefresh: Boolean
+    ) = if (shouldUseMockData) Result.Success(MockDataGenerator.generateMockProducts(wallpaperId, isForceRefresh)) else null
+
     override suspend fun getMockWallpapers(
         collectionId: String,
         isForceRefresh: Boolean

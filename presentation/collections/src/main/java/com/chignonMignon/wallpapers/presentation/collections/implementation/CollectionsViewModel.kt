@@ -195,7 +195,7 @@ internal class CollectionsViewModel(
 
     private suspend fun loadProducts(isForceRefresh: Boolean): Pair<Boolean, Any?> {
         DebugMenu.log("Loading products...")
-        return when (val result = getProducts(isForceRefresh)) {
+        return when (val result = DebugMenu.getMockProducts("", isForceRefresh) ?: getProducts(isForceRefresh)) {
             is Result.Success -> true.also { DebugMenu.log("Loaded ${result.data.size} products.") }
             is Result.Failure -> false.also { DebugMenu.log("Failed to load products: ${result.exception.message}.") }
         } to null

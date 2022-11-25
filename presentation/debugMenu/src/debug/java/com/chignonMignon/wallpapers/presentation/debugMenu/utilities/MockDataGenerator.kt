@@ -1,6 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.debugMenu.utilities
 
 import com.chignonMignon.wallpapers.data.model.domain.Collection
+import com.chignonMignon.wallpapers.data.model.domain.Product
 import com.chignonMignon.wallpapers.data.model.domain.TranslatableText
 import com.chignonMignon.wallpapers.data.model.domain.Wallpaper
 import kotlinx.coroutines.delay
@@ -66,6 +67,13 @@ internal object MockDataGenerator {
         }
     }
 
+    suspend fun generateMockProducts(wallpaperId: String, isForceRefresh: Boolean): List<Product> {
+        if (isForceRefresh) {
+            delay(FAKE_LOADING_TIME)
+        }
+        return (0..generateRandomCount()).map { generateRandomProduct() }.map { it.copy(wallpaperId = wallpaperId) }
+    }
+
     suspend fun generateMockWallpapers(collectionId: String, isForceRefresh: Boolean): List<Wallpaper> {
         if (isForceRefresh || mockWallpaperCache == null) {
             delay(FAKE_LOADING_TIME)
@@ -76,7 +84,7 @@ internal object MockDataGenerator {
         }
     }
 
-    private fun generateRandomCount(until: Int = 30) = random.nextInt(until)
+    private fun generateRandomCount(until: Int = 30) = random.nextInt(1, until)
 
     private fun generateRandomIndex() = random.nextInt(200) + 100
 
@@ -91,6 +99,16 @@ internal object MockDataGenerator {
             primaryColorCode = "",
             secondaryColorCode = "",
             onSecondaryColorCode = "",
+            isPublic = false
+        )
+    }
+
+    private fun generateRandomProduct() = generateRandomImage(generateRandomSeed()).let { imageUrl ->
+        Product(
+            id = generateRandomId(),
+            wallpaperId = "",
+            thumbnailUrl = imageUrl,
+            url = imageUrl,
             isPublic = false
         )
     }

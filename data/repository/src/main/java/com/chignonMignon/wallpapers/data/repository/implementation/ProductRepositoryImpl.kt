@@ -10,7 +10,9 @@ internal class ProductRepositoryImpl(
     productRemoteSource: ProductRemoteSource
 ) : BaseRepository<List<Product>>(productRemoteSource::getProducts), ProductRepository {
 
-    override suspend fun getProducts(isForceRefresh: Boolean): List<Product> = getData(isForceRefresh)
+    override suspend fun getProducts(isForceRefresh: Boolean): List<Product> =
+        getData(isForceRefresh)
 
-    override fun getProductsByWallpaperId(wallpaperId: String) = cache?.filter { it.wallpaperId == wallpaperId } ?: emptyList()
+    override suspend fun getProductsByWallpaperId(isForceRefresh: Boolean, wallpaperId: String) =
+        getProducts(isForceRefresh).filter { it.wallpaperId == wallpaperId }
 }

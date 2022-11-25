@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chignonMignon.wallpapers.data.model.Result
 import com.chignonMignon.wallpapers.data.model.domain.Product
 import com.chignonMignon.wallpapers.domain.useCases.GetProductsByWallpaperIdUseCase
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
@@ -40,8 +41,9 @@ internal class WallpaperDetailsViewModel(
     private val _pagerProgress = MutableStateFlow(getPagerProgress(initialWallpaperIndex))
     val pagerProgress: StateFlow<Float> = _pagerProgress
     val productListItems = focusedWallpaper.map { wallpaper ->
-        getProductsByWallpaperId(wallpaper.id).let { products ->
-            if (products.isEmpty()) {
+        (DebugMenu.getMockProducts(wallpaper.id, false) ?: getProductsByWallpaperId(false, wallpaper.id)).let { result ->
+            val products = (result as? Result.Success)?.data
+            if (products.isNullOrEmpty()) {
                 listOf(WallpaperDetailsProductListItem.EmptyUiModel())
             } else {
                 products.map { WallpaperDetailsProductListItem.ProductUiModel(it) }
