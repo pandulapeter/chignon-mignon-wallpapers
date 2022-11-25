@@ -94,47 +94,49 @@ internal class CollectionsViewModel(
     val backgroundColor = combine(primaryColor, secondaryColor) { primaryColor, secondaryColor -> primaryColor to secondaryColor }
     private var colorPaletteGeneratorJob: Job? = null
 
-    fun loadData(isForceRefresh: Boolean, context: Context) = viewModelScope.launch {
-        if (!_shouldShowLoadingIndicator.value) {
-            val areCollectionsAvailable = areCollectionsAvailable()
-            _shouldShowLoadingIndicator.value = isForceRefresh || !areCollectionsAvailable
-            if (!areCollectionsAvailable) {
-                _events.pushEvent(Event.ScrollToWelcome)
-            }
-            val loadResult = listOf(
-                async { loadCollections(isForceRefresh) },
-                async { loadProducts(isForceRefresh) },
-                async { loadWallpapers(isForceRefresh) }
-            ).awaitAll()
-            @Suppress("UNCHECKED_CAST")
-            val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
-            if (loadResult.all { it.first } && collectionsData != null) {
-                colorPaletteGeneratorJob?.cancel()
-                val filteredResults = collectionsData.filter { BuildConfig.DEBUG || it.isPublic }
-                if (collections.value?.map { it.thumbnailUrl } != filteredResults.map { it.thumbnailUrl }) {
-                    collections.value = filteredResults.map { it.toPlaceholderNavigatorCollection(context) }
+    fun loadData(isForceRefresh: Boolean, context: Context) {
+        viewModelScope.launch {
+            if (!_shouldShowLoadingIndicator.value) {
+                val areCollectionsAvailable = areCollectionsAvailable()
+                _shouldShowLoadingIndicator.value = isForceRefresh || !areCollectionsAvailable
+                if (!areCollectionsAvailable) {
+                    _events.pushEvent(Event.ScrollToWelcome)
                 }
-                colorPaletteGeneratorJob = launch {
-                    filteredResults.map { collection ->
-                        async {
-                            collection.toNavigatorCollection().let { collectionWithFinalColorPalette ->
-                                if (collections.value?.contains(collectionWithFinalColorPalette) == false) {
-                                    collections.value = collections.value?.toMutableList()?.apply {
-                                        val index = indexOfFirst { it.id == collectionWithFinalColorPalette.id }
-                                        if (index != -1) {
-                                            removeAt(index)
-                                            add(index, collectionWithFinalColorPalette)
+                val loadResult = listOf(
+                    async { loadCollections(_shouldShowLoadingIndicator.value) },
+                    async { loadProducts(_shouldShowLoadingIndicator.value) },
+                    async { loadWallpapers(_shouldShowLoadingIndicator.value) }
+                ).awaitAll()
+                @Suppress("UNCHECKED_CAST")
+                val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
+                if (loadResult.all { it.first } && collectionsData != null) {
+                    colorPaletteGeneratorJob?.cancel()
+                    val filteredResults = collectionsData.filter { BuildConfig.DEBUG || it.isPublic }
+                    if (collections.value?.map { it.thumbnailUrl } != filteredResults.map { it.thumbnailUrl }) {
+                        collections.value = filteredResults.map { it.toPlaceholderNavigatorCollection(context) }
+                    }
+                    colorPaletteGeneratorJob = launch {
+                        filteredResults.map { collection ->
+                            async {
+                                collection.toNavigatorCollection().let { collectionWithFinalColorPalette ->
+                                    if (collections.value?.contains(collectionWithFinalColorPalette) == false) {
+                                        collections.value = collections.value?.toMutableList()?.apply {
+                                            val index = indexOfFirst { it.id == collectionWithFinalColorPalette.id }
+                                            if (index != -1) {
+                                                removeAt(index)
+                                                add(index, collectionWithFinalColorPalette)
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    }.awaitAll()
+                        }.awaitAll()
+                    }
+                    _shouldShowLoadingIndicator.value = false
+                } else {
+                    _events.pushEvent(Event.ShowErrorMessage)
+                    _shouldShowLoadingIndicator.value = false
                 }
-                _shouldShowLoadingIndicator.value = false
-            } else {
-                _events.pushEvent(Event.ShowErrorMessage)
-                _shouldShowLoadingIndicator.value = false
             }
         }
     }

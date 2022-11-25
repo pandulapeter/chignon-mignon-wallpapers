@@ -8,6 +8,7 @@ androidx-fragment = "1.6.0-alpha03" # https://developer.android.com/jetpack/andr
 androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-palette = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/palette
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
+androidx-room = "2.4.3" # https://developer.android.com/jetpack/androidx/releases/room
 androidx-swiperefreshlayout = "1.2.0-alpha01" # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
 androidx-viewpager = "1.1.0-beta01" # https://developer.android.com/jetpack/androidx/releases/viewpager2
 beagle = "2.9.0" # https://github.com/pandulapeter/beagle/releases
@@ -34,6 +35,8 @@ androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "andr
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 androidx-palette = { module = "androidx.palette:palette", version.ref = "androidx-palette" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
+androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
+androidx-room-codegen = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
 androidx-viewpager = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager" }
 beagle = { module = "io.github.pandulapeter.beagle:ui-drawer", version.ref = "beagle" }

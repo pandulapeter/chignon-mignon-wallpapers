@@ -3,6 +3,7 @@ include(
     ":data:model",
     ":data:repository",
     ":data:source:local",
+    ":data:source:localImpl",
     ":data:source:remote",
     ":domain",
     ":presentation:shared",

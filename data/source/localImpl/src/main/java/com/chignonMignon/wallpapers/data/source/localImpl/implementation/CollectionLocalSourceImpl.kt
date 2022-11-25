@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.data.source.local.implementation
+package com.chignonMignon.wallpapers.data.source.localImpl.implementation
 
 import com.chignonMignon.wallpapers.data.model.domain.Collection
 import com.chignonMignon.wallpapers.data.source.local.api.CollectionLocalSource

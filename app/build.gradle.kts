@@ -7,6 +7,7 @@ plugins {
 dependencies {
     implementation(project(":data:repository"))
     implementation(project(":data:source:local"))
+    implementation(project(":data:source:localImpl"))
     implementation(project(":data:source:remote"))
     implementation(project(":domain"))
     implementation(project(":presentation:shared"))

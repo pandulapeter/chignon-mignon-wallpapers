@@ -2,7 +2,7 @@ package com.chignonMignon.wallpapers
 
 import android.app.Application
 import com.chignonMignon.wallpapers.data.repository.repositoryModule
-import com.chignonMignon.wallpapers.data.source.local.localSourceModule
+import com.chignonMignon.wallpapers.data.source.localImpl.localSourceModule
 import com.chignonMignon.wallpapers.data.source.remote.remoteSourceModule
 import com.chignonMignon.wallpapers.domain.domainModule
 import com.chignonMignon.wallpapers.presentation.about.presentationAboutModule
