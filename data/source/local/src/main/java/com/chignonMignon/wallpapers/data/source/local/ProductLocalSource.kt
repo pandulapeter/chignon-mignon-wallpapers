@@ -1,4 +1,4 @@
-package com.chignonMignon.wallpapers.data.source.local.api
+package com.chignonMignon.wallpapers.data.source.local
 
 import com.chignonMignon.wallpapers.data.model.domain.Product
 
