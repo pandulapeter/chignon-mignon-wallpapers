@@ -103,9 +103,9 @@ internal class CollectionsViewModel(
                     _events.pushEvent(Event.ScrollToWelcome)
                 }
                 val loadResult = listOf(
-                    async { loadCollections(_shouldShowLoadingIndicator.value) },
-                    async { loadProducts(_shouldShowLoadingIndicator.value) },
-                    async { loadWallpapers(_shouldShowLoadingIndicator.value) }
+                    async { loadCollections(isForceRefresh) },
+                    async { loadProducts(isForceRefresh) },
+                    async { loadWallpapers(isForceRefresh) }
                 ).awaitAll()
                 @Suppress("UNCHECKED_CAST")
                 val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
