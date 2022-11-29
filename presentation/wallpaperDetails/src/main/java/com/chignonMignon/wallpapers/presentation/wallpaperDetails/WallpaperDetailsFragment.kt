@@ -74,24 +74,24 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         viewModel.focusedWallpaper.observe(viewLifecycleOwner, ::onFocusedWallpaperChanged)
         viewModel.productListItems.observe(viewLifecycleOwner, productAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
-        delaySharedElementTransition(binding.viewPager)
+        delaySharedElementTransition(binding.content.viewPager)
     }
 
     override fun onResume() {
         super.onResume()
-        binding.progressBar.finishAnimation()
+        binding.appBar.progressBar.finishAnimation()
     }
 
     override fun onStop() {
         super.onStop()
-        navigator?.selectedWallpaperIndex = binding.viewPager.currentItem
+        navigator?.selectedWallpaperIndex = binding.content.viewPager.currentItem
     }
 
-    private fun FragmentWallpaperDetailsBinding.setupToolbar() = toolbar.setNavigationOnClickListener {
+    private fun FragmentWallpaperDetailsBinding.setupToolbar() = appBar.toolbar.setNavigationOnClickListener {
         navigator?.navigateBack()
     }
 
-    private fun FragmentWallpaperDetailsBinding.setupViewPager() = viewPager.run {
+    private fun FragmentWallpaperDetailsBinding.setupViewPager() = content.viewPager.run {
         val viewModel = this@WallpaperDetailsFragment.viewModel
         wallpaperDetailsAdapter.submitList(viewModel.wallpaperListItems)
         adapter = wallpaperDetailsAdapter
@@ -112,17 +112,17 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         adapter = productAdapter
     }
 
-    private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
-        is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
-        is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper)
-        is WallpaperDetailsViewModel.Event.OpenUrl -> openUrl(event.url)
-    }
-
     private fun onFocusedWallpaperChanged(focusedWallpaperDestination: WallpaperDestination?) {
         primaryColorTransitionManager.fadeToColor(focusedWallpaperDestination?.colorPaletteModel?.primary, shouldAnimateColorTransitions)
         if (!shouldAnimateColorTransitions) {
             shouldAnimateColorTransitions = true
         }
+    }
+
+    private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
+        is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
+        is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper)
+        is WallpaperDetailsViewModel.Event.OpenUrl -> openUrl(event.url)
     }
 
     private fun setWallpaper(uri: Uri) = context?.setWallpaper(uri)

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.WallpaperDetailsViewModel" />
+
+    </data>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:liftOnScroll="false">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.MaterialComponents.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                app:marginWithInsetLeft="@{0f}"
+                app:marginWithInsetRight="@{0f}"
+                app:marginWithInsetTop="@{0f}"
+                app:navigationIcon="@drawable/ic_close">
+
+                <com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
+                    android:id="@+id/view_flipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:title="@{viewModel.focusedWallpaper.name}" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pager_progress_bar_height"
+                android:layout_gravity="bottom"
+                app:color="@{@color/on_primary}"
+                app:progress="@{viewModel.pagerProgress}" />
+
+        </FrameLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</layout>

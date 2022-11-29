@@ -12,4 +12,6 @@ Google Sheet instead of a dedicated backend. The app features a scalable user in
 
 ### License
 
-This software is licensed under GNU GPL 3.0. Any derivative works must follow the same open-source license. 
+This software is licensed under GNU GPL 3.0. Any derivative works must follow the same open-source license.
+
+The artwork displayed in the application is the property of [Chignon Mignon](https://chignonmignon.ro/) and should only be used for personal purposes.
