@@ -12,6 +12,10 @@
     <string name="about_text_1">Számodra mi szolgál inspirációként a hétköznapokban? Mi az, ami az érzékelés világán keresztül új gondolatokat indít el benned?</string>
     <string name="about_text_2">Kollekcióinkkal, a színek, textúrák és formák játékával szólítjuk meg a kreatív éned, hogy újra meg újra izgalmas történetek színesítsék a mindennapjaidat!</string>
     <string name="about_text_3">Mintáinkat táskák és kiegészítők megalkotásához terveztük és mostantól háttérképként is elérhetőek!</string>
+    <string name="about_text_4">All pattern designs showcased in the app as well as the physical products are made with love in Cluj, Romania.</string> <!-- TODO -->
+    <string name="about_text_5">Török Patrícia-Ágnes</string> <!-- TODO -->
+    <string name="about_text_6">Designer</string> <!-- TODO -->
+    <string name="about_text_7">This application was created by Pandula Péter.</string> <!-- TODO -->
     <string name="about_button_website">Visit our website</string> <!-- TODO -->
     <string name="about_button_email">Drop us a line</string> <!-- TODO -->
     <string name="about_button_facebook">Check us out on Facebook</string> <!-- TODO -->
