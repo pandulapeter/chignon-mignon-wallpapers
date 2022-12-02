@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/button_website"
+            style="@style/AboutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/about_button_website"
+            app:drawableStartCompat="@drawable/ic_website"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/button_email"
+            style="@style/AboutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/about_button_email"
+            app:drawableStartCompat="@drawable/ic_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_website" />
+
+        <TextView
+            android:id="@+id/button_facebook"
+            style="@style/AboutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/about_button_facebook"
+            app:drawableStartCompat="@drawable/ic_facebook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_email" />
+
+        <TextView
+            android:id="@+id/button_instagram"
+            style="@style/AboutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/about_button_instagram"
+            app:drawableStartCompat="@drawable/ic_instagram"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_facebook" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

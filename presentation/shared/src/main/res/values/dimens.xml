@@ -11,5 +11,9 @@
     <!-- Custom views -->
 
     <dimen name="pager_progress_bar_height">2dp</dimen>
+    <dimen name="pager_margin">56dp</dimen>
+    <dimen name="about_vertical_margin">32dp</dimen>
+    <dimen name="about_button_vertical_padding">12dp</dimen>
+    <dimen name="about_button_drawable_margin">24dp</dimen>
 
 </resources>

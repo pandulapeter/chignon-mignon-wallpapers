@@ -5,13 +5,24 @@
     <string name="try_again">Încearcă din nou</string>
     <string name="something_went_wrong">A intervenit o eroare.\nVerifică conexiunea la internet</string>
     <string name="empty_state">Se pare că nu există conținut aici…\mReveniți mai târziu!</string>
-    <string name="work_in_progress">Încă nu e gata…</string>
     <string name="no_browser_installed">No browser installed on the device</string> <!-- TODO -->
+
+    <!-- About -->
+    <string name="about_title">Despre noi</string>
+    <string name="about_text_1">What inspires you day to day? What kind of perceptions open you up to having new ideas?</string>
+    <string name="about_text_2">The playfulness of textures, shapes and colors in our collections stimulate your creative self.</string>
+    <string name="about_text_3">Our patterns, initially designed for bags and various other accessories are now available to use as wallpapers!</string>
+    <string name="about_button_website">Visit our website</string> <!-- TODO -->
+    <string name="about_button_email">Drop us a line</string> <!-- TODO -->
+    <string name="about_button_facebook">Check us out on Facebook</string> <!-- TODO -->
+    <string name="about_button_instagram">Follow us on Instagram</string> <!-- TODO -->
+    <string name="about_button_google_play">Rate the app on Google Play</string> <!-- TODO -->
+    <string name="about_button_github">Check out the source code</string> <!-- TODO -->
+    <string name="about_button_licenses">See the open source licenses</string> <!-- TODO -->
 
     <!-- Collections -->
     <string name="collections_title">Colecții</string>
     <string name="collections_welcome">Bine ați venit</string>
-    <string name="about_title">Despre noi</string>
     <string name="collections_welcome_message">Start swiping horizontally to explore the various collections</string> <!-- TODO -->
     <string name="collections_previous">Anterior</string>
     <string name="collections_next">Următor</string>
@@ -19,6 +30,6 @@
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Setează fundal</string>
     <string name="wallpaper_details_cannot_set_wallpaper">Something went wrong while downloading the wallpaper</string> <!-- TODO -->
-    <string name="wallpaper_details_products_empty">No products related\nto this pattern yet.</string> <!-- TODO -->
+    <string name="wallpaper_details_products_empty">Products using this pattern are coming soon!</string> <!-- TODO -->
 
 </resources>

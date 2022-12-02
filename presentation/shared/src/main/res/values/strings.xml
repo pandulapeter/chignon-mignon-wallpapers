@@ -5,11 +5,20 @@
     <string name="try_again">Try again</string>
     <string name="something_went_wrong">Something went wrong.\nCheck your internet connection</string>
     <string name="empty_state">Looks like there\'s no content here…\nCheck back later!</string>
-    <string name="work_in_progress">Work in progress…</string>
-    <string name="no_browser_installed">No browser installed on the device</string> <!-- TODO -->
+    <string name="no_browser_installed">No browser installed on the device</string>
 
     <!-- About -->
     <string name="about_title">About</string>
+    <string name="about_text_1">What inspires you day to day? What kind of perceptions open you up to having new ideas?</string>
+    <string name="about_text_2">The playfulness of textures, shapes and colors in our collections stimulate your creative self.</string>
+    <string name="about_text_3">Our patterns, initially designed for bags and various other accessories are now available to use as wallpapers!</string>
+    <string name="about_button_website">Visit our website</string>
+    <string name="about_button_email">Drop us a line</string>
+    <string name="about_button_facebook">Check us out on Facebook</string>
+    <string name="about_button_instagram">Follow us on Instagram</string>
+    <string name="about_button_google_play">Rate the app on Google Play</string>
+    <string name="about_button_github">Check out the source code</string>
+    <string name="about_button_licenses">See the open source licenses</string>
 
     <!-- Collections -->
     <string name="collections_title">Collections</string>
@@ -21,6 +30,6 @@
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Set wallpaper</string>
     <string name="wallpaper_details_cannot_set_wallpaper">Something went wrong while downloading the wallpaper</string>
-    <string name="wallpaper_details_products_empty">No products related\nto this pattern yet.</string>
+    <string name="wallpaper_details_products_empty">Products using this pattern are coming soon!</string>
 
 </resources>

@@ -62,8 +62,8 @@
                 android:id="@+id/about_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:marginWithInsetLeft="@{@dimen/double_content_padding}"
-                app:marginWithInsetRight="@{@dimen/double_content_padding}" />
+                app:marginWithInsetLeft="@{0f}"
+                app:marginWithInsetRight="@{0f}" />
 
         </androidx.core.widget.NestedScrollView>
 

@@ -12,10 +12,16 @@ class AboutView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
+    private val binding = ViewAboutBinding.inflate(LayoutInflater.from(context), this)
+
     init {
-        ViewAboutBinding.inflate(LayoutInflater.from(context), this)
-        context.dimension(R.dimen.double_content_padding).let {
-            setPadding(paddingLeft, it, paddingRight, it)
-        }
+        setPadding(paddingLeft, paddingTop, paddingRight, context.dimension(R.dimen.about_vertical_margin))
+        binding.linksBusiness.buttonWebsite.setOnClickListener { } // TODO
+        binding.linksBusiness.buttonEmail.setOnClickListener { } // TODO
+        binding.linksBusiness.buttonFacebook.setOnClickListener { } // TODO
+        binding.linksBusiness.buttonInstagram.setOnClickListener { } // TODO
+        binding.linksApplication.buttonGooglePlay.setOnClickListener { } // TODO
+        binding.linksApplication.buttonGithub.setOnClickListener { } // TODO
+        binding.linksApplication.buttonLicenses.setOnClickListener { } // TODO
     }
 }

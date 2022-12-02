@@ -68,13 +68,13 @@
                         android:contentDescription="@string/about_title"
                         android:onClick="@{() -> viewModel.onAboutButtonPressed()}"
                         android:padding="@dimen/content_padding"
-                        android:src="@drawable/ic_about"
                         android:visibility="@{viewModel.shouldShowAboutButton}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:marginWithInsetRight="@{@dimen/content_padding}"
                         app:marginWithInsetTop="@{0f}"
+                        app:srcCompat="@drawable/ic_about"
                         app:tint="?colorOnPrimary" />
 
                     <FrameLayout
@@ -153,7 +153,7 @@
                             android:onClick="@{() -> viewModel.onPreviousButtonPressed()}"
                             android:padding="@dimen/content_padding"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_previous"
+                            app:srcCompat="@drawable/ic_previous"
                             app:tint="@{viewModel.onSecondaryColor}" />
 
                         <ImageView
@@ -166,8 +166,8 @@
                             android:onClick="@{() -> viewModel.onNextButtonPressed()}"
                             android:padding="@dimen/content_padding"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_next"
                             android:visibility="@{viewModel.areCollectionsLoaded}"
+                            app:srcCompat="@drawable/ic_next"
                             app:tint="@{viewModel.onSecondaryColor}" />
 
                     </FrameLayout>

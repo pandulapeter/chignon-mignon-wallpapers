@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AboutButton">
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">@dimen/about_button_drawable_margin</item>
+        <item name="android:paddingHorizontal">@dimen/pager_margin</item>
+        <item name="android:paddingVertical">@dimen/about_button_vertical_padding</item>
+    </style>
+
+</resources>

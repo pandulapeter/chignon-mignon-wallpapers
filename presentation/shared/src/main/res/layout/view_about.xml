@@ -7,129 +7,73 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <ImageView
-        android:id="@+id/view_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
+        android:alpha="0.3"
         android:importantForAccessibility="no"
-        android:src="@drawable/img_about_01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_error"
+        app:tint="?android:windowBackground" />
+
+    <TextView
+        android:id="@+id/text_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pager_margin"
+        android:layout_marginTop="@dimen/about_vertical_margin"
+        android:layout_marginEnd="@dimen/pager_margin"
+        android:gravity="center"
+        android:text="@string/about_text_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/view_2"
+        android:id="@+id/text_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pager_margin"
         android:layout_marginTop="@dimen/double_content_padding"
+        android:layout_marginEnd="@dimen/pager_margin"
         android:gravity="center"
-        android:text="@string/work_in_progress"
+        android:text="@string/about_text_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_1" />
-
-    <ImageView
-        android:id="@+id/view_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:adjustViewBounds="true"
-        android:importantForAccessibility="no"
-        android:src="@drawable/img_about_02"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_2" />
+        app:layout_constraintTop_toBottomOf="@id/text_1" />
 
     <TextView
-        android:id="@+id/view_4"
+        android:id="@+id/text_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pager_margin"
         android:layout_marginTop="@dimen/double_content_padding"
+        android:layout_marginEnd="@dimen/pager_margin"
         android:gravity="center"
-        android:text="@string/work_in_progress"
+        android:text="@string/about_text_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_3" />
+        app:layout_constraintTop_toBottomOf="@id/text_2" />
 
-    <ImageView
-        android:id="@+id/view_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:adjustViewBounds="true"
-        android:importantForAccessibility="no"
-        android:src="@drawable/img_about_03"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_4" />
-
-    <TextView
-        android:id="@+id/view_6"
+    <include
+        android:id="@+id/links_business"
+        layout="@layout/layout_about_links_business"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:gravity="center"
-        android:text="@string/work_in_progress"
+        android:layout_marginTop="@dimen/about_vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_5" />
+        app:layout_constraintTop_toBottomOf="@id/text_3" />
 
-    <ImageView
-        android:id="@+id/view_7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:adjustViewBounds="true"
-        android:importantForAccessibility="no"
-        android:src="@drawable/img_about_04"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_6" />
-
-    <TextView
-        android:id="@+id/view_8"
+    <include
+        android:id="@+id/links_application"
+        layout="@layout/layout_about_links_application"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:gravity="center"
-        android:text="@string/work_in_progress"
+        android:layout_marginTop="@dimen/about_vertical_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_7" />
-
-    <ImageView
-        android:id="@+id/view_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:adjustViewBounds="true"
-        android:importantForAccessibility="no"
-        android:src="@drawable/img_about_03"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_8" />
-
-    <TextView
-        android:id="@+id/view_10"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:gravity="center"
-        android:text="@string/work_in_progress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_9" />
-
-    <ImageView
-        android:id="@+id/view_11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/double_content_padding"
-        android:adjustViewBounds="true"
-        android:importantForAccessibility="no"
-        android:src="@drawable/img_about_04"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_10" />
+        app:layout_constraintTop_toBottomOf="@id/links_business" />
 
 </merge>
