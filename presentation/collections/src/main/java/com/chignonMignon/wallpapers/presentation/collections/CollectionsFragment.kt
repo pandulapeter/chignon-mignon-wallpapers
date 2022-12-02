@@ -185,11 +185,10 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun onIsLastPageFocusedChanged(isLastPageFocused: Boolean) {
         context?.run {
-            secondaryColorTransitionManager.defaultColor = if (isLastPageFocused) {
-                colorResource(android.R.attr.windowBackground)
-            } else {
-                color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary)
-            }
+            val primaryColor = color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary)
+            val windowBackgroundColor = colorResource(android.R.attr.windowBackground)
+            primaryColorTransitionManager.defaultColor = if (isLastPageFocused) primaryColor else windowBackgroundColor
+            secondaryColorTransitionManager.defaultColor = if (isLastPageFocused) windowBackgroundColor else primaryColor
         }
     }
 

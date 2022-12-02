@@ -2,6 +2,7 @@ package com.chignonMignon.wallpapers.presentation.about
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import com.chignonMignon.wallpapers.presentation.about.databinding.FragmentAboutBinding
 import com.chignonMignon.wallpapers.presentation.about.implementation.AboutViewModel
@@ -24,7 +25,7 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         val binding = bind<FragmentAboutBinding>(view)
         binding.viewModel = viewModel
         binding.setupToolbar()
-        activity?.window?.decorView?.setBackgroundColor(requireContext().colorResource(android.R.attr.windowBackground))
+        activity?.window?.decorView?.background = AppCompatResources.getDrawable(requireContext(), R.drawable.bg_about)
     }
 
     private fun FragmentAboutBinding.setupToolbar() = toolbar.setNavigationOnClickListener {
