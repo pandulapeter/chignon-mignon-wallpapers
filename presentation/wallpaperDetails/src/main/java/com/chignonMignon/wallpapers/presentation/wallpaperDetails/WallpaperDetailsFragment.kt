@@ -1,15 +1,14 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 
-import android.content.ActivityNotFoundException
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
+import com.chignonMignon.wallpapers.presentation.shared.extensions.openUrl
 import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
@@ -135,19 +134,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         )
     }
 
-    private fun openUrl(url: String) = context?.run {
-        try {
-            CustomTabsIntent.Builder()
-                .setColorScheme(CustomTabsIntent.COLOR_SCHEME_LIGHT)
-                .build()
-                .launchUrl(this, Uri.parse(url))
-        } catch (_: ActivityNotFoundException) {
-            showSnackbar(
-                anchor = binding.coordinatorLayout,
-                messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.no_browser_installed
-            )
-        }
-    }
+    private fun openUrl(url: String) = context?.openUrl(url, binding.coordinatorLayout)
 
     companion object {
         private var Bundle.wallpapers by BundleDelegate.ParcelableList<WallpaperDestination>("wallpapers")

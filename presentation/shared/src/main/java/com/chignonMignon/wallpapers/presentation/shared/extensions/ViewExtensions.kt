@@ -3,8 +3,10 @@ package com.chignonMignon.wallpapers.presentation.shared.extensions
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import coil.drawable.CrossfadeDrawable
@@ -20,6 +22,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewT
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.isVisible
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.snackbar.Snackbar
 
 @BindingAdapter("android:text")
 fun TextView.setText(translatableTextModel: TranslatableTextModel?) {
@@ -123,3 +126,22 @@ fun ImageView.setImageUrl(
         }
     }
 }
+
+
+fun View.showSnackbar(
+    @StringRes messageResourceId: Int = R.string.something_went_wrong,
+    @StringRes actionButtonTextResourceId: Int = R.string.try_again,
+    action: (() -> Unit)? = null
+) = showSnackbar(
+    message = context.getString(messageResourceId),
+    actionButtonTextResourceId = actionButtonTextResourceId,
+    action = action
+)
+
+fun View.showSnackbar(
+    message: String,
+    @StringRes actionButtonTextResourceId: Int = R.string.try_again,
+    action: (() -> Unit)? = null
+) = Snackbar.make(this, message, Snackbar.LENGTH_SHORT).apply {
+    action?.let { setAction(actionButtonTextResourceId) { action() } }
+}.show()

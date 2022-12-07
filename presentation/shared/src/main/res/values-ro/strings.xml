@@ -9,20 +9,20 @@
 
     <!-- About -->
     <string name="about_title">Despre noi</string>
-    <string name="about_text_1">What inspires you day to day? What kind of perceptions open you up to having new ideas?</string>
-    <string name="about_text_2">The playfulness of textures, shapes and colors in our collections stimulate your creative self.</string>
-    <string name="about_text_3">Our patterns, initially designed for bags and various other accessories are now available to use as wallpapers!</string>
+    <string name="about_text_1">Ce te inspiră în viața de zi cu zi? Ce anume declanșează în tine gânduri noi prin lumea percepției?</string>
+    <string name="about_text_2">Cu colecțiile noastre facem apel la latura ta creativă printr-un joc de culori, texturi și forme, să te poți bucura de povești captivante, care să îți coloreze viața de zi cu zi din nou și din nou!</string>
+    <string name="about_text_3">Modelele noastre, concepute pentru crearea de genți și accesorii, sunt acum disponibile și ca imagini de fundal!</string>
     <string name="about_text_4">All pattern designs showcased in the app as well as the physical products are made with love in Cluj, Romania.</string> <!-- TODO -->
-    <string name="about_text_5">Török Patrícia-Ágnes</string> <!-- TODO -->
+    <string name="about_text_5">Török Patrícia-Ágnes</string>
     <string name="about_text_6">Designer</string> <!-- TODO -->
-    <string name="about_text_7">This application was created by Pandula Péter.</string> <!-- TODO -->
+    <string name="about_text_7">This application was created by Pandula Péter</string> <!-- TODO -->
     <string name="about_button_website">Visit our website</string> <!-- TODO -->
     <string name="about_button_email">Drop us a line</string> <!-- TODO -->
     <string name="about_button_facebook">Check us out on Facebook</string> <!-- TODO -->
     <string name="about_button_instagram">Follow us on Instagram</string> <!-- TODO -->
     <string name="about_button_google_play">Rate the app on Google Play</string> <!-- TODO -->
     <string name="about_button_github">Check out the source code</string> <!-- TODO -->
-    <string name="about_button_licenses">See the open source licenses</string> <!-- TODO -->
+    <string name="about_button_licenses">Read the open source licenses</string> <!-- TODO -->
 
     <!-- Collections -->
     <string name="collections_title">Colecții</string>

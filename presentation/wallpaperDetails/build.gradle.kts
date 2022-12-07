@@ -11,7 +11,6 @@ dependencies {
     implementation(project(":presentation:debugMenu"))
     implementation(project(":presentation:utilities"))
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.browser)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.lifecycle.viewmodel)
