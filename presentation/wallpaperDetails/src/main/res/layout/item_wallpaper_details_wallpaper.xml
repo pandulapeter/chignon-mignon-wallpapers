@@ -11,17 +11,17 @@
 
     </data>
 
-    <FrameLayout
+    <com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.PhotoViewWrapper
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             app:imageUrl="@{uiModel.wallpaper.url}"
             tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -33,6 +33,6 @@
             android:indeterminate="true"
             app:indicatorColor="?colorOnPrimary" />
 
-    </FrameLayout>
+    </com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.PhotoViewWrapper>
 
 </layout>

@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.google.android.material)
     implementation(libs.koin.android)
     implementation(libs.kotlin.coroutines)
+    implementation(libs.photoview)
 }
 
 android {
