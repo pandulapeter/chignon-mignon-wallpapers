@@ -4,7 +4,7 @@ androidx-browser = "1.4.0" # https://developer.android.com/jetpack/androidx/rele
 androidx-constraintlayout = "2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-core = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/core
 androidx-core-splashscreen = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/core
-androidx-fragment = "1.6.0-alpha03" # https://developer.android.com/jetpack/androidx/releases/fragment
+androidx-fragment = "1.6.0-alpha04" # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-palette = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/palette
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -14,16 +14,16 @@ androidx-viewpager = "1.1.0-beta01" # https://developer.android.com/jetpack/andr
 beagle = "2.9.0" # https://github.com/pandulapeter/beagle/releases
 coil = "2.2.2" # https://github.com/coil-kt/coil/releases
 google-android-material = "1.7.0" # https://github.com/material-components/material-components-android/releases
-gradle = "7.3.0" # https://developer.android.com/studio/releases/gradle-plugin
+gradle = "7.3.1" # https://developer.android.com/studio/releases/gradle-plugin
 jvm-target = "1.8" # https://kotlinlang.org/docs/gradle.html#check-for-jvm-target-compatibility-of-related-compile-tasks
 koin = "3.2.2" # https://github.com/InsertKoinIO/koin/tags
-kotlin = "1.7.21" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "1.8.0" # https://kotlinlang.org/docs/releases.html#release-details
 kotlin-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlin-ksp = "1.7.21-1.0.8" # https://github.com/google/ksp/releases
+kotlin-ksp = "1.8.0-1.0.8" # https://github.com/google/ksp/releases
 square-moshi = "1.14.0" # https://github.com/square/moshi/tags
 square-okhttp = "4.10.0" # https://github.com/square/okhttp/tags
 square-retrofit = "2.9.0" # https://github.com/square/retrofit/tags
-theapache64-retrosheet = "2.0.0" # https://github.com/theapache64/retrosheet/releases
+theapache64-retrosheet = "2.0.1" # https://github.com/theapache64/retrosheet/releases
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
