@@ -1,7 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 
 import android.graphics.Rect
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
@@ -27,8 +26,8 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArgume
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.databinding.FragmentWallpaperDetailsBinding
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.WallpaperDetailsViewModel
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.productList.WallpaperDetailsProductAdapter
-import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.setWallpaper
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperDetailsAdapter
+import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperType
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -120,7 +119,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         val viewModel = this@WallpaperDetailsFragment.viewModel
         content.floatingActionButton.setOnClickListener {
             getCurrentCropRect()?.let { cropRect ->
-                context?.run { viewModel.onSetWallpaperButtonPressed(this, viewModel.focusedWallpaper.value, cropRect) }
+                context?.run { viewModel.onSetWallpaperButtonPressed(this, viewModel.focusedWallpaper.value, cropRect, WallpaperType.BOTH) }
             }
         }
     }
@@ -142,14 +141,11 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     private fun getCurrentCropRect() = (getCurrentViewHolder()?.itemView?.tag as? WallpaperDetailsAdapter.GetCropRectCallback)?.getCropRect()
 
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
-        is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
         WallpaperDetailsViewModel.Event.WallpaperSet -> showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_wallpaper_applied_successfully)
         WallpaperDetailsViewModel.Event.WallpaperNotSet -> showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper_apply)
-        is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper, event.cropRect)
+        is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper, event.cropRect, event.wallpaperType)
         is WallpaperDetailsViewModel.Event.OpenUrl -> openUrl(event.url)
     }
-
-    private fun setWallpaper(uri: Uri) = context?.setWallpaper(uri)
 
     private fun showMessage(@StringRes messageResourceId: Int) = context?.let {
         showSnackbar(
@@ -158,11 +154,11 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         )
     }
 
-    private fun showErrorMessage(wallpaper: WallpaperDestination, cropRect: Rect) = context?.let {
+    private fun showErrorMessage(wallpaper: WallpaperDestination, cropRect: Rect, wallpaperType: WallpaperType) = context?.let {
         showSnackbar(
             anchor = binding.coordinatorLayout,
             messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper_download,
-            action = { viewModel.onSetWallpaperButtonPressed(it, wallpaper, cropRect) }
+            action = { viewModel.onSetWallpaperButtonPressed(it, wallpaper, cropRect, wallpaperType) }
         )
     }
 

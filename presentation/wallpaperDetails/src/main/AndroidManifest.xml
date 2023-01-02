@@ -4,22 +4,6 @@
 
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
 
-    <application>
-
-        <provider
-            android:name=".implementation.ChignonMignonFileProvider"
-            android:authorities="${applicationId}.fileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-
-        </provider>
-
-    </application>
-
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
