@@ -40,11 +40,13 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
                     val scale = binding.preview.scale
                     val transitionX = abs(values[Matrix.MTRANS_X])
                     val transitionY = abs(values[Matrix.MTRANS_Y])
+                    val cropX = (transitionX / scale).roundToInt()
+                    val cropY = (transitionY / scale).roundToInt()
                     return Rect(
-                        (transitionX / scale).roundToInt(),
-                        (transitionY / scale).roundToInt(),
-                        ((transitionX + binding.preview.width) / scale).roundToInt(),
-                        ((transitionY + binding.preview.height) / scale).roundToInt()
+                        cropX,
+                        cropY,
+                        cropX + ((binding.preview.width) / scale).roundToInt(),
+                        cropY + ((binding.preview.height) / scale).roundToInt()
                     )
                 }
             }
