@@ -4,6 +4,7 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Rect
 import android.net.Uri
 import android.widget.Toast
 import com.chignonMignon.wallpapers.presentation.shared.R
@@ -11,10 +12,9 @@ import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-// TODO: Take into consideration the selected zoom level and translation values.
-internal suspend fun Context.setWallpaperBitmap(bitmap: Bitmap) = suspendCoroutine { continuation ->
+internal suspend fun Context.setWallpaperBitmap(bitmap: Bitmap, visibleRect: Rect) = suspendCoroutine { continuation ->
     try {
-        WallpaperManager.getInstance(this@setWallpaperBitmap).setBitmap(bitmap)
+        WallpaperManager.getInstance(this@setWallpaperBitmap).setBitmap(bitmap, visibleRect, true)
         continuation.resume(true)
     } catch (_: IOException) {
         continuation.resume(false)

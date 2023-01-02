@@ -1,6 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation
 
 import android.content.Context
+import android.graphics.Rect
 import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
@@ -58,19 +59,19 @@ internal class WallpaperDetailsViewModel(
         _pagerProgress.value = getPagerProgress(position)
     }
 
-    fun onSetWallpaperButtonPressed(context: Context, wallpaper: WallpaperDestination) = viewModelScope.launch {
+    fun onSetWallpaperButtonPressed(context: Context, wallpaper: WallpaperDestination, cropRect: Rect) = viewModelScope.launch {
         if (!_shouldShowLoadingIndicator.value) {
             _shouldShowLoadingIndicator.value = true
             DebugMenu.log("Downloading wallpaper: ${wallpaper.id}...")
-            delay(1000)
+            delay(100)
             _events.pushEvent(
                 context.downloadImage(wallpaper.url).let { bitmap ->
                     if (bitmap == null) {
                         DebugMenu.log("Error while downloading wallpaper.")
-                        Event.ShowErrorMessage(wallpaper)
+                        Event.ShowErrorMessage(wallpaper, cropRect)
                     } else {
                         DebugMenu.log("Setting wallpaper...")
-                        if (context.setWallpaperBitmap(bitmap)) {
+                        if (context.setWallpaperBitmap(bitmap, cropRect)) {
                             DebugMenu.log("Wallpaper set.")
                             Event.WallpaperSet
                         } else {
@@ -105,7 +106,7 @@ internal class WallpaperDetailsViewModel(
         data class SetWallpaper(val uri: Uri) : Event()
         object WallpaperSet : Event()
         object WallpaperNotSet : Event()
-        data class ShowErrorMessage(val wallpaper: WallpaperDestination) : Event()
+        data class ShowErrorMessage(val wallpaper: WallpaperDestination, val cropRect: Rect) : Event()
         data class OpenUrl(val url: String) : Event()
     }
 }

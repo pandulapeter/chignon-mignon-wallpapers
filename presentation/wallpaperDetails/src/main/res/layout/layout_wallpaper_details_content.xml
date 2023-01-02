@@ -30,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/double_content_padding"
-            android:onClick="@{() -> viewModel.onSetWallpaperButtonPressed(context, viewModel.focusedWallpaper)}"
             android:text="@string/wallpaper_details_set_wallpaper"
             android:textColor="?colorOnPrimary"
             android:textStyle="bold"

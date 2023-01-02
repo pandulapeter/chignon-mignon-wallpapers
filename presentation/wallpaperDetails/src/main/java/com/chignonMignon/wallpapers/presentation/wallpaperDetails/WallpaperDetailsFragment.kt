@@ -1,12 +1,15 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.app.SharedElementCallback
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.shared.extensions.openUrl
@@ -71,6 +74,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         binding.setupToolbar()
         binding.setupViewPager()
         binding.setupRecyclerView()
+        binding.setupFloatingActionButton()
         viewModel.focusedWallpaper.observe(viewLifecycleOwner, ::onFocusedWallpaperChanged)
         viewModel.productListItems.observe(viewLifecycleOwner, productAdapter::submitList)
         viewModel.events.observe(viewLifecycleOwner, ::handleEvent)
@@ -96,7 +100,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         wallpaperDetailsAdapter.submitList(viewModel.wallpaperListItems)
         adapter = wallpaperDetailsAdapter
         offscreenPageLimit = 1
-        setCurrentItem(viewModel.wallpaperListItems.indexOfFirst { it.wallpaper.id == viewModel.focusedWallpaper.value.id }, false)
+        setCurrentItem(getCurrentVisibleItemIndex(), false)
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) = viewModel.onPageSelected(position)
         })
@@ -112,6 +116,15 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         adapter = productAdapter
     }
 
+    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() {
+        val viewModel = this@WallpaperDetailsFragment.viewModel
+        content.floatingActionButton.setOnClickListener {
+            getCurrentCropRect()?.let { cropRect ->
+                context?.run { viewModel.onSetWallpaperButtonPressed(this, viewModel.focusedWallpaper.value, cropRect) }
+            }
+        }
+    }
+
     private fun onFocusedWallpaperChanged(focusedWallpaperDestination: WallpaperDestination?) {
         primaryColorTransitionManager.fadeToColor(focusedWallpaperDestination?.colorPaletteModel?.primary, shouldAnimateColorTransitions)
         if (!shouldAnimateColorTransitions) {
@@ -119,11 +132,20 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         }
     }
 
+    private fun getViewPagerRecyclerView() = (binding.content.viewPager[0] as RecyclerView)
+
+    private fun getCurrentVisibleItemIndex() = viewModel.wallpaperListItems.indexOfFirst { it.wallpaper.id == viewModel.focusedWallpaper.value.id }
+
+    private fun getCurrentViewHolder() =
+        getViewPagerRecyclerView().findViewHolderForAdapterPosition(getCurrentVisibleItemIndex())
+
+    private fun getCurrentCropRect() = (getCurrentViewHolder()?.itemView?.tag as? WallpaperDetailsAdapter.GetCropRectCallback)?.getCropRect()
+
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
         is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
         WallpaperDetailsViewModel.Event.WallpaperSet -> showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_wallpaper_applied_successfully)
         WallpaperDetailsViewModel.Event.WallpaperNotSet -> showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper_apply)
-        is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper)
+        is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper, event.cropRect)
         is WallpaperDetailsViewModel.Event.OpenUrl -> openUrl(event.url)
     }
 
@@ -136,11 +158,11 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
         )
     }
 
-    private fun showErrorMessage(wallpaper: WallpaperDestination) = context?.let {
+    private fun showErrorMessage(wallpaper: WallpaperDestination, cropRect: Rect) = context?.let {
         showSnackbar(
             anchor = binding.coordinatorLayout,
             messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper_download,
-            action = { viewModel.onSetWallpaperButtonPressed(it, wallpaper) }
+            action = { viewModel.onSetWallpaperButtonPressed(it, wallpaper, cropRect) }
         )
     }
 
