@@ -33,7 +33,9 @@
 
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Háttérkép beállítása</string>
-    <string name="wallpaper_details_cannot_set_wallpaper">Hiba történt a háttérkép letöltése közben</string>
+    <string name="wallpaper_details_cannot_set_wallpaper_download">Hiba történt a háttérkép letöltése közben</string>
+    <string name="wallpaper_details_cannot_set_wallpaper_apply">Hiba történt a háttérkép beállítása közben</string>
+    <string name="wallpaper_details_wallpaper_applied_successfully">Háttérkép sikeresen beállítva</string>
     <string name="wallpaper_details_products_empty">Termékek ezzel a mintával hamarosan készülnek!</string> <!-- TODO -->
 
 </resources>

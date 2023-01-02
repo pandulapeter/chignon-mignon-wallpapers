@@ -12,9 +12,7 @@ import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.downloadImage
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.getWallpaperFile
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.saveImage
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.productList.WallpaperDetailsProductListItem
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperDetailsListItem
 import kotlinx.coroutines.delay
@@ -71,15 +69,23 @@ internal class WallpaperDetailsViewModel(
                         DebugMenu.log("Error while downloading wallpaper.")
                         Event.ShowErrorMessage(wallpaper)
                     } else {
-                        context.saveImage(context.getWallpaperFile(wallpaper.id), bitmap).let { uri ->
-                            if (uri == null) {
-                                DebugMenu.log("Error while saving wallpaper.")
-                                Event.ShowErrorMessage(wallpaper)
-                            } else {
-                                DebugMenu.log("Setting wallpaper...")
-                                Event.SetWallpaper(uri)
-                            }
+                        DebugMenu.log("Setting wallpaper...")
+                        if (context.setWallpaperBitmap(bitmap)) {
+                            DebugMenu.log("Wallpaper set.")
+                            Event.WallpaperSet
+                        } else {
+                            DebugMenu.log("Wallpaper not set.")
+                            Event.WallpaperNotSet
                         }
+//                        context.saveImage(context.getWallpaperFile(wallpaper.id), bitmap).let { uri ->
+//                            if (uri == null) {
+//                                DebugMenu.log("Error while saving wallpaper.")
+//                                Event.ShowErrorMessage(wallpaper)
+//                            } else {
+//                                DebugMenu.log("Setting wallpaper...")
+//                                Event.SetWallpaper(uri)
+//                            }
+//                        }
                     }
                 }
             )
@@ -97,6 +103,8 @@ internal class WallpaperDetailsViewModel(
 
     sealed class Event {
         data class SetWallpaper(val uri: Uri) : Event()
+        object WallpaperSet : Event()
+        object WallpaperNotSet : Event()
         data class ShowErrorMessage(val wallpaper: WallpaperDestination) : Event()
         data class OpenUrl(val url: String) : Event()
     }

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             app:imageUrl="@{uiModel.wallpaper.url}"
             tools:src="@tools:sample/backgrounds/scenic" />
 

@@ -3,6 +3,7 @@ package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -120,16 +121,25 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
 
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
         is WallpaperDetailsViewModel.Event.SetWallpaper -> setWallpaper(event.uri)
+        WallpaperDetailsViewModel.Event.WallpaperSet -> showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_wallpaper_applied_successfully)
+        WallpaperDetailsViewModel.Event.WallpaperNotSet -> showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper_apply)
         is WallpaperDetailsViewModel.Event.ShowErrorMessage -> showErrorMessage(event.wallpaper)
         is WallpaperDetailsViewModel.Event.OpenUrl -> openUrl(event.url)
     }
 
     private fun setWallpaper(uri: Uri) = context?.setWallpaper(uri)
 
+    private fun showMessage(@StringRes messageResourceId: Int) = context?.let {
+        showSnackbar(
+            anchor = binding.coordinatorLayout,
+            messageResourceId = messageResourceId,
+        )
+    }
+
     private fun showErrorMessage(wallpaper: WallpaperDestination) = context?.let {
         showSnackbar(
             anchor = binding.coordinatorLayout,
-            messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper,
+            messageResourceId = com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper_download,
             action = { viewModel.onSetWallpaperButtonPressed(it, wallpaper) }
         )
     }

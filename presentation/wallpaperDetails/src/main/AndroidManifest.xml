@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chignonMignon.wallpapers.presentation.wallpaperDetails">
 
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
     <application>
 
         <provider
