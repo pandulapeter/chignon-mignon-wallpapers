@@ -33,6 +33,10 @@
 
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Háttérkép beállítása</string>
+    <string name="wallpaper_details_apply_wallpaper">Háttérkép alkalmazása</string>
+    <string name="wallpaper_details_apply_wallpaper_home_screen">Home screen</string> <!-- TODO -->
+    <string name="wallpaper_details_apply_wallpaper_lock_screen">Lock screen</string> <!-- TODO -->
+    <string name="wallpaper_details_apply_wallpaper_both">Mindkettő</string>
     <string name="wallpaper_details_cannot_set_wallpaper_download">Hiba történt a háttérkép letöltése közben</string>
     <string name="wallpaper_details_cannot_set_wallpaper_apply">Hiba történt a háttérkép beállítása közben</string>
     <string name="wallpaper_details_wallpaper_applied_successfully">Háttérkép sikeresen beállítva</string>

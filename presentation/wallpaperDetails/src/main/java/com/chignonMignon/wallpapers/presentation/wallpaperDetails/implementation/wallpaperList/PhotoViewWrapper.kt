@@ -6,7 +6,7 @@ import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.annotation.AttrRes
 
-class PhotoViewWrapper @JvmOverloads constructor(
+internal class PhotoViewWrapper @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = 0

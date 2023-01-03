@@ -1,6 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList
 
-enum class WallpaperType {
+internal enum class WallpaperType {
     HOME_SCREEN,
     LOCK_SCREEN,
     BOTH

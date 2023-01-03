@@ -26,13 +26,15 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArgume
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.databinding.FragmentWallpaperDetailsBinding
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.WallpaperDetailsViewModel
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.productList.WallpaperDetailsProductAdapter
+import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.OnWallpaperTypeSelectedListener
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperDetailsAdapter
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperType
+import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperTypeSelectorBottomSheetFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 
-class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
+class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), OnWallpaperTypeSelectedListener {
 
     private val viewModel by viewModel<WallpaperDetailsViewModel> {
         parametersOf(arguments?.wallpapers, arguments?.selectedWallpaperIndex)
@@ -116,11 +118,18 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details) {
     }
 
     private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() {
-        val viewModel = this@WallpaperDetailsFragment.viewModel
-        content.floatingActionButton.setOnClickListener {
-            getCurrentCropRect()?.let { cropRect ->
-                context?.run { viewModel.onSetWallpaperButtonPressed(this, viewModel.focusedWallpaper.value, cropRect, WallpaperType.BOTH) }
-            }
+        content.floatingActionButton.setOnClickListener { WallpaperTypeSelectorBottomSheetFragment.show(childFragmentManager) }
+    }
+
+    override fun onHomeScreenSelected() = setWallpaper(WallpaperType.HOME_SCREEN)
+
+    override fun onLockScreenSelected() = setWallpaper(WallpaperType.LOCK_SCREEN)
+
+    override fun onBothSelected() = setWallpaper(WallpaperType.BOTH)
+
+    private fun setWallpaper(wallpaperType: WallpaperType) {
+        getCurrentCropRect()?.let { cropRect ->
+            context?.run { viewModel.onSetWallpaperButtonPressed(this, viewModel.focusedWallpaper.value, cropRect, wallpaperType) }
         }
     }
 

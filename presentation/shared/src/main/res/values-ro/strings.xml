@@ -33,6 +33,10 @@
 
     <!-- Wallpaper details -->
     <string name="wallpaper_details_set_wallpaper">Setează fundal</string>
+    <string name="wallpaper_details_apply_wallpaper">Aplică fundal</string>
+    <string name="wallpaper_details_apply_wallpaper_home_screen">Home screen</string> <!-- TODO -->
+    <string name="wallpaper_details_apply_wallpaper_lock_screen">Lock screen</string> <!-- TODO -->
+    <string name="wallpaper_details_apply_wallpaper_both">Both</string> <!-- TODO -->
     <string name="wallpaper_details_cannot_set_wallpaper_download">Something went wrong while downloading the wallpaper</string> <!-- TODO -->
     <string name="wallpaper_details_cannot_set_wallpaper_apply">Something went wrong while applying the wallpaper</string> <!-- TODO -->
     <string name="wallpaper_details_wallpaper_applied_successfully">Wallpaper applied successfully</string> <!-- TODO -->
