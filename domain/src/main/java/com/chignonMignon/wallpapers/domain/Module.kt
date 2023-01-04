@@ -9,6 +9,7 @@ import com.chignonMignon.wallpapers.domain.useCases.GetProductsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpaperByIdUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
+import com.chignonMignon.wallpapers.domain.useCases.IsAppStartupUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
@@ -21,4 +22,5 @@ val domainModule = module {
     factory { GetWallpaperByIdUseCase(get()) }
     factory { GetWallpapersByCollectionIdUseCase(get()) }
     factory { GetWallpapersUseCase(get()) }
+    factory { IsAppStartupUseCase(get()) }
 }

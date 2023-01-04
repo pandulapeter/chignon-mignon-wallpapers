@@ -10,6 +10,7 @@ import com.chignonMignon.wallpapers.domain.useCases.AreCollectionsAvailableUseCa
 import com.chignonMignon.wallpapers.domain.useCases.GetCollectionsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetProductsUseCase
 import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersUseCase
+import com.chignonMignon.wallpapers.domain.useCases.IsAppStartupUseCase
 import com.chignonMignon.wallpapers.presentation.collections.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsListItem
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
@@ -35,7 +36,8 @@ internal class CollectionsViewModel(
     private val areCollectionsAvailable: AreCollectionsAvailableUseCase,
     private val getCollections: GetCollectionsUseCase,
     private val getProducts: GetProductsUseCase,
-    private val getWallpapers: GetWallpapersUseCase
+    private val getWallpapers: GetWallpapersUseCase,
+    private val isAppStartup: IsAppStartupUseCase
 ) : ViewModel() {
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
@@ -79,7 +81,7 @@ internal class CollectionsViewModel(
     private val secondaryColor = MutableStateFlow<Int?>(null)
     val backgroundColor = combine(primaryColor, secondaryColor) { primaryColor, secondaryColor -> primaryColor to secondaryColor }
 
-    fun loadData(isForceRefresh: Boolean) {
+    fun loadData(isForceRefresh: Boolean, shouldShowErrorMessage: Boolean = true) {
         viewModelScope.launch {
             if (!_shouldShowLoadingIndicator.value) {
                 val areCollectionsAvailable = areCollectionsAvailable()
@@ -87,14 +89,22 @@ internal class CollectionsViewModel(
                 if (!areCollectionsAvailable) {
                     _events.pushEvent(Event.ScrollToWelcome)
                 }
-                val loadResult = listOf(async { loadCollections(isForceRefresh) }, async { loadProducts(isForceRefresh) }, async { loadWallpapers(isForceRefresh) }).awaitAll()
+                val loadResult = listOf(
+                    async { loadCollections(isForceRefresh) },
+                    async { loadProducts(isForceRefresh) },
+                    async { loadWallpapers(isForceRefresh) }
+                ).awaitAll()
                 @Suppress("UNCHECKED_CAST") val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
                 if (loadResult.all { it.first } && collectionsData != null) {
                     collections.value = collectionsData.filter { BuildConfig.DEBUG || it.isPublic }.map { it.toNavigatorCollection() }
-
                     _shouldShowLoadingIndicator.value = false
+                    if (!isForceRefresh && isAppStartup()) {
+                        loadData(isForceRefresh = true, shouldShowErrorMessage = false)
+                    }
                 } else {
-                    _events.pushEvent(Event.ShowErrorMessage)
+                    if (shouldShowErrorMessage) {
+                        _events.pushEvent(Event.ShowErrorMessage)
+                    }
                     _shouldShowLoadingIndicator.value = false
                 }
             }
