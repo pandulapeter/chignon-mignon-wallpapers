@@ -53,8 +53,7 @@
                 android:paddingHorizontal="@dimen/double_content_padding"
                 android:paddingVertical="@dimen/double_content_padding"
                 android:text="@string/wallpaper_details_apply_wallpaper_both"
-                android:textAppearance="@style/BodyMediumTextAppearance"
-                app:marginWithInsetBottom="@{0f}" />
+                android:textAppearance="@style/BodyMediumTextAppearance" />
 
         </LinearLayout>
 
