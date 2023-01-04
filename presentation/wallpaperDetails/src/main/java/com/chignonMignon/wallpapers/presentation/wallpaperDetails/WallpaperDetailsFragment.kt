@@ -19,6 +19,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.ColorTransitionManage
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.delaySharedElementTransition
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
@@ -43,6 +44,9 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
     private var binding by autoClearedValue<FragmentWallpaperDetailsBinding>()
     private val primaryColorTransitionManager by lazy {
         ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
+    }
+    private val secondaryColorTransitionManager by lazy {
+        ColorTransitionManager(requireContext().colorResource(android.R.attr.windowBackground), viewModel::updateSecondaryColor)
     }
     private var shouldAnimateColorTransitions = false
     private val productAdapter by lazy {
@@ -122,7 +126,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
         content.floatingActionButton.setOnClickListener {
             WallpaperTypeSelectorBottomSheetFragment.show(
                 fragmentManager = childFragmentManager,
-                backgroundColor = viewModel.focusedWallpaper.value.colorPaletteModel.primary
+                backgroundColor = viewModel.focusedWallpaper.value.colorPaletteModel.secondary
             )
         }
     }
@@ -141,6 +145,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
 
     private fun onFocusedWallpaperChanged(focusedWallpaperDestination: WallpaperDestination?) {
         primaryColorTransitionManager.fadeToColor(focusedWallpaperDestination?.colorPaletteModel?.primary, shouldAnimateColorTransitions)
+        secondaryColorTransitionManager.fadeToColor(focusedWallpaperDestination?.colorPaletteModel?.secondary, shouldAnimateColorTransitions)
         if (!shouldAnimateColorTransitions) {
             shouldAnimateColorTransitions = true
         }

@@ -43,10 +43,8 @@ internal class CollectionsViewModel(
     private val _shouldShowLoadingIndicator = MutableStateFlow(false)
     val shouldShowLoadingIndicator: StateFlow<Boolean> = _shouldShowLoadingIndicator
     val isViewPagerSwipeEnabled = combine(
-        shouldShowLoadingIndicator,
-        collections
-    ) { shouldShowLoadingIndicator,
-        collections ->
+        shouldShowLoadingIndicator, collections
+    ) { shouldShowLoadingIndicator, collections ->
         collections != null || !shouldShowLoadingIndicator
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     val items = collections.map { collections ->
@@ -68,12 +66,8 @@ internal class CollectionsViewModel(
     val areCollectionsLoaded = collections.map { it != null }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val shouldShowAboutButton = collections.map { it?.isNotEmpty() == true }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val selectedTitle = combine(
-        collections,
-        focusedCollectionDestination,
-        _isLastPageFocused
-    ) { collections,
-        focusedCollection,
-        isLastPageFocused ->
+        collections, focusedCollectionDestination, _isLastPageFocused
+    ) { collections, focusedCollection, isLastPageFocused ->
         if (focusedCollection == null && (!collections.isNullOrEmpty() || !isLastPageFocused)) if (isLastPageFocused) R.string.about_title else R.string.collections_welcome else R.string.collections_title
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
     private val _pagerProgress = MutableStateFlow(0f)
@@ -93,17 +87,10 @@ internal class CollectionsViewModel(
                 if (!areCollectionsAvailable) {
                     _events.pushEvent(Event.ScrollToWelcome)
                 }
-                val loadResult = listOf(
-                    async { loadCollections(isForceRefresh) },
-                    async { loadProducts(isForceRefresh) },
-                    async { loadWallpapers(isForceRefresh) }
-                ).awaitAll()
-                @Suppress("UNCHECKED_CAST")
-                val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
+                val loadResult = listOf(async { loadCollections(isForceRefresh) }, async { loadProducts(isForceRefresh) }, async { loadWallpapers(isForceRefresh) }).awaitAll()
+                @Suppress("UNCHECKED_CAST") val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
                 if (loadResult.all { it.first } && collectionsData != null) {
-                    collections.value = collectionsData
-                        .filter { BuildConfig.DEBUG || it.isPublic }
-                        .map { it.toNavigatorCollection() }
+                    collections.value = collectionsData.filter { BuildConfig.DEBUG || it.isPublic }.map { it.toNavigatorCollection() }
 
                     _shouldShowLoadingIndicator.value = false
                 } else {
@@ -186,8 +173,7 @@ internal class CollectionsViewModel(
         description = description.toNavigatorTranslatableText(),
         thumbnailUrl = thumbnailUrl,
         colorPaletteModel = ColorPaletteModel(
-            primary = primaryColorCode.toNavigatorColorCode(),
-            secondary = secondaryColorCode.toNavigatorColorCode()
+            primary = primaryColorCode.toNavigatorColorCode(), secondary = secondaryColorCode.toNavigatorColorCode()
         ),
         isPublic = isPublic
     )

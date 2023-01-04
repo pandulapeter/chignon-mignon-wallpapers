@@ -3,6 +3,7 @@ package com.chignonMignon.wallpapers.presentation.shared.extensions
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,6 +17,7 @@ import coil.transform.RoundedCornersTransformation
 import coil.transition.TransitionTarget
 import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
+import com.chignonMignon.wallpapers.presentation.shared.navigation.model.ColorPaletteModel
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.TranslatableTextModel
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
@@ -50,7 +52,8 @@ private const val ROUNDED_CORNER_FIX = 0.75f
 )
 fun ImageView.setImageUrl(
     imageUrl: String?,
-    shouldFade: Boolean? = null, topCornerRadius: Float? = null,
+    shouldFade: Boolean? = null,
+    topCornerRadius: Float? = null,
     bottomCornerRadius: Float? = null,
     retryCount: Int = 3
 ) {
@@ -121,6 +124,10 @@ fun ImageView.setImageUrl(
     }
 }
 
+@BindingAdapter("gradientBackground")
+fun View.setGradientBackground(colorPaletteModel: ColorPaletteModel) {
+    background = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(colorPaletteModel.primary, colorPaletteModel.secondary))
+}
 
 fun View.showSnackbar(
     @StringRes messageResourceId: Int = R.string.something_went_wrong,

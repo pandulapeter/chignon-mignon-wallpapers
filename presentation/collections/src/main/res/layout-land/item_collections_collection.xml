@@ -39,9 +39,9 @@
                 android:id="@+id/thumbnail_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@{uiModel.collectionDestination.colorPaletteModel.primary}"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
+                app:gradientBackground="@{uiModel.collectionDestination.colorPaletteModel}"
                 app:imageUrl="@{uiModel.collectionDestination.thumbnailUrl}"
                 tools:src="@tools:sample/backgrounds/scenic" />
 

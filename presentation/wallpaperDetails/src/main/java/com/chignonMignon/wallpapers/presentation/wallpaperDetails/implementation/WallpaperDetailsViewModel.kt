@@ -37,6 +37,8 @@ internal class WallpaperDetailsViewModel(
     val focusedWallpaper: StateFlow<WallpaperDestination> = _focusedWallpaper
     private val _primaryColor = MutableStateFlow<Int?>(null)
     val primaryColor: StateFlow<Int?> = _primaryColor
+    private val _secondaryColor = MutableStateFlow<Int?>(null)
+    val secondaryColor: StateFlow<Int?> = _secondaryColor
     private val _pagerProgress = MutableStateFlow(getPagerProgress(initialWallpaperIndex))
     val pagerProgress: StateFlow<Float> = _pagerProgress
     val productListItems = focusedWallpaper.map { wallpaper ->
@@ -86,6 +88,10 @@ internal class WallpaperDetailsViewModel(
 
     fun updatePrimaryColor(@ColorInt primaryColor: Int) {
         _primaryColor.value = primaryColor
+    }
+
+    fun updateSecondaryColor(@ColorInt secondaryColor: Int) {
+        _secondaryColor.value = secondaryColor
     }
 
     fun onProductSelected(product: Product) = _events.pushEvent(Event.OpenUrl(product.url))
