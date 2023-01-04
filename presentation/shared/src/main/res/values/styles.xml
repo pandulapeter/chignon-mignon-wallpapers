@@ -4,6 +4,7 @@
     <style name="Card">
         <item name="strokeWidth">@dimen/divider</item>
         <item name="strokeColor">?colorOnPrimary</item>
+        <item name="cardCornerRadius">@dimen/corner_radius</item>
     </style>
 
     <style name="AboutButton">

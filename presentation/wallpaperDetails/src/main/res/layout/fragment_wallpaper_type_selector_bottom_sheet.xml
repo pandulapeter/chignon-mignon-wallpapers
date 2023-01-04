@@ -7,7 +7,7 @@
         style="@style/Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:shapeAppearanceOverlay="@style/RoundedCorners">
+        app:shapeAppearanceOverlay="@style/RoundedTopCorners">
 
         <LinearLayout
             android:layout_width="match_parent"

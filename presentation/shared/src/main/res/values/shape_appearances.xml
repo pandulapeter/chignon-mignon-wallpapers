@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="RoundedCorners">
+    <style name="RoundedTopCorners">
         <item name="cornerSizeTopLeft">@dimen/corner_radius</item>
         <item name="cornerSizeTopRight">@dimen/corner_radius</item>
         <item name="cornerSizeBottomLeft">0dp</item>

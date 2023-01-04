@@ -22,6 +22,7 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewT
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.isVisible
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 
 @BindingAdapter("android:text")
