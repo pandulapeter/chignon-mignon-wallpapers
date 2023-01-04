@@ -2,8 +2,6 @@ package com.chignonMignon.wallpapers.presentation.utilities
 
 import android.graphics.Color
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AnticipateOvershootInterpolator
-import android.view.animation.BounceInterpolator
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.channels.BufferOverflow

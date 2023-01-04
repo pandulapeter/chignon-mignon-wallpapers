@@ -12,6 +12,7 @@ internal fun WallpaperResponse.toModel() = try {
         name = nameEn.toWallpaperName(nameHu, nameRo),
         url = url.toWallpaperUrl(),
         primaryColorCode = primaryColorCode.toColor(),
+        secondaryColorCode = secondaryColorCode.toColor(),
         isPublic = isPublic.toBoolean()
     )
 } catch (exception: DataValidationException) {

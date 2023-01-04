@@ -1,6 +1,5 @@
 package com.chignonMignon.wallpapers.presentation.collections.implementation
 
-import android.content.Context
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
@@ -15,16 +14,12 @@ import com.chignonMignon.wallpapers.presentation.collections.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsListItem
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.R
-import com.chignonMignon.wallpapers.presentation.shared.colorPaletteGenerator.ColorPaletteGenerator
-import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorColorPalette
+import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorColorCode
 import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorTranslatableText
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.ColorPaletteModel
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
@@ -40,8 +35,7 @@ internal class CollectionsViewModel(
     private val areCollectionsAvailable: AreCollectionsAvailableUseCase,
     private val getCollections: GetCollectionsUseCase,
     private val getProducts: GetProductsUseCase,
-    private val getWallpapers: GetWallpapersUseCase,
-    private val colorPaletteGenerator: ColorPaletteGenerator
+    private val getWallpapers: GetWallpapersUseCase
 ) : ViewModel() {
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
@@ -89,12 +83,9 @@ internal class CollectionsViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     private val primaryColor = MutableStateFlow<Int?>(null)
     private val secondaryColor = MutableStateFlow<Int?>(null)
-    private val _onSecondaryColor = MutableStateFlow<Int?>(null)
-    val onSecondaryColor: StateFlow<Int?> = _onSecondaryColor
     val backgroundColor = combine(primaryColor, secondaryColor) { primaryColor, secondaryColor -> primaryColor to secondaryColor }
-    private var colorPaletteGeneratorJob: Job? = null
 
-    fun loadData(isForceRefresh: Boolean, context: Context) {
+    fun loadData(isForceRefresh: Boolean) {
         viewModelScope.launch {
             if (!_shouldShowLoadingIndicator.value) {
                 val areCollectionsAvailable = areCollectionsAvailable()
@@ -110,28 +101,10 @@ internal class CollectionsViewModel(
                 @Suppress("UNCHECKED_CAST")
                 val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
                 if (loadResult.all { it.first } && collectionsData != null) {
-                    colorPaletteGeneratorJob?.cancel()
-                    val filteredResults = collectionsData.filter { BuildConfig.DEBUG || it.isPublic }
-                    if (collections.value?.map { it.thumbnailUrl } != filteredResults.map { it.thumbnailUrl }) {
-                        collections.value = filteredResults.map { it.toPlaceholderNavigatorCollection(context) }
-                    }
-                    colorPaletteGeneratorJob = launch {
-                        filteredResults.map { collection ->
-                            async {
-                                collection.toNavigatorCollection().let { collectionWithFinalColorPalette ->
-                                    if (collections.value?.contains(collectionWithFinalColorPalette) == false) {
-                                        collections.value = collections.value?.toMutableList()?.apply {
-                                            val index = indexOfFirst { it.id == collectionWithFinalColorPalette.id }
-                                            if (index != -1) {
-                                                removeAt(index)
-                                                add(index, collectionWithFinalColorPalette)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }.awaitAll()
-                    }
+                    collections.value = collectionsData
+                        .filter { BuildConfig.DEBUG || it.isPublic }
+                        .map { it.toNavigatorCollection() }
+
                     _shouldShowLoadingIndicator.value = false
                 } else {
                     _events.pushEvent(Event.ShowErrorMessage)
@@ -157,10 +130,6 @@ internal class CollectionsViewModel(
 
     fun updateSecondaryColor(@ColorInt secondaryColor: Int) {
         this.secondaryColor.value = secondaryColor
-    }
-
-    fun updateOnSecondaryColor(@ColorInt onSecondaryColor: Int) {
-        _onSecondaryColor.value = onSecondaryColor
     }
 
     fun onItemSelected(collectionId: String, sharedElements: List<View>) = collections.value?.firstOrNull { it.id == collectionId }?.let {
@@ -189,7 +158,7 @@ internal class CollectionsViewModel(
 
     private suspend fun loadCollections(isForceRefresh: Boolean): Pair<Boolean, List<Collection>?> {
         DebugMenu.log("Loading collections...")
-        return when (val result = DebugMenu.getMockCollections(isForceRefresh) ?: getCollections(isForceRefresh)) {
+        return when (val result = getCollections(isForceRefresh)) {
             is Result.Success -> true.also { DebugMenu.log("Loaded ${result.data.size} collections.") } to result.data
             is Result.Failure -> false.also { DebugMenu.log("Failed to load collections: ${result.exception.message}.") } to null
         }
@@ -197,7 +166,7 @@ internal class CollectionsViewModel(
 
     private suspend fun loadProducts(isForceRefresh: Boolean): Pair<Boolean, Any?> {
         DebugMenu.log("Loading products...")
-        return when (val result = DebugMenu.getMockProducts("", isForceRefresh) ?: getProducts(isForceRefresh)) {
+        return when (val result = getProducts(isForceRefresh)) {
             is Result.Success -> true.also { DebugMenu.log("Loaded ${result.data.size} products.") }
             is Result.Failure -> false.also { DebugMenu.log("Failed to load products: ${result.exception.message}.") }
         } to null
@@ -205,40 +174,23 @@ internal class CollectionsViewModel(
 
     private suspend fun loadWallpapers(isForceRefresh: Boolean): Pair<Boolean, Any?> {
         DebugMenu.log("Loading wallpapers...")
-        return when (val result = DebugMenu.getMockWallpapers("", isForceRefresh) ?: getWallpapers(isForceRefresh)) {
+        return when (val result = getWallpapers(isForceRefresh)) {
             is Result.Success -> true.also { DebugMenu.log("Loaded ${result.data.size} wallpapers.") }
             is Result.Failure -> false.also { DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.") }
         } to null
     }
 
-    private fun Collection.toPlaceholderNavigatorCollection(context: Context) = CollectionDestination(
+    private fun Collection.toNavigatorCollection() = CollectionDestination(
         id = id,
         name = name.toNavigatorTranslatableText(),
         description = description.toNavigatorTranslatableText(),
-        thumbnailUrl = "",
+        thumbnailUrl = thumbnailUrl,
         colorPaletteModel = ColorPaletteModel(
-            primary = context.colorResource(android.R.attr.windowBackground),
-            secondary = context.color(R.color.primary),
-            onSecondary = context.color(R.color.on_primary)
+            primary = primaryColorCode.toNavigatorColorCode(),
+            secondary = secondaryColorCode.toNavigatorColorCode()
         ),
         isPublic = isPublic
     )
-
-    private suspend fun Collection.toNavigatorCollection() = colorPaletteGenerator.generateColors(
-        imageUrl = thumbnailUrl,
-        overridePrimaryColorCode = primaryColorCode,
-        overrideSecondaryColorCode = secondaryColorCode,
-        overrideOnSecondaryColorCode = onSecondaryColorCode
-    ).let { colorPalette ->
-        CollectionDestination(
-            id = id,
-            name = name.toNavigatorTranslatableText(),
-            description = description.toNavigatorTranslatableText(),
-            thumbnailUrl = thumbnailUrl,
-            colorPaletteModel = colorPalette.toNavigatorColorPalette(),
-            isPublic = isPublic
-        )
-    }
 
     sealed class Event {
         data class OpenCollectionDetails(val collectionDestination: CollectionDestination, val sharedElements: List<View>) : Event()

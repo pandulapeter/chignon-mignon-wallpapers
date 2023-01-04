@@ -6,7 +6,6 @@ androidx-core = "1.9.0" # https://developer.android.com/jetpack/androidx/release
 androidx-core-splashscreen = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/core
 androidx-fragment = "1.6.0-alpha04" # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
-androidx-palette = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/palette
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
 androidx-room = "2.4.3" # https://developer.android.com/jetpack/androidx/releases/room
 androidx-swiperefreshlayout = "1.2.0-alpha01" # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
@@ -34,7 +33,6 @@ androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "androidx-fragment" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
-androidx-palette = { module = "androidx.palette:palette", version.ref = "androidx-palette" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
 androidx-room-codegen = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }

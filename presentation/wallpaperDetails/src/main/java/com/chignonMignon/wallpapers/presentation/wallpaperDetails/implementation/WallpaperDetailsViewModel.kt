@@ -40,7 +40,7 @@ internal class WallpaperDetailsViewModel(
     private val _pagerProgress = MutableStateFlow(getPagerProgress(initialWallpaperIndex))
     val pagerProgress: StateFlow<Float> = _pagerProgress
     val productListItems = focusedWallpaper.map { wallpaper ->
-        (DebugMenu.getMockProducts(wallpaper.id, false) ?: getProductsByWallpaperId(false, wallpaper.id)).let { result ->
+        (getProductsByWallpaperId(false, wallpaper.id)).let { result ->
             val products = (result as? Result.Success)?.data
             if (products.isNullOrEmpty()) {
                 listOf(WallpaperDetailsProductListItem.EmptyUiModel())

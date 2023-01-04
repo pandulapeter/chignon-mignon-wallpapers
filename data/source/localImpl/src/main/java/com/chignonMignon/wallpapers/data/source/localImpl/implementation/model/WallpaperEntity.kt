@@ -13,6 +13,7 @@ internal data class WallpaperEntity(
     @ColumnInfo(name = "nameRo") val nameRo: String,
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "primaryColorCode") val primaryColorCode: String,
+    @ColumnInfo(name = "secondaryColorCode") val secondaryColorCode: String,
     @ColumnInfo(name = "isPublic") val isPublic: Boolean
 ) {
 

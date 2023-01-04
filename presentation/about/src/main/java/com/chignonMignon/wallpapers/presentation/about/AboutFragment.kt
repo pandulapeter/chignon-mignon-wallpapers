@@ -8,7 +8,6 @@ import com.chignonMignon.wallpapers.presentation.about.databinding.FragmentAbout
 import com.chignonMignon.wallpapers.presentation.about.implementation.AboutViewModel
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResource
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

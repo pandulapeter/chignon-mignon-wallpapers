@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import coil.drawable.CrossfadeDrawable
 import coil.imageLoader
@@ -27,11 +26,6 @@ import com.google.android.material.snackbar.Snackbar
 @BindingAdapter("android:text")
 fun TextView.setText(translatableTextModel: TranslatableTextModel?) {
     text = translatableTextModel?.toText()
-}
-
-@BindingAdapter("title")
-fun Toolbar.setTitle(translatableTextModel: TranslatableTextModel?) {
-    title = translatableTextModel?.toText()
 }
 
 @BindingAdapter("title")

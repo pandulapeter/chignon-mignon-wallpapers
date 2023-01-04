@@ -7,6 +7,5 @@ data class Collection(
     val thumbnailUrl: String,
     val primaryColorCode: String,
     val secondaryColorCode: String,
-    val onSecondaryColorCode: String,
     val isPublic: Boolean
 )

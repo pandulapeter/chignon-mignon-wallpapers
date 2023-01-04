@@ -17,10 +17,9 @@ class PagerProgressBar @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
     @get:ColorInt
-    @set:ColorInt
     var color: Int
         get() = paint.color
-        set(value) {
+        set(@ColorInt value) {
             if (paint.color != value) {
                 paint.color = value
                 invalidate()

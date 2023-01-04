@@ -13,6 +13,7 @@ internal data class WallpaperResponse(
     @Json(name = KEY_NAME_RO) val nameRo: String? = null,
     @Json(name = KEY_URL) val url: String? = null,
     @Json(name = KEY_PRIMARY_COLOR) val primaryColorCode: String? = null,
+    @Json(name = KEY_SECONDARY_COLOR) val secondaryColorCode: String? = null,
     @Json(name = KEY_IS_PUBLIC) val isPublic: Boolean? = null
 ) {
     companion object {
@@ -24,6 +25,7 @@ internal data class WallpaperResponse(
         private const val KEY_NAME_RO = "name_ro"
         private const val KEY_URL = "url"
         private const val KEY_PRIMARY_COLOR = "primary_color"
+        private const val KEY_SECONDARY_COLOR = "secondary_color"
         private const val KEY_IS_PUBLIC = "is_public"
 
         internal fun addSheet(interceptorBuilder: RetrosheetInterceptor.Builder) = interceptorBuilder.addSheet(
@@ -35,6 +37,7 @@ internal data class WallpaperResponse(
             KEY_NAME_RO,
             KEY_URL,
             KEY_PRIMARY_COLOR,
+            KEY_SECONDARY_COLOR,
             KEY_IS_PUBLIC
         )
     }

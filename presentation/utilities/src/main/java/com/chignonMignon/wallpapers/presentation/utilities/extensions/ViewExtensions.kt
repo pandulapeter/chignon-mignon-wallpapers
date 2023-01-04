@@ -1,6 +1,5 @@
 package com.chignonMignon.wallpapers.presentation.utilities.extensions
 
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +29,6 @@ fun View.relativeTranslationY(factor: Float) {
     translationY = height * factor
 }
 
-@BindingAdapter("tint")
-fun ImageView.setTint(color: Int?) = color?.let {
-    imageTintList = ColorStateList.valueOf(color)
-}
 @BindingAdapter("indicatorColor")
 fun CircularProgressIndicator.setTint(color: Int?) = color?.let { setIndicatorColor(color) }
 

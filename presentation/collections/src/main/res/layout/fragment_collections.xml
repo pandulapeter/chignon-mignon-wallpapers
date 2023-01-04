@@ -154,7 +154,7 @@
                             android:padding="@dimen/content_padding"
                             android:scaleType="centerInside"
                             app:srcCompat="@drawable/ic_previous"
-                            app:tint="@{viewModel.onSecondaryColor}" />
+                            app:tint="?colorOnPrimary" />
 
                         <ImageView
                             android:id="@+id/next"
@@ -168,7 +168,7 @@
                             android:scaleType="centerInside"
                             android:visibility="@{viewModel.areCollectionsLoaded}"
                             app:srcCompat="@drawable/ic_next"
-                            app:tint="@{viewModel.onSecondaryColor}" />
+                            app:tint="?colorOnPrimary" />
 
                     </FrameLayout>
 

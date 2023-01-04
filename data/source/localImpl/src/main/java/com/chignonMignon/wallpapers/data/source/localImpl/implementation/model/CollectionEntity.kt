@@ -16,7 +16,6 @@ internal data class CollectionEntity(
     @ColumnInfo(name = "thumbnailUrl") val thumbnailUrl: String,
     @ColumnInfo(name = "primaryColorCode") val primaryColorCode: String,
     @ColumnInfo(name = "secondaryColorCode") val secondaryColorCode: String,
-    @ColumnInfo(name = "onSecondaryColorCode") val onSecondaryColorCode: String,
     @ColumnInfo(name = "isPublic") val isPublic: Boolean
 ) {
 

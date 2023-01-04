@@ -13,7 +13,6 @@ internal fun CollectionResponse.toModel() = try {
         thumbnailUrl = thumbnailUrl.toCollectionThumbnailUrl(),
         primaryColorCode = primaryColorCode.toColor(),
         secondaryColorCode = secondaryColorCode.toColor(),
-        onSecondaryColorCode = onSecondaryColorCode.toColor(),
         isPublic = isPublic.toBoolean()
     )
 } catch (exception: DataValidationException) {

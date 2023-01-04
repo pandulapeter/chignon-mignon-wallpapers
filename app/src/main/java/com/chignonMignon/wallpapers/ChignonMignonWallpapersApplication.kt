@@ -9,7 +9,6 @@ import com.chignonMignon.wallpapers.presentation.about.presentationAboutModule
 import com.chignonMignon.wallpapers.presentation.collectionDetails.presentationCollectionDetailsModule
 import com.chignonMignon.wallpapers.presentation.collections.presentationCollectionsModule
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
-import com.chignonMignon.wallpapers.presentation.shared.presentationSharedModule
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.presentationWallpaperDetailsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -22,10 +21,9 @@ class ChignonMignonWallpapersApplication : Application() {
             androidContext(this@ChignonMignonWallpapersApplication)
             modules(
                 localSourceModule +
-                remoteSourceModule +
+                        remoteSourceModule +
                         repositoryModule +
                         domainModule +
-                        presentationSharedModule +
                         presentationAboutModule +
                         presentationCollectionsModule +
                         presentationCollectionDetailsModule +

@@ -22,7 +22,6 @@ import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
@@ -189,13 +188,6 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
             scale(1f - multiplier)
             relativeTranslationX(multiplier * 0.2f)
         }
-        toolbar.setNavigationIconTint(
-            ColorUtils.blendARGB(
-                viewModel.collection.colorPaletteModel.onSecondary,
-                toolbar.context.color(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary),
-                multiplier
-            )
-        )
         divider.run {
             alpha = multiplier
         }

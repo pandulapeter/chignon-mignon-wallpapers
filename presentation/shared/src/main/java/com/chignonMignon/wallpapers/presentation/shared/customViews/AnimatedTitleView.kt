@@ -1,13 +1,11 @@
 package com.chignonMignon.wallpapers.presentation.shared.customViews
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.ViewSwitcher
-import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.databinding.ViewAnimatedTitleBinding
@@ -39,10 +37,5 @@ class AnimatedTitleView @JvmOverloads constructor(
                 showNext()
             }
         }
-    }
-
-    fun setTextColor(@ColorInt color: Int) = ColorStateList.valueOf(color).let {
-        currentTextView.setTextColor(it)
-        nextTextView.setTextColor(it)
     }
 }

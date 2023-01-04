@@ -14,6 +14,7 @@ internal fun WallpaperEntity.toModel() = Wallpaper(
     ),
     url = url,
     primaryColorCode = primaryColorCode,
+    secondaryColorCode = secondaryColorCode,
     isPublic = isPublic
 )
 
@@ -25,5 +26,6 @@ internal fun Wallpaper.toEntity() = WallpaperEntity(
     nameRo = name.romanian,
     url = url,
     primaryColorCode = primaryColorCode,
+    secondaryColorCode = secondaryColorCode,
     isPublic = isPublic
 )

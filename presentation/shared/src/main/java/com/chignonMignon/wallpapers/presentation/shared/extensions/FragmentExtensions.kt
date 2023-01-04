@@ -18,14 +18,3 @@ fun Fragment.showSnackbar(
     actionButtonTextResourceId = actionButtonTextResourceId,
     action = action
 )
-
-fun Fragment.showSnackbar(
-    anchor: View? = null,
-    message: String,
-    @StringRes actionButtonTextResourceId: Int = R.string.try_again,
-    action: (() -> Unit)? = null
-) = (anchor ?: view)?.showSnackbar(
-    message = message,
-    actionButtonTextResourceId = actionButtonTextResourceId,
-    action = action
-)

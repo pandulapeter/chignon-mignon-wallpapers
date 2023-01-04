@@ -19,7 +19,6 @@ internal fun CollectionEntity.toModel() = Collection(
     thumbnailUrl = thumbnailUrl,
     primaryColorCode = primaryColorCode,
     secondaryColorCode = secondaryColorCode,
-    onSecondaryColorCode = onSecondaryColorCode,
     isPublic = isPublic
 )
 
@@ -34,6 +33,5 @@ internal fun Collection.toEntity() = CollectionEntity(
     thumbnailUrl = thumbnailUrl,
     primaryColorCode = primaryColorCode,
     secondaryColorCode = secondaryColorCode,
-    onSecondaryColorCode = onSecondaryColorCode,
     isPublic = isPublic
 )

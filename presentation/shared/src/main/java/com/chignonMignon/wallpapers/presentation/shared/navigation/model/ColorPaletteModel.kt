@@ -7,6 +7,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ColorPaletteModel(
     @ColorInt val primary: Int,
-    @ColorInt val secondary: Int,
-    @ColorInt val onSecondary: Int
+    @ColorInt val secondary: Int
 ) : Parcelable

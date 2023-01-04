@@ -11,16 +11,13 @@ import com.chignonMignon.wallpapers.domain.useCases.GetWallpapersByCollectionIdU
 import com.chignonMignon.wallpapers.presentation.collectionDetails.BuildConfig
 import com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.list.CollectionDetailsListItem
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
-import com.chignonMignon.wallpapers.presentation.shared.colorPaletteGenerator.ColorPaletteGenerator
-import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorColorPalette
+import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorColorCode
 import com.chignonMignon.wallpapers.presentation.shared.extensions.toNavigatorTranslatableText
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
+import com.chignonMignon.wallpapers.presentation.shared.navigation.model.ColorPaletteModel
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -34,8 +31,7 @@ internal class CollectionDetailsViewModel(
     val collection: CollectionDestination,
     private val getCollections: GetCollectionsUseCase,
     private val areWallpapersAvailable: AreWallpapersAvailableUseCase,
-    private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase,
-    private val colorPaletteGenerator: ColorPaletteGenerator
+    private val getWallpapersByCollectionId: GetWallpapersByCollectionIdUseCase
 ) : ViewModel() {
     private val _events = eventFlow<Event>()
     val events: Flow<Event> = _events
@@ -48,7 +44,6 @@ internal class CollectionDetailsViewModel(
     val shouldShowEmptyState = combine(wallpapers, shouldShowLoadingIndicator) { wallpapers, shouldShowLoadingIndicator ->
         wallpapers?.isEmpty() == true && !shouldShowLoadingIndicator
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
-    private var colorPaletteGeneratorJob: Job? = null
 
     init {
         DebugMenu.log("Opened collection details for ${collection.id}.")
@@ -60,32 +55,14 @@ internal class CollectionDetailsViewModel(
             _shouldShowLoadingIndicator.value = isForceRefresh || !areWallpapersAvailable()
             DebugMenu.log("Loading wallpapers (force refresh: $isForceRefresh)...")
             getCollections(false) // Needed for state restoration, in case the process has been killed while in the background
-            when (val result = DebugMenu.getMockWallpapers(collection.id, isForceRefresh) ?: getWallpapersByCollectionId(isForceRefresh, collection.id)) {
+            when (val result = getWallpapersByCollectionId(isForceRefresh, collection.id)) {
                 is Result.Success -> {
                     DebugMenu.log("Loaded ${result.data.size} wallpapers.")
-                    colorPaletteGeneratorJob?.cancel()
-                    val filteredResults = result.data.filter { BuildConfig.DEBUG || it.isPublic }
-                    if (wallpapers.value?.map { it.url } != filteredResults.map { it.url }) {
-                        wallpapers.value = filteredResults.map { it.toPlaceholderNavigatorWallpaper() }
-                    }
+                    wallpapers.value = result.data
+                        .filter { BuildConfig.DEBUG || it.isPublic }
+                        .map { it.toNavigatorWallpaper() }
                     _shouldShowLoadingIndicator.value = false
-                    colorPaletteGeneratorJob = launch {
-                        filteredResults.map { wallpaper ->
-                            async {
-                                wallpaper.toNavigatorWallpaper().let { wallpaperWithFinalColorPalette ->
-                                    if (wallpapers.value?.contains(wallpaperWithFinalColorPalette) == false) {
-                                        wallpapers.value = wallpapers.value?.toMutableList()?.apply {
-                                            val index = indexOfFirst { it.id == wallpaperWithFinalColorPalette.id }
-                                            if (index != -1) {
-                                                removeAt(index)
-                                                add(index, wallpaperWithFinalColorPalette)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }.awaitAll()
-                    }
+
                 }
                 is Result.Failure -> {
                     DebugMenu.log("Failed to load wallpapers: ${result.exception.message}.")
@@ -112,26 +89,16 @@ internal class CollectionDetailsViewModel(
         }
     }
 
-    private fun Wallpaper.toPlaceholderNavigatorWallpaper() = WallpaperDestination(
+    private fun Wallpaper.toNavigatorWallpaper() = WallpaperDestination(
         id = id,
         name = name.toNavigatorTranslatableText(),
-        url = "",
-        colorPaletteModel = collection.colorPaletteModel,
+        url = url,
+        colorPaletteModel = ColorPaletteModel(
+            primary = primaryColorCode.toNavigatorColorCode(),
+            secondary = secondaryColorCode.toNavigatorColorCode()
+        ),
         isPublic = isPublic
     )
-
-    private suspend fun Wallpaper.toNavigatorWallpaper() = colorPaletteGenerator.generateColors(
-        imageUrl = url,
-        overridePrimaryColorCode = primaryColorCode
-    ).let { colorPalette ->
-        WallpaperDestination(
-            id = id,
-            name = name.toNavigatorTranslatableText(),
-            url = url,
-            colorPaletteModel = colorPalette.toNavigatorColorPalette(),
-            isPublic = isPublic
-        )
-    }
 
     sealed class Event {
         object NavigateBack : Event()
