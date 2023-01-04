@@ -15,13 +15,14 @@
         android:layout_height="match_parent"
         android:transitionGroup="true"
         android:transitionName="@{viewModel.focusedWallpaper.id}"
-        app:backgroundColor="@{viewModel.primaryColor}"
+        app:backgroundColor="@{viewModel.secondaryColor}"
         app:paddingBottomWithBottomOffset="@{@dimen/content_padding}">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinator_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:backgroundColor="@{viewModel.primaryColor}"
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,15 +49,9 @@
             app:horizontalPaddingWithInset="@{@dimen/content_padding}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/divider"
-            android:background="?colorOnPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/recycler_view" />
+            app:verticalGradientBackgroundA="@{viewModel.secondaryColor}"
+            app:verticalGradientBackgroundB="@{viewModel.primaryColor}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

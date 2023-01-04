@@ -37,8 +37,9 @@
                 android:layout_height="match_parent"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
-                app:gradientBackground="@{uiModel.collectionDestination.colorPaletteModel}"
                 app:imageUrl="@{uiModel.collectionDestination.thumbnailUrl}"
+                app:verticalGradientBackgroundA="@{uiModel.collectionDestination.colorPaletteModel.primary}"
+                app:verticalGradientBackgroundB="@{uiModel.collectionDestination.colorPaletteModel.secondary}"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
             <com.google.android.material.progressindicator.CircularProgressIndicator

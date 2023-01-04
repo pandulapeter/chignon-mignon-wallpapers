@@ -17,7 +17,6 @@ import coil.transform.RoundedCornersTransformation
 import coil.transition.TransitionTarget
 import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
-import com.chignonMignon.wallpapers.presentation.shared.navigation.model.ColorPaletteModel
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.TranslatableTextModel
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
@@ -124,10 +123,17 @@ fun ImageView.setImageUrl(
     }
 }
 
-@BindingAdapter("gradientBackground")
-fun View.setGradientBackground(colorPaletteModel: ColorPaletteModel) {
-    background = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(colorPaletteModel.primary, colorPaletteModel.secondary))
+private fun View.setOrUpdateGradientDrawable(colorArray: IntArray, orientation: GradientDrawable.Orientation) {
+    background = ((background as? GradientDrawable)?.mutate() as? GradientDrawable)?.apply { colors = colorArray } ?: GradientDrawable(orientation, colorArray)
 }
+
+@BindingAdapter(value = ["verticalGradientBackgroundA", "verticalGradientBackgroundB"], requireAll = true)
+fun View.setVerticalGradientBackground(colorA: Int, colorB: Int) =
+    setOrUpdateGradientDrawable(intArrayOf(colorA, colorB), GradientDrawable.Orientation.BOTTOM_TOP)
+
+@BindingAdapter(value = ["horizontalGradientBackgroundA", "horizontalGradientBackgroundB"], requireAll = true)
+fun View.setHorizontalGradientBackground(colorA: Int, colorB: Int) =
+    setOrUpdateGradientDrawable(intArrayOf(colorA, colorB), GradientDrawable.Orientation.RIGHT_LEFT)
 
 fun View.showSnackbar(
     @StringRes messageResourceId: Int = R.string.something_went_wrong,
