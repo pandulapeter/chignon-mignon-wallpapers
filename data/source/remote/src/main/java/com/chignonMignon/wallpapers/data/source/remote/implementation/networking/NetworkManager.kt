@@ -16,6 +16,6 @@ internal class NetworkManager(
         .create(NetworkingService::class.java)
 
     companion object {
-        private const val BASE_URL = "https://docs.google.com/spreadsheets/d/1LDCLGX02X2pErmHS6iq0ABZnZJ4i_-TS5ZR5W6-Utv8/"
+        private const val BASE_URL = "https://docs.google.com/spreadsheets/d/19BRPx_WjfaVvWoOtZV6MvlR0-vOo0n4uMZG4Z2-GSyA/"
     }
 }
