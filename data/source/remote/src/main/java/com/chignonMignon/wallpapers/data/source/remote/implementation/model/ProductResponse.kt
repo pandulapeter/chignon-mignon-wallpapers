@@ -14,7 +14,7 @@ internal data class ProductResponse(
     companion object {
         const val SHEET_NAME = "products"
         private const val KEY_WALLPAPER_ID = "wallpaper_id"
-        private const val KEY_THUMBNAIL_URL = "thumbnail_url"
+        private const val KEY_THUMBNAIL_URL = "thumbnail_url_512px"
         private const val KEY_URL = "url"
         private const val KEY_IS_PUBLIC = "is_public"
 

@@ -92,6 +92,7 @@ internal class CollectionDetailsViewModel(
     private fun Wallpaper.toNavigatorWallpaper() = WallpaperDestination(
         id = id,
         name = name.toNavigatorTranslatableText(),
+        thumbnailUrl = thumbnailUrl,
         url = url,
         colorPaletteModel = ColorPaletteModel(
             primary = primaryColorCode.toNavigatorColorCode(),

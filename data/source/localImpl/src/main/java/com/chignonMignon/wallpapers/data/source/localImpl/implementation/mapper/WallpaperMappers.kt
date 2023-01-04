@@ -12,6 +12,7 @@ internal fun WallpaperEntity.toModel() = Wallpaper(
         hungarian = nameHu,
         romanian = nameRo
     ),
+    thumbnailUrl = thumbnailUrl,
     url = url,
     primaryColorCode = primaryColorCode,
     secondaryColorCode = secondaryColorCode,
@@ -24,6 +25,7 @@ internal fun Wallpaper.toEntity() = WallpaperEntity(
     nameEn = name.english,
     nameHu = name.hungarian,
     nameRo = name.romanian,
+    thumbnailUrl = thumbnailUrl,
     url = url,
     primaryColorCode = primaryColorCode,
     secondaryColorCode = secondaryColorCode,

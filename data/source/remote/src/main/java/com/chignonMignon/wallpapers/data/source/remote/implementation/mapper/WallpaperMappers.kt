@@ -10,6 +10,7 @@ internal fun WallpaperResponse.toModel() = try {
         id = id.toWallpaperId(),
         collectionId = collectionId.toCollectionId(),
         name = nameEn.toWallpaperName(nameHu, nameRo),
+        thumbnailUrl = thumbnailUrl.toThumbnailUrl(),
         url = url.toWallpaperUrl(),
         primaryColorCode = primaryColorCode.toColor(),
         secondaryColorCode = secondaryColorCode.toColor(),
@@ -30,5 +31,7 @@ private fun String?.toWallpaperName(
     hungarian = if (hungarian.isNullOrBlank()) this else hungarian,
     romanian = if (romanian.isNullOrBlank()) this else romanian
 )
+
+private fun String?.toThumbnailUrl() = this ?: throw DataValidationException("Missing thumbnail URL.")
 
 private fun String?.toWallpaperUrl() = this ?: throw DataValidationException("Missing wallpaper URL.")

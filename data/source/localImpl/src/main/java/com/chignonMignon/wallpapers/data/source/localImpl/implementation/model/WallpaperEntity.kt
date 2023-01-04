@@ -11,6 +11,7 @@ internal data class WallpaperEntity(
     @ColumnInfo(name = "nameEn") val nameEn: String,
     @ColumnInfo(name = "nameHu") val nameHu: String,
     @ColumnInfo(name = "nameRo") val nameRo: String,
+    @ColumnInfo(name = "thumbnailUrl") val thumbnailUrl: String,
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "primaryColorCode") val primaryColorCode: String,
     @ColumnInfo(name = "secondaryColorCode") val secondaryColorCode: String,

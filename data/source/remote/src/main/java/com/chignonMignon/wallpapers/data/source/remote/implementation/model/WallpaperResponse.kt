@@ -11,6 +11,7 @@ internal data class WallpaperResponse(
     @Json(name = KEY_NAME_EN) val nameEn: String? = null,
     @Json(name = KEY_NAME_HU) val nameHu: String? = null,
     @Json(name = KEY_NAME_RO) val nameRo: String? = null,
+    @Json(name = KEY_THUMBNAIL_URL) val thumbnailUrl: String? = null,
     @Json(name = KEY_URL) val url: String? = null,
     @Json(name = KEY_PRIMARY_COLOR) val primaryColorCode: String? = null,
     @Json(name = KEY_SECONDARY_COLOR) val secondaryColorCode: String? = null,
@@ -23,7 +24,8 @@ internal data class WallpaperResponse(
         private const val KEY_NAME_EN = "name_en"
         private const val KEY_NAME_HU = "name_hu"
         private const val KEY_NAME_RO = "name_ro"
-        private const val KEY_URL = "url"
+        private const val KEY_THUMBNAIL_URL = "thumbnail_url_768px"
+        private const val KEY_URL = "url_2880px"
         private const val KEY_PRIMARY_COLOR = "primary_color"
         private const val KEY_SECONDARY_COLOR = "secondary_color"
         private const val KEY_IS_PUBLIC = "is_public"
@@ -35,6 +37,7 @@ internal data class WallpaperResponse(
             KEY_NAME_EN,
             KEY_NAME_HU,
             KEY_NAME_RO,
+            KEY_THUMBNAIL_URL,
             KEY_URL,
             KEY_PRIMARY_COLOR,
             KEY_SECONDARY_COLOR,

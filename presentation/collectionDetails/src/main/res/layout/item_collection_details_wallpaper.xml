@@ -29,7 +29,7 @@
                 android:layout_height="0dp"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{uiModel.wallpaperDestination.url}"
+                app:imageUrl="@{uiModel.wallpaperDestination.thumbnailUrl}"
                 app:layout_constraintDimensionRatio="1.2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

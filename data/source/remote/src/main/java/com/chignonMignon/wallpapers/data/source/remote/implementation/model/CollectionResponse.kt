@@ -27,7 +27,7 @@ internal data class CollectionResponse(
         private const val KEY_DESCRIPTION_EN = "description_en"
         private const val KEY_DESCRIPTION_HU = "description_hu"
         private const val KEY_DESCRIPTION_RO = "description_ro"
-        private const val KEY_THUMBNAIL_URL = "thumbnail_url"
+        private const val KEY_THUMBNAIL_URL = "thumbnail_url_1024px"
         private const val KEY_PRIMARY_COLOR = "primary_color"
         private const val KEY_SECONDARY_COLOR = "secondary_color"
         private const val KEY_IS_PUBLIC = "is_public"
