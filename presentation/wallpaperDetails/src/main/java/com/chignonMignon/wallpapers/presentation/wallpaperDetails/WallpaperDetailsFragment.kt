@@ -118,7 +118,13 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
     }
 
     private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() {
-        content.floatingActionButton.setOnClickListener { WallpaperTypeSelectorBottomSheetFragment.show(childFragmentManager) }
+        val viewModel = this@WallpaperDetailsFragment.viewModel
+        content.floatingActionButton.setOnClickListener {
+            WallpaperTypeSelectorBottomSheetFragment.show(
+                fragmentManager = childFragmentManager,
+                backgroundColor = viewModel.focusedWallpaper.value.colorPaletteModel.primary
+            )
+        }
     }
 
     override fun onHomeScreenSelected() = setWallpaper(WallpaperType.HOME_SCREEN)

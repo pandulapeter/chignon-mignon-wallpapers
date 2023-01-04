@@ -11,7 +11,7 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        style="@style/RoundedCorners"
+        style="@style/Card"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/content_padding">

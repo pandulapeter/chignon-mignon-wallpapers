@@ -8,7 +8,6 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/designer_photo"
-            style="@style/RoundedCorners"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"

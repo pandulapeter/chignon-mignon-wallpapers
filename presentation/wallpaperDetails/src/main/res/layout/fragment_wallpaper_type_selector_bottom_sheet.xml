@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        style="@style/Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:shapeAppearanceOverlay="@style/RoundedCorners">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/double_content_padding"
-            android:paddingTop="@dimen/double_content_padding"
-            android:paddingBottom="@dimen/content_padding"
-            android:text="@string/wallpaper_details_apply_wallpaper"
-            android:textAppearance="@style/BodyLargeTextAppearance"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/home_screen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:paddingHorizontal="@dimen/double_content_padding"
-            android:paddingVertical="@dimen/double_content_padding"
-            android:text="@string/wallpaper_details_apply_wallpaper_home_screen"
-            android:textAppearance="@style/BodyMediumTextAppearance" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/double_content_padding"
+                android:paddingTop="@dimen/double_content_padding"
+                android:paddingBottom="@dimen/content_padding"
+                android:text="@string/wallpaper_details_apply_wallpaper"
+                android:textAppearance="@style/BodyLargeTextAppearance"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/lock_screen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:paddingHorizontal="@dimen/double_content_padding"
-            android:paddingVertical="@dimen/double_content_padding"
-            android:text="@string/wallpaper_details_apply_wallpaper_lock_screen"
-            android:textAppearance="@style/BodyMediumTextAppearance" />
+            <TextView
+                android:id="@+id/home_screen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:paddingHorizontal="@dimen/double_content_padding"
+                android:paddingVertical="@dimen/double_content_padding"
+                android:text="@string/wallpaper_details_apply_wallpaper_home_screen"
+                android:textAppearance="@style/BodyMediumTextAppearance" />
 
-        <TextView
-            android:id="@+id/both"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:paddingHorizontal="@dimen/double_content_padding"
-            android:paddingVertical="@dimen/double_content_padding"
-            android:text="@string/wallpaper_details_apply_wallpaper_both"
-            android:textAppearance="@style/BodyMediumTextAppearance" />
+            <TextView
+                android:id="@+id/lock_screen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:paddingHorizontal="@dimen/double_content_padding"
+                android:paddingVertical="@dimen/double_content_padding"
+                android:text="@string/wallpaper_details_apply_wallpaper_lock_screen"
+                android:textAppearance="@style/BodyMediumTextAppearance" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/both"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:paddingHorizontal="@dimen/double_content_padding"
+                android:paddingVertical="@dimen/double_content_padding"
+                android:text="@string/wallpaper_details_apply_wallpaper_both"
+                android:textAppearance="@style/BodyMediumTextAppearance"
+                app:marginWithInsetBottom="@{0f}" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

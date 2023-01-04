@@ -89,7 +89,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/collection_thumbnail"
-                    style="@style/RoundedCorners"
+                    style="@style/Card"
                     android:layout_width="@dimen/collection_details_thumbnail_height"
                     android:layout_height="@dimen/collection_details_thumbnail_height"
                     android:layout_gravity="top"
