@@ -104,7 +104,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            <com.chignonMignon.wallpapers.presentation.shared.customViews.LogoSwiperRefreshLayout
                 android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -174,7 +174,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </com.chignonMignon.wallpapers.presentation.shared.customViews.LogoSwiperRefreshLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

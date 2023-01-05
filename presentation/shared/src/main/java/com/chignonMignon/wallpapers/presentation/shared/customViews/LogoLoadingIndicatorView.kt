@@ -1,6 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.shared.customViews
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
@@ -38,6 +39,9 @@ class LogoLoadingIndicatorView @JvmOverloads constructor(
     }
 
     fun setIndicatorColor(@ColorInt color: Int) {
-
+        ColorStateList.valueOf(color).let { tint ->
+            interiorImage.imageTintList = tint
+            exteriorImage.imageTintList = tint
+        }
     }
 }

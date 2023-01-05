@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.google.android.material)
     implementation(libs.koin.android)
     implementation(libs.kotlin.coroutines)
