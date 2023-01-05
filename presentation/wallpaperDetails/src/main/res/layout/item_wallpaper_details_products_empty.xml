@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/wallpaper_details_products_empty" />
+        android:text="@string/wallpaper_details_products_empty"
+        android:textColor="@color/on_primary" />
 
 
 </layout>
