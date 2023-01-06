@@ -43,7 +43,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
     private val wallpaperDetailsAdapter by lazy { WallpaperDetailsAdapter() }
     private var binding by autoClearedValue<FragmentWallpaperDetailsBinding>()
     private val primaryColorTransitionManager by lazy {
-        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updatePrimaryColor)
+        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.brand_yellow), viewModel::updatePrimaryColor)
     }
     private val secondaryColorTransitionManager by lazy {
         ColorTransitionManager(requireContext().colorResource(android.R.attr.windowBackground), viewModel::updateSecondaryColor)

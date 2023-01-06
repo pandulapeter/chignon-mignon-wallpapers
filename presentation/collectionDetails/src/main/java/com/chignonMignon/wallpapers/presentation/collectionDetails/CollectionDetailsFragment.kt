@@ -120,7 +120,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     private fun FragmentCollectionDetailsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
         background = backgroundGradient
         setOnRefreshListener { this@CollectionDetailsFragment.viewModel.loadData(true) }
-        setColorSchemeResources(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary)
+        setColorSchemeResources(com.chignonMignon.wallpapers.presentation.shared.R.color.brand_text)
     }
 
     private fun FragmentCollectionDetailsBinding.setupRecyclerView() = recyclerView.run {

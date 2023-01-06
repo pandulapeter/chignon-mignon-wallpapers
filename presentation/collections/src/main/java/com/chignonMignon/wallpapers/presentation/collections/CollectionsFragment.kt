@@ -48,7 +48,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         ColorTransitionManager(requireContext().colorResource(android.R.attr.windowBackground), viewModel::updatePrimaryColor)
     }
     private val secondaryColorTransitionManager by lazy {
-        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary), viewModel::updateSecondaryColor)
+        ColorTransitionManager(requireContext().color(com.chignonMignon.wallpapers.presentation.shared.R.color.brand_yellow), viewModel::updateSecondaryColor)
     }
     private val onBackPressedCallback by lazy {
         object : OnBackPressedCallback(true) {
@@ -117,7 +117,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun FragmentCollectionsBinding.setupSwipeRefreshLayout() = swipeRefreshLayout.run {
         setOnRefreshListener { this@CollectionsFragment.viewModel.loadData(true) }
-        setColorSchemeResources(com.chignonMignon.wallpapers.presentation.shared.R.color.on_primary)
+        setColorSchemeResources(com.chignonMignon.wallpapers.presentation.shared.R.color.brand_text)
     }
 
     private fun FragmentCollectionsBinding.setupBackgroundAnimation() = background.run {
@@ -182,7 +182,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun onIsLastPageFocusedChanged(isLastPageFocused: Boolean) {
         context?.run {
-            val primaryColor = color(com.chignonMignon.wallpapers.presentation.shared.R.color.primary)
+            val primaryColor = color(com.chignonMignon.wallpapers.presentation.shared.R.color.brand_yellow)
             val windowBackgroundColor = colorResource(android.R.attr.windowBackground)
             primaryColorTransitionManager.defaultColor = if (isLastPageFocused) primaryColor else windowBackgroundColor
             secondaryColorTransitionManager.defaultColor = if (isLastPageFocused) windowBackgroundColor else primaryColor

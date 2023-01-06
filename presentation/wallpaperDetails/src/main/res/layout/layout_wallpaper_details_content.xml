@@ -44,7 +44,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/dark_overlay"
+            android:background="@color/overlay_loading"
             android:elevation="@dimen/double_content_padding"
             android:visibility="@{viewModel.shouldShowLoadingIndicator}"
             app:layout_constraintBottom_toBottomOf="parent"

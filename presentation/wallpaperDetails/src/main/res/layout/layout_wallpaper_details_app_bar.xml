@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/pager_progress_bar_height"
                 android:layout_gravity="bottom"
-                app:color="@{@color/on_primary}"
+                app:color="@{@color/brand_text}"
                 app:progress="@{viewModel.pagerProgress}" />
 
         </FrameLayout>

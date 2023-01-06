@@ -95,7 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/pager_progress_bar_height"
                             android:visibility="@{viewModel.shouldShowProgressBar}"
-                            app:color="@{@color/on_primary}"
+                            app:color="@{@color/brand_text}"
                             app:progress="@{viewModel.pagerProgress}" />
 
                     </FrameLayout>
@@ -108,6 +108,7 @@
                 android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:indicatorColor="@{viewModel.focusedCollectionDestination.colorPaletteModel}"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                 app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
 

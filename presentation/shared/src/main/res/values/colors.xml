@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#FECE46</color>
-    <color name="on_primary">#2B292A</color>
-    <color name="dark_overlay">#80000000</color>
-    <color name="navigation_overlay">#BFEEEEEE</color>
+    <color name="brand_yellow">#FECE46</color>
+    <color name="brand_white">#FFFFFF</color>
+    <color name="brand_text">#2B292A</color>
+    <color name="overlay_loading">#80000000</color>
+    <color name="overlay_navigation">#BFEEEEEE</color>
 </resources>

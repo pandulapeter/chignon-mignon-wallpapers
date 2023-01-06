@@ -156,6 +156,7 @@
             android:layout_height="match_parent"
             app:enabled="@{viewModel.shouldShowLoadingIndicator}"
             app:horizontalPaddingWithInset="@{@dimen/content_padding}"
+            app:indicatorColor="@{viewModel.collection.colorPaletteModel}"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:refreshing="@{viewModel.shouldShowLoadingIndicator}">
 
