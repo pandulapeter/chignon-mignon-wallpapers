@@ -17,6 +17,7 @@ import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCol
 import com.chignonMignon.wallpapers.presentation.collections.implementation.CollectionsViewModel
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animate
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsAboutButton
+import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsNextButtonHint
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsNextButton
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsPreviousButton
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsAdapter
@@ -75,6 +76,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         binding.setupSwipeRefreshLayout()
         binding.setupBackgroundAnimation()
         binding.setupViewPager()
+        binding.setupHintView()
         shouldAnimateColorTransitions = false
         viewModel.items.observe(viewLifecycleOwner, collectionsAdapter::submitList)
         viewModel.backgroundColor.observe(viewLifecycleOwner, ::updateSwipeRefreshLayoutBackground)
@@ -124,18 +126,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         startAnimation(AnimationUtils.loadAnimation(context, com.chignonMignon.wallpapers.presentation.shared.R.anim.anim_background))
     }
 
-    private fun onPageSelected(position: Int) {
-        currentItem = position
-        if (position == collectionsAdapter.itemCount - 1) {
-            binding.progressBar.run {
-                progress = 1f
-                finishAnimation()
-            }
-        }
-        viewModel.onPageSelected(position)
-        onBackPressedCallback.isEnabled = position != 0
-    }
-
     private fun FragmentCollectionsBinding.setupViewPager() = viewPager.run {
         adapter = collectionsAdapter
         val viewModel = this@CollectionsFragment.viewModel
@@ -165,11 +155,29 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                     pageBinding.animate(position)
                     val adjustedPosition = -max(-1f, position)
                     binding.previous.animateCollectionsPreviousButton(adjustedPosition)
+                    binding.hintView.animateCollectionsNextButtonHint(adjustedPosition)
                     binding.background.alpha = adjustedPosition * BACKGROUND_ALPHA
                 }
                 else -> Unit
             }
         }
+    }
+
+    private fun FragmentCollectionsBinding.setupHintView() = hintView.run {
+        targetView = next
+    }
+
+    private fun onPageSelected(position: Int) {
+        currentItem = position
+        if (position == collectionsAdapter.itemCount - 1) {
+            binding.progressBar.run {
+                progress = 1f
+                finishAnimation()
+            }
+        }
+        viewModel.onPageSelected(position)
+        onBackPressedCallback.isEnabled = position != 0
+        binding.hintView.radiusMultiplier = if (position == 0) 1f else 0f
     }
 
     private fun updateSwipeRefreshLayoutBackground(colors: Pair<Int?, Int?>) {

@@ -4,5 +4,7 @@
     <dimen name="collections_logo_max_width">224dp</dimen>
     <dimen name="collections_collection_thumbnail_width">384dp</dimen>
     <dimen name="collections_collection_text_width">512dp</dimen>
+    <dimen name="collections_hint_ripple_wave_size">6dp</dimen>
+    <dimen name="collections_hint_ripple_center_radius">48dp</dimen>
 
 </resources>

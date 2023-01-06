@@ -46,6 +46,10 @@ internal fun ImageView.animateCollectionsPreviousButton(adjustedPosition: Float)
     scale(adjustedPosition)
 }
 
+internal fun HintView.animateCollectionsNextButtonHint(adjustedPosition: Float) {
+    radiusMultiplier = 1f - adjustedPosition
+}
+
 internal fun ImageView.animateCollectionsNextButton(adjustedPosition: Float) {
     alpha = adjustedPosition * adjustedPosition
     relativeTranslationX(adjustedPosition - 1)
