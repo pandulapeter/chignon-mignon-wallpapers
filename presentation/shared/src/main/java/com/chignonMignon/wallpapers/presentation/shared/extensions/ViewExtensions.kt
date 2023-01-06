@@ -22,7 +22,6 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewT
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.isVisible
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 
 @BindingAdapter("android:text")
@@ -37,8 +36,6 @@ fun CollapsingToolbarLayout.setTitle(translatableTextModel: TranslatableTextMode
 
 @BindingAdapter("title")
 fun AnimatedTitleView.setTitle(translatableTextModel: TranslatableTextModel?) = setTitle(translatableTextModel?.toText())
-
-private const val ROUNDED_CORNER_FIX = 0.75f
 
 @BindingAdapter(
     value = [
@@ -96,10 +93,10 @@ fun ImageView.setImageUrl(
                 if (topCornerRadius != null || bottomCornerRadius != null) {
                     transformations(
                         RoundedCornersTransformation(
-                            topLeft = (topCornerRadius ?: 0f) * ROUNDED_CORNER_FIX,
-                            topRight = (topCornerRadius ?: 0f) * ROUNDED_CORNER_FIX,
-                            bottomLeft = (bottomCornerRadius ?: 0f) * ROUNDED_CORNER_FIX,
-                            bottomRight = (bottomCornerRadius ?: 0f) * ROUNDED_CORNER_FIX
+                            topLeft = (topCornerRadius ?: 0f),
+                            topRight = (topCornerRadius ?: 0f),
+                            bottomLeft = (bottomCornerRadius ?: 0f),
+                            bottomRight = (bottomCornerRadius ?: 0f)
                         )
                     )
                 }
