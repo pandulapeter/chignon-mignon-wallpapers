@@ -13,15 +13,25 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/pager_margin">
+        android:layout_height="match_parent">
+
+        <com.chignonMignon.wallpapers.presentation.collections.implementation.HintView
+            android:id="@+id/hint_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/thumbnail"
             style="@style/Card"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="@dimen/pager_margin"
             android:layout_marginTop="@dimen/double_content_padding"
+            android:layout_marginEnd="@dimen/pager_margin"
             android:foreground="?selectableItemBackground"
             android:transitionName="@{uiModel.collectionDestination.id}"
             app:cardBackgroundColor="@{uiModel.collectionDestination.colorPaletteModel.primary}"
@@ -64,6 +74,8 @@
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pager_margin"
+            android:layout_marginEnd="@dimen/pager_margin"
             android:layout_marginBottom="@dimen/double_content_padding"
             android:ellipsize="end"
             android:gravity="center"
@@ -84,6 +96,8 @@
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pager_margin"
+            android:layout_marginEnd="@dimen/pager_margin"
             android:layout_marginBottom="@dimen/double_content_padding"
             android:ellipsize="end"
             android:gravity="center"

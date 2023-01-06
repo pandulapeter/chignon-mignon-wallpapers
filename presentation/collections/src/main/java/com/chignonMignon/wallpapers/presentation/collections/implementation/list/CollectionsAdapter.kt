@@ -73,10 +73,10 @@ internal class CollectionsAdapter(
                     binding.uiModel?.collectionDestination?.id?.let { onItemSelected(it, listOf(binding.thumbnail)) }
                 }
             }
-
             binding.thumbnail.layoutTransition = LayoutTransition().apply {
                 setAnimateParentHierarchy(false)
             }
+            binding.hintView.targetView = binding.thumbnail
         }
 
         override fun bind(listItem: CollectionsListItem.CollectionUiModel) {

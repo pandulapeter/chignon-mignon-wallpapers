@@ -32,6 +32,7 @@ class HintView @JvmOverloads constructor(
         isAntiAlias = true
     }
     private var progress = 0f
+    private var viewCoordinates = intArrayOf(0, 0)
     private var targetCoordinates = intArrayOf(0, 0)
     var radiusMultiplier = 1f
         set(value) {
@@ -57,9 +58,10 @@ class HintView @JvmOverloads constructor(
         if (radiusMultiplier > 0f) {
             targetView?.let { targetView ->
                 canvas?.run {
+                    getLocationOnScreen(viewCoordinates)
                     targetView.getLocationOnScreen(targetCoordinates)
-                    val centerX = targetCoordinates.first() + targetView.width * 0.5f
-                    val centerY = targetCoordinates.last() + targetView.height * 0.5f
+                    val centerX = targetCoordinates.first() + targetView.width * 0.5f - viewCoordinates.first()
+                    val centerY = targetCoordinates.last() + targetView.height * 0.5f - viewCoordinates.last()
                     val maximumRadius = min(width, height) * WAVE_SIZE_MULTIPLIER * radiusMultiplier
                     val waveDistance = 1f / WAVE_COUNT
                     for (i in 0..WAVE_COUNT) {
