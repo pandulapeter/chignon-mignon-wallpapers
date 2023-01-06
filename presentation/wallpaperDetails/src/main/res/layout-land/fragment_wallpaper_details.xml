@@ -39,6 +39,11 @@
                 layout="@layout/layout_wallpaper_details_content"
                 app:viewModel="@{viewModel}" />
 
+            <include
+                android:id="@+id/floating_action_button"
+                layout="@layout/layout_wallpaper_details_floating_action_button"
+                app:viewModel="@{viewModel}" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <androidx.recyclerview.widget.RecyclerView

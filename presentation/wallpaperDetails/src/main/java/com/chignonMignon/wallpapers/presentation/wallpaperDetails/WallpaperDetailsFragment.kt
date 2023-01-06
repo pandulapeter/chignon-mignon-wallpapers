@@ -122,11 +122,10 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
     }
 
     private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() {
-        val viewModel = this@WallpaperDetailsFragment.viewModel
-        content.floatingActionButton.setOnClickListener {
+        floatingActionButton.floatingActionButton.setOnClickListener {
             WallpaperTypeSelectorBottomSheetFragment.show(
                 fragmentManager = childFragmentManager,
-                backgroundColor = viewModel.focusedWallpaper.value.colorPaletteModel.secondary
+                backgroundColor = this@WallpaperDetailsFragment.viewModel.focusedWallpaper.value.colorPaletteModel.secondary
             )
         }
     }
