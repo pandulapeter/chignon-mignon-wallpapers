@@ -97,6 +97,6 @@ class HintView @JvmOverloads constructor(
         private const val ANIMATION_SPEED = 0.001f
         private const val WAVE_COUNT = 9
         private const val WAVE_SIZE_MULTIPLIER = 1f
-        private const val VIEW_ALPHA = 0.25f
+        private const val VIEW_ALPHA = 0.35f
     }
 }
