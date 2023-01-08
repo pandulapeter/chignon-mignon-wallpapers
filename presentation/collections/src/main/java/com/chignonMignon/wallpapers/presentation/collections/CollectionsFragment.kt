@@ -40,6 +40,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
@@ -71,6 +72,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, requireContext().colorResource(android.R.attr.windowBackground).let { intArrayOf(it, it) })
     }
     private var currentItem: Int? = null
+    private var isInBetweenPages = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,6 +149,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             }
         })
         setPageTransformer { page, position ->
+            isInBetweenPages = position != position.roundToInt().toFloat()
             when (val pageBinding = page.tag) {
                 is ItemCollectionsAboutBinding -> {
                     pageBinding.animate(position)
@@ -253,15 +256,21 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun openCollectionDetails(collectionDestination: CollectionDestination, sharedElements: List<View>) {
-        navigator?.navigateToCollectionDetails(collectionDestination, sharedElements)
+        if (!isInBetweenPages) {
+            navigator?.navigateToCollectionDetails(collectionDestination, sharedElements)
+        }
     }
 
     private fun navigateToPreviousPage() {
-        binding.viewPager.currentItem--
+        if (!isInBetweenPages) {
+            binding.viewPager.currentItem--
+        }
     }
 
     private fun navigateToNextPage() {
-        binding.viewPager.currentItem++
+        if (!isInBetweenPages) {
+            binding.viewPager.currentItem++
+        }
     }
 
     private fun navigateToAboutPage() {
