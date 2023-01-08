@@ -24,4 +24,4 @@ fun enterTransition(forward: Boolean) = MaterialSharedAxis(MaterialSharedAxis.Y,
     interpolator = AccelerateDecelerateInterpolator()
 }
 
-const val TRANSITION_DURATION = 300L
+const val TRANSITION_DURATION = 250L
