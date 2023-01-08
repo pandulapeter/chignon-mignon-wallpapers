@@ -16,10 +16,12 @@ fun sharedElementTransition() = MaterialContainerTransform().apply {
     scrimColor = Color.TRANSPARENT
     fadeMode = MaterialContainerTransform.FADE_MODE_OUT
     interpolator = AccelerateDecelerateInterpolator()
-    duration = 300
+    duration = TRANSITION_DURATION
 }
 
 fun enterTransition(forward: Boolean) = MaterialSharedAxis(MaterialSharedAxis.Y, forward).apply {
-    duration = 300
+    duration = TRANSITION_DURATION
     interpolator = AccelerateDecelerateInterpolator()
 }
+
+const val TRANSITION_DURATION = 300L

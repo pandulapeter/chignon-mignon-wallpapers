@@ -10,6 +10,7 @@ import android.view.animation.ScaleAnimation
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.chignonMignon.wallpapers.presentation.collections.databinding.FragmentCollectionsBinding
@@ -29,6 +30,7 @@ import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
 import com.chignonMignon.wallpapers.presentation.utilities.ColorTransitionManager
+import com.chignonMignon.wallpapers.presentation.utilities.TRANSITION_DURATION
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.color
@@ -36,6 +38,8 @@ import com.chignonMignon.wallpapers.presentation.utilities.extensions.colorResou
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.delaySharedElementTransition
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 import kotlin.math.max
@@ -116,6 +120,14 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         updateUi()
     }
 
+    override fun startPostponedEnterTransition() {
+        super.startPostponedEnterTransition()
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(TRANSITION_DURATION)
+            binding.viewPager.isUserInputEnabled = true
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         currentItem?.let { currentItem ->
@@ -172,6 +184,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
                 else -> Unit
             }
         }
+        post { isUserInputEnabled = false }
     }
 
     private val nextUpscaleAnimation: Animation by lazy { createNextAnimation(1f, NEXT_ANIMATION_SCALE_X) { nextDownscaleAnimation } }
@@ -261,15 +274,15 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
     }
 
-    private fun navigateToPreviousPage() {
-        if (!isInBetweenPages) {
-            binding.viewPager.currentItem--
+    private fun navigateToPreviousPage() = binding.viewPager.run {
+        if (!isInBetweenPages && isUserInputEnabled) {
+            currentItem--
         }
     }
 
-    private fun navigateToNextPage() {
-        if (!isInBetweenPages) {
-            binding.viewPager.currentItem++
+    private fun navigateToNextPage() = binding.viewPager.run {
+        if (!isInBetweenPages && isUserInputEnabled) {
+            currentItem++
         }
     }
 
