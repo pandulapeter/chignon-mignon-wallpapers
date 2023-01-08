@@ -29,12 +29,6 @@ internal fun ItemCollectionsCollectionBinding.animate(position: Float) {
         relativeTranslationX(position * 0.5f)
         alpha = multiplierSquared
     }
-    hintView.run {
-        scale(multiplier)
-        radiusMultiplier = multiplier
-        relativeTranslationX(-position * 0.5f)
-        relativeTranslationY(-sin((1 - multiplier) * PI.toFloat()) * 0.05f)
-    }
 }
 
 internal fun ItemCollectionsWelcomeBinding.animate(position: Float) {

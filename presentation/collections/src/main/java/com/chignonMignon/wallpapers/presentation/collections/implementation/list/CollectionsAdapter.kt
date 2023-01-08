@@ -92,7 +92,6 @@ internal class CollectionsAdapter(
             )
             binding.thumbnail.setOnClickListener(onClickListener)
             binding.thumbnail.layoutTransition = LayoutTransition().apply { setAnimateParentHierarchy(false) }
-            binding.hintView.targetView = binding.thumbnail
             binding.navigateBackClick.setOnClickListener { onPreviousPageNavigationHelperClicked() }
             binding.navigateClick.setOnClickListener(onClickListener)
             binding.navigateForwardClick.setOnClickListener { onNextPageNavigationHelperClicked() }
