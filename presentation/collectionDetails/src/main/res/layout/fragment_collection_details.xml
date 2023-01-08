@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/collection_details_header_height"
             app:heightWithTopInset="@{@dimen/collection_details_header_height}"
+            app:layout_behavior="com.chignonMignon.wallpapers.presentation.collectionDetails.BlockableAppBarLayoutBehavior"
             app:liftOnScroll="false">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -190,6 +191,12 @@
             </FrameLayout>
 
         </com.chignonMignon.wallpapers.presentation.shared.customViews.LogoSwiperRefreshLayout>
+
+        <View
+            android:id="@+id/gesture_blocking_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

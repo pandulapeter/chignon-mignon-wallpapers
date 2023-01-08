@@ -7,9 +7,11 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.View.OnLayoutChangeListener
 import android.view.animation.AnimationUtils
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.SharedElementCallback
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chignonMignon.wallpapers.presentation.collectionDetails.databinding.FragmentCollectionDetailsBinding
 import com.chignonMignon.wallpapers.presentation.collectionDetails.implementation.CollectionDetailsViewModel
@@ -19,16 +21,20 @@ import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.CollectionDestination
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.BundleDelegate
+import com.chignonMignon.wallpapers.presentation.utilities.TRANSITION_DURATION
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.autoClearedValue
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.bind
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.isVisible
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.observe
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.relativeTranslationX
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.scale
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.setupTransitions
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.withArguments
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -45,6 +51,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     private val backgroundGradient by lazy {
         GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(viewModel.collection.colorPaletteModel.secondary))
     }
+    private val appBarLayoutBehavior get() = (binding.appBarLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior as BlockableAppBarLayoutBehavior
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +93,14 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         updateActivityWindowBackground()
     }
 
+    override fun startPostponedEnterTransition() {
+        super.startPostponedEnterTransition()
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(TRANSITION_DURATION)
+            setUserInteractionAllowed(true)
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         updateActivityWindowBackground()
@@ -113,6 +128,7 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
         collectionThumbnailImage.run {
             tag = imageViewTag?.copy(loadingIndicator = binding.loadingIndicator) ?: ImageViewTag(loadingIndicator = binding.loadingIndicator)
         }
+        setUserInteractionAllowed(false)
     }
 
     private fun FragmentCollectionDetailsBinding.setupBackgroundAnimation() = collectionBackground.run {
@@ -146,6 +162,11 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
                 }
             )
         }
+    }
+
+    private fun setUserInteractionAllowed(isUserInteractionAllowed: Boolean) {
+        appBarLayoutBehavior.shouldAllowScrolling = isUserInteractionAllowed
+        binding.gestureBlockingView.isVisible = !isUserInteractionAllowed
     }
 
     private fun getSpanCount(): Int {
