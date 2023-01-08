@@ -1,13 +1,18 @@
 package com.chignonMignon.wallpapers.presentation.shared.customViews
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.databinding.ViewAboutBinding
 import com.chignonMignon.wallpapers.presentation.shared.extensions.openEmailComposer
 import com.chignonMignon.wallpapers.presentation.shared.extensions.openUrl
+import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 
 
@@ -23,8 +28,20 @@ class AboutView @JvmOverloads constructor(
         binding.linksBusiness.buttonEmail.setOnClickListener { context.openEmailComposer("office@chignonmignon.ro", this) }
         binding.linksBusiness.buttonFacebook.setOnClickListener { context.openUrl("https://www.facebook.com/chignon.mignon/", this) }
         binding.linksBusiness.buttonInstagram.setOnClickListener { context.openUrl("https://www.instagram.com/chignonmignon/", this) }
-        binding.linksApplication.buttonGooglePlay.setOnClickListener { } // TODO
+        binding.linksApplication.buttonGooglePlay.setOnClickListener { context.openPlayStoreListing(this) }
         binding.linksApplication.buttonGithub.setOnClickListener { context.openUrl("https://github.com/pandulapeter/chignon-mignon-wallpapers", this) }
-        binding.linksApplication.buttonLicenses.setOnClickListener { } // TODO
+        binding.linksApplication.buttonLicenses.setOnClickListener { showSnackbar("Work in progress") } // TODO
+    }
+
+    private fun Context.openPlayStoreListing(view: View) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$PACKAGE_NAME")))
+        } catch (_: ActivityNotFoundException) {
+            openUrl("https://play.google.com/store/apps/details?id=$PACKAGE_NAME", view)
+        }
+    }
+
+    companion object {
+        private const val PACKAGE_NAME = "com.chignonMignon.wallpapers"
     }
 }

@@ -269,7 +269,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     private fun openCollectionDetails(collectionDestination: CollectionDestination, sharedElements: List<View>) {
-        if (!isInBetweenPages) {
+        if (!isInBetweenPages && binding.viewPager.isUserInputEnabled) {
             navigator?.navigateToCollectionDetails(collectionDestination, sharedElements)
         }
     }
