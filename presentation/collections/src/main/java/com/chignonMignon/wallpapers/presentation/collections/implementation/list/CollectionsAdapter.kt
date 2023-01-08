@@ -4,6 +4,7 @@ import android.animation.LayoutTransition
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.chignonMignon.wallpapers.presentation.collections.R
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsAboutBinding
@@ -39,6 +40,12 @@ internal class CollectionsAdapter(
         else -> throw IllegalArgumentException("Unsupported view type: $viewType")
     }
 
+    override fun onViewAttachedToWindow(holder: BaseViewHolder<out CollectionsListItem, *>) {
+        if (holder is CollectionViewHolder) {
+            holder.startAnimation()
+        }
+    }
+
     private class AboutViewHolder private constructor(
         binding: ItemCollectionsAboutBinding,
         onPreviousPageNavigationHelperClicked: () -> Unit
@@ -71,27 +78,31 @@ internal class CollectionsAdapter(
         onNextPageNavigationHelperClicked: () -> Unit
     ) : BaseViewHolder<CollectionsListItem.CollectionUiModel, ItemCollectionsCollectionBinding>(binding) {
 
+        private val thumbnailAnimation = AnimationUtils.loadAnimation(binding.root.context, R.anim.anim_pulsate)
+
         init {
-            binding.root.tag = binding
-            binding.thumbnailImage.tag = ImageViewTag(
-                loadingIndicator = binding.loadingIndicator
-            )
-            binding.thumbnail.setOnClickListener {
+            val onClickListener = View.OnClickListener {
                 if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
                     binding.uiModel?.collectionDestination?.id?.let { onItemSelected(it, listOf(binding.thumbnail)) }
                 }
             }
-            binding.thumbnail.layoutTransition = LayoutTransition().apply {
-                setAnimateParentHierarchy(false)
-            }
+            binding.root.tag = binding
+            binding.thumbnailImage.tag = ImageViewTag(
+                loadingIndicator = binding.loadingIndicator
+            )
+            binding.thumbnail.setOnClickListener(onClickListener)
+            binding.thumbnail.layoutTransition = LayoutTransition().apply { setAnimateParentHierarchy(false) }
             binding.hintView.targetView = binding.thumbnail
             binding.navigateBackClick.setOnClickListener { onPreviousPageNavigationHelperClicked() }
+            binding.navigateClick.setOnClickListener(onClickListener)
             binding.navigateForwardClick.setOnClickListener { onNextPageNavigationHelperClicked() }
         }
 
         override fun bind(listItem: CollectionsListItem.CollectionUiModel) {
             binding.uiModel = listItem
         }
+
+        fun startAnimation() = binding.thumbnail.startAnimation(thumbnailAnimation)
 
         companion object {
             fun create(
