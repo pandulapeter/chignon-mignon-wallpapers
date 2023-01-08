@@ -98,6 +98,8 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
     }
 
     private fun FragmentCollectionDetailsBinding.setupToolbar() {
+        collapsingToolbarLayout.setOnClickListener { navigator?.navigateBack() }
+        toolbar.setOnClickListener { navigator?.navigateBack() }
         toolbar.setNavigationOnClickListener { navigator?.navigateBack() }
         appBarLayout.addOnOffsetChangedListener { _, verticalOffset -> animateHeader(-verticalOffset.toFloat() / appBarLayout.totalScrollRange) }
         collectionBackgroundOverlay.foreground = GradientDrawable(

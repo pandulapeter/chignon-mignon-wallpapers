@@ -96,8 +96,9 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
         navigator?.selectedWallpaperIndex = binding.content.viewPager.currentItem
     }
 
-    private fun FragmentWallpaperDetailsBinding.setupToolbar() = appBar.toolbar.setNavigationOnClickListener {
-        navigator?.navigateBack()
+    private fun FragmentWallpaperDetailsBinding.setupToolbar() = appBar.toolbar.run {
+        setOnClickListener { navigator?.navigateBack() }
+        setNavigationOnClickListener { navigator?.navigateBack() }
     }
 
     private fun FragmentWallpaperDetailsBinding.setupViewPager() = content.viewPager.run {

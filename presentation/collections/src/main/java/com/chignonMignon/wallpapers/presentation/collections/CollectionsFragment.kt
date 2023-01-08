@@ -45,7 +45,12 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val viewModel by viewModel<CollectionsViewModel>()
     private val collectionsAdapter by lazy {
-        CollectionsAdapter(onItemSelected = viewModel::onItemSelected, onTryAgainButtonClicked = { viewModel.loadData(true) })
+        CollectionsAdapter(
+            onPreviousPageNavigationHelperClicked = ::navigateToPreviousPage,
+            onNextPageNavigationHelperClicked = ::navigateToNextPage,
+            onItemSelected = viewModel::onItemSelected,
+            onTryAgainButtonClicked = { viewModel.loadData(true) }
+        )
     }
     private var binding by autoClearedValue<FragmentCollectionsBinding>()
     private val primaryColorTransitionManager by lazy {
@@ -166,7 +171,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
     }
 
-
     private val nextUpscaleAnimation: Animation by lazy { createNextAnimation(1f, NEXT_ANIMATION_SCALE_X) { nextDownscaleAnimation } }
     private val nextDownscaleAnimation: Animation by lazy {
         createNextAnimation(NEXT_ANIMATION_SCALE_X, 1f) {
@@ -183,7 +187,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         targetView = next
         next.startAnimation(nextHoldAnimation)
     }
-
 
     private fun createNextAnimation(
         fromX: Float,
