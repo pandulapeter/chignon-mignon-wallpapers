@@ -38,10 +38,20 @@
                 layout="@layout/layout_wallpaper_details_content"
                 app:viewModel="@{viewModel}" />
 
-            <include
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/floating_action_button"
-                layout="@layout/layout_wallpaper_details_floating_action_button"
-                app:viewModel="@{viewModel}" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="@dimen/double_content_padding"
+                android:text="@string/wallpaper_details_set_wallpaper"
+                android:textColor="?colorOnPrimary"
+                android:textStyle="bold"
+                app:backgroundColor="@{viewModel.secondaryColor}"
+                app:icon="@drawable/ic_set_wallpaper"
+                app:iconTint="?colorOnPrimary"
+                app:marginWithInsetRight="@{@dimen/double_content_padding}"
+                app:rippleColor="?colorControlHighlight" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

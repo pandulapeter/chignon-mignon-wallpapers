@@ -3,6 +3,7 @@ package com.chignonMignon.wallpapers.presentation.wallpaperDetails
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.annotation.StringRes
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.get
@@ -122,13 +123,14 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
         adapter = productAdapter
     }
 
-    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() {
-        floatingActionButton.floatingActionButton.setOnClickListener {
+    private fun FragmentWallpaperDetailsBinding.setupFloatingActionButton() = floatingActionButton.run {
+        setOnClickListener {
             WallpaperTypeSelectorBottomSheetFragment.show(
                 fragmentManager = childFragmentManager,
                 backgroundColor = this@WallpaperDetailsFragment.viewModel.focusedWallpaper.value.colorPaletteModel.secondary
             )
         }
+        startAnimation(AnimationUtils.loadAnimation(binding.root.context, com.chignonMignon.wallpapers.presentation.shared.R.anim.anim_pulsate))
     }
 
     override fun onHomeScreenSelected() = setWallpaper(WallpaperType.HOME_SCREEN)

@@ -27,11 +27,9 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         activity?.window?.decorView?.background = AppCompatResources.getDrawable(requireContext(), R.drawable.bg_about)
     }
 
-    private fun FragmentAboutBinding.setupToolbar(){
-        appBarLayout.setOnClickListener { navigator?.navigateBack() }
-        toolbar.setNavigationOnClickListener {
-            navigator?.navigateBack()
-        }
+    private fun FragmentAboutBinding.setupToolbar() = toolbar.run {
+        setOnClickListener { navigator?.navigateBack() }
+        setNavigationOnClickListener { navigator?.navigateBack() }
     }
 
     companion object {

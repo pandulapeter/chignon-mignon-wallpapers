@@ -13,7 +13,7 @@
         android:label="@string/chignon_mignon_wallpapers"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/Splash"
         tools:targetApi="33">
 

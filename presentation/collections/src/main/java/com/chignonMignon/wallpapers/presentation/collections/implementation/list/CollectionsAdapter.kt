@@ -78,7 +78,7 @@ internal class CollectionsAdapter(
         onNextPageNavigationHelperClicked: () -> Unit
     ) : BaseViewHolder<CollectionsListItem.CollectionUiModel, ItemCollectionsCollectionBinding>(binding) {
 
-        private val thumbnailAnimation = AnimationUtils.loadAnimation(binding.root.context, R.anim.anim_pulsate)
+        private val thumbnailAnimation = AnimationUtils.loadAnimation(binding.root.context, com.chignonMignon.wallpapers.presentation.shared.R.anim.anim_pulsate)
 
         init {
             val onClickListener = View.OnClickListener {
