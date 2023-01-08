@@ -3,7 +3,10 @@ package com.chignonMignon.wallpapers.presentation.collections
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
 import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
@@ -17,8 +20,8 @@ import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCol
 import com.chignonMignon.wallpapers.presentation.collections.implementation.CollectionsViewModel
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animate
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsAboutButton
-import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsNextButtonHint
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsNextButton
+import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsNextButtonHint
 import com.chignonMignon.wallpapers.presentation.collections.implementation.animateCollectionsPreviousButton
 import com.chignonMignon.wallpapers.presentation.collections.implementation.list.CollectionsAdapter
 import com.chignonMignon.wallpapers.presentation.shared.extensions.navigator
@@ -163,8 +166,40 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         }
     }
 
+
+    private val nextUpscaleAnimation: Animation by lazy { createNextAnimation(1f, NEXT_ANIMATION_SCALE_X) { nextDownscaleAnimation } }
+    private val nextDownscaleAnimation: Animation by lazy {
+        createNextAnimation(NEXT_ANIMATION_SCALE_X, 1f) {
+            if (binding.viewPager.currentItem == 0) nextUpscaleAnimation else nextHoldAnimation
+        }
+    }
+    private val nextHoldAnimation: Animation by lazy {
+        createNextAnimation(1f, 1f) {
+            if (binding.viewPager.currentItem == 0) nextUpscaleAnimation else nextHoldAnimation
+        }
+    }
+
     private fun FragmentCollectionsBinding.setupHintView() = hintView.run {
         targetView = next
+        next.startAnimation(nextHoldAnimation)
+    }
+
+
+    private fun createNextAnimation(
+        fromX: Float,
+        toX: Float,
+        nextAnimation: () -> Animation
+    ) = ScaleAnimation(fromX, toX, 1f, 1f, 0.5f, 0.5f).apply {
+        setAnimationListener(
+            object : AnimationListener {
+                override fun onAnimationStart(animation: Animation?) = Unit
+
+                override fun onAnimationEnd(animation: Animation?) = binding.next.startAnimation(nextAnimation())
+
+                override fun onAnimationRepeat(animation: Animation?) = Unit
+            }
+        )
+        duration = 250L
     }
 
     private fun onPageSelected(position: Int) {
@@ -239,6 +274,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     }
 
     companion object {
+        private const val NEXT_ANIMATION_SCALE_X = 1.1f
         private const val BACKGROUND_ALPHA = 0.1f
         private var Bundle.currentItem by BundleDelegate.Int("currentItem")
 
