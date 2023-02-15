@@ -55,7 +55,13 @@ fun ImageView.setImageUrl(
 ) {
     if (imageUrl?.isNotBlank() == true && imageViewTag?.url != imageUrl) {
         tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
-        imageViewTag?.loadingIndicator?.isVisible = true
+        post {
+            imageViewTag?.run {
+                if (!isLoadingReady) {
+                    loadingIndicator?.isVisible = true
+                }
+            }
+        }
         Glide.with(context.applicationContext)
             .load(imageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -64,6 +70,7 @@ fun ImageView.setImageUrl(
                 object : RequestListener<Drawable> {
                     override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                         imageViewTag?.loadingIndicator?.isVisible = false
+                        tag = imageViewTag?.copy(isLoadingReady = true) ?: ImageViewTag(imageUrl, isLoadingReady = true)
                         scaleType = ImageView.ScaleType.CENTER_CROP
                         return false
                     }

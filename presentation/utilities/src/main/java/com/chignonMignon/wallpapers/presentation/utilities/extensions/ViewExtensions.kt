@@ -12,7 +12,8 @@ import kotlin.math.roundToInt
 
 data class ImageViewTag(
     val url: String? = null,
-    val loadingIndicator: View? = null
+    val loadingIndicator: View? = null,
+    val isLoadingReady: Boolean = false
 )
 
 val ImageView.imageViewTag get() = tag as? ImageViewTag
