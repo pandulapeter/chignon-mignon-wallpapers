@@ -20,6 +20,7 @@ import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.TranslatableTextModel
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.isVisible
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -76,7 +77,7 @@ fun ImageView.setImageUrl(
                     }
 
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        scaleType = ImageView.ScaleType.CENTER
+                        scaleType = ImageView.ScaleType.CENTER_INSIDE
                         tag = imageViewTag?.copy(url = "")
                         imageViewTag?.loadingIndicator?.isVisible = false
                         return false
