@@ -61,12 +61,11 @@ internal class WallpaperDetailsViewModel(
         _pagerProgress.value = getPagerProgress(position)
     }
 
-    fun onSetWallpaperButtonPressed(context: Context, bitmap: Bitmap, cropRect: Rect, wallpaperType: WallpaperType) =
+    fun onSetWallpaperButtonPressed(context: Context, bitmap: Bitmap, wallpaperType: WallpaperType) =
         viewModelScope.launch(Dispatchers.IO) {
             if (!_shouldShowLoadingIndicator.value) {
                 _shouldShowLoadingIndicator.value = true
-                DebugMenu.log("Setting wallpaper with crop region ${cropRect.left}, ${cropRect.top}, ${cropRect.width()}, ${cropRect.height()}...")
-                val result = context.setWallpaperBitmap(bitmap, cropRect, wallpaperType)
+                val result = context.setWallpaperBitmap(bitmap, wallpaperType)
                 if (result) {
                     DebugMenu.log("Wallpaper set.")
                     _events.pushEvent(Event.WallpaperSet)

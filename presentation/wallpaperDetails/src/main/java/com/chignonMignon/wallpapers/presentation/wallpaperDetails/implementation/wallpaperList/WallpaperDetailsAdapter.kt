@@ -2,23 +2,17 @@ package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementatio
 
 import android.animation.LayoutTransition
 import android.graphics.Bitmap
-import android.graphics.Matrix
-import android.graphics.Rect
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseListAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseViewHolder
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.databinding.ItemWallpaperDetailsWallpaperBinding
-import kotlin.math.abs
-import kotlin.math.roundToInt
 
 
 internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListItem>() {
 
-    interface GetCropRectCallback {
-        fun getCropRect(): Rect
+    interface BitmapCallback {
 
         fun getBitmap(): Bitmap?
     }
@@ -35,26 +29,14 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
             binding.preview.tag = ImageViewTag(
                 loadingIndicator = binding.loadingIndicator
             )
-            binding.root.tag = object : GetCropRectCallback {
-                override fun getCropRect(): Rect {
-                    val matrix = Matrix()
-                    binding.preview.getDisplayMatrix(matrix)
-                    val values = FloatArray(9)
-                    matrix.getValues(values)
-                    val scale = binding.preview.scale
-                    val transitionX = abs(values[Matrix.MTRANS_X])
-                    val transitionY = abs(values[Matrix.MTRANS_Y])
-                    val cropX = (transitionX / scale).roundToInt()
-                    val cropY = (transitionY / scale).roundToInt()
-                    return Rect(
-                        cropX,
-                        cropY,
-                        cropX + ((binding.preview.width) / scale).roundToInt(),
-                        cropY + ((binding.preview.height) / scale).roundToInt()
-                    )
-                }
+            binding.root.tag = object : BitmapCallback {
 
-                override fun getBitmap() = (binding.preview.drawable as? BitmapDrawable)?.bitmap
+                override fun getBitmap(): Bitmap {
+                    binding.preview.isDrawingCacheEnabled = true
+                    val bitmap = Bitmap.createBitmap(binding.preview.drawingCache)
+                    binding.preview.isDrawingCacheEnabled = false
+                    return bitmap
+                }
             }
             binding.container.layoutTransition = LayoutTransition().apply {
                 setAnimateParentHierarchy(false)

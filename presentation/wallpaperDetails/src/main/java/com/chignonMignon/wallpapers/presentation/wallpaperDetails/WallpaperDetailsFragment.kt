@@ -140,9 +140,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
 
     private fun setWallpaper(wallpaperType: WallpaperType) {
         getCurrentBitmap()?.let { bitmap ->
-            getCurrentCropRect()?.let { cropRect ->
-                context?.run { viewModel.onSetWallpaperButtonPressed(this, bitmap, cropRect, wallpaperType) }
-            }
+            context?.run { viewModel.onSetWallpaperButtonPressed(this, bitmap, wallpaperType) }
         }
     }
 
@@ -161,9 +159,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
     private fun getCurrentViewHolder() =
         getViewPagerRecyclerView().findViewHolderForAdapterPosition(getCurrentVisibleItemIndex())
 
-    private fun getCurrentBitmap() = (getCurrentViewHolder()?.itemView?.tag as? WallpaperDetailsAdapter.GetCropRectCallback)?.getBitmap()
-
-    private fun getCurrentCropRect() = (getCurrentViewHolder()?.itemView?.tag as? WallpaperDetailsAdapter.GetCropRectCallback)?.getCropRect()
+    private fun getCurrentBitmap() = (getCurrentViewHolder()?.itemView?.tag as? WallpaperDetailsAdapter.BitmapCallback)?.getBitmap()
 
     private fun handleEvent(event: WallpaperDetailsViewModel.Event) = when (event) {
         WallpaperDetailsViewModel.Event.WallpaperSet -> showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_wallpaper_applied_successfully)
