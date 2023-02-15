@@ -1,6 +1,7 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Rect
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
@@ -11,7 +12,6 @@ import com.chignonMignon.wallpapers.domain.useCases.GetProductsByWallpaperIdUseC
 import com.chignonMignon.wallpapers.presentation.debugMenu.DebugMenu
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.WallpaperDestination
 import com.chignonMignon.wallpapers.presentation.utilities.eventFlow
-import com.chignonMignon.wallpapers.presentation.utilities.extensions.downloadImage
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.pushEvent
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.productList.WallpaperDetailsProductListItem
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList.WallpaperDetailsListItem
@@ -61,30 +61,22 @@ internal class WallpaperDetailsViewModel(
         _pagerProgress.value = getPagerProgress(position)
     }
 
-    fun onSetWallpaperButtonPressed(context: Context, wallpaper: WallpaperDestination, cropRect: Rect, wallpaperType: WallpaperType) = viewModelScope.launch(Dispatchers.IO) {
-        if (!_shouldShowLoadingIndicator.value) {
-            _shouldShowLoadingIndicator.value = true
-            DebugMenu.log("Downloading wallpaper: ${wallpaper.id}...")
-            context.downloadImage(wallpaper.url).let { bitmap ->
-                if (bitmap == null) {
-                    DebugMenu.log("Error while downloading wallpaper.")
-                    _events.pushEvent(Event.ShowErrorMessage(wallpaper, cropRect, wallpaperType))
+    fun onSetWallpaperButtonPressed(context: Context, bitmap: Bitmap, cropRect: Rect, wallpaperType: WallpaperType) =
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!_shouldShowLoadingIndicator.value) {
+                _shouldShowLoadingIndicator.value = true
+                DebugMenu.log("Setting wallpaper with crop region ${cropRect.left}, ${cropRect.top}, ${cropRect.width()}, ${cropRect.height()}...")
+                val result = context.setWallpaperBitmap(bitmap, cropRect, wallpaperType)
+                if (result) {
+                    DebugMenu.log("Wallpaper set.")
+                    _events.pushEvent(Event.WallpaperSet)
                 } else {
-                    DebugMenu.log("Setting wallpaper with crop region ${cropRect.left}, ${cropRect.top}, ${cropRect.width()}, ${cropRect.height()}...")
-                    val result = context.setWallpaperBitmap(bitmap, cropRect, wallpaperType)
-                    if (result) {
-                        DebugMenu.log("Wallpaper set.")
-                        _events.pushEvent(Event.WallpaperSet)
-                    } else {
-                        DebugMenu.log("Wallpaper not set.")
-                        _events.pushEvent(Event.WallpaperNotSet)
-                    }
+                    DebugMenu.log("Wallpaper not set.")
+                    _events.pushEvent(Event.WallpaperNotSet)
                 }
+                _shouldShowLoadingIndicator.value = false
             }
-
-            _shouldShowLoadingIndicator.value = false
         }
-    }
 
     fun updatePrimaryColor(@ColorInt primaryColor: Int) {
         _primaryColor.value = primaryColor
@@ -101,7 +93,6 @@ internal class WallpaperDetailsViewModel(
     sealed class Event {
         object WallpaperSet : Event()
         object WallpaperNotSet : Event()
-        data class ShowErrorMessage(val wallpaper: WallpaperDestination, val cropRect: Rect, val wallpaperType: WallpaperType) : Event()
         data class OpenUrl(val url: String) : Event()
     }
 }

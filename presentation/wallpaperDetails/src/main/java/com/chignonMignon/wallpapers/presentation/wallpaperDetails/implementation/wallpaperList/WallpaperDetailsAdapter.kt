@@ -1,8 +1,10 @@
 package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation.wallpaperList
 
 import android.animation.LayoutTransition
+import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.Rect
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
@@ -17,6 +19,8 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
 
     interface GetCropRectCallback {
         fun getCropRect(): Rect
+
+        fun getBitmap(): Bitmap?
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<out WallpaperDetailsListItem, *> = WallpaperViewHolder.create(
@@ -49,6 +53,8 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
                         cropY + ((binding.preview.height) / scale).roundToInt()
                     )
                 }
+
+                override fun getBitmap() = (binding.preview.drawable as? BitmapDrawable)?.bitmap
             }
             binding.container.layoutTransition = LayoutTransition().apply {
                 setAnimateParentHierarchy(false)
