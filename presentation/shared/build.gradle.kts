@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp") version libs.versions.kotlin.ksp.get()
 }
 
 dependencies {
@@ -17,9 +18,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.recyclerview)
     api(libs.androidx.swiperefreshlayout)
-    implementation(libs.coil)
+    implementation(libs.bumptech.glide)
+    ksp(libs.bumptech.glide.codegen)
+    implementation(libs.bumptech.glide.okhttp)
     implementation(libs.google.android.material)
+    implementation(libs.koin.android)
     implementation(libs.kotlin.coroutines)
+    implementation(libs.square.okhttp)
 }
 
 android {

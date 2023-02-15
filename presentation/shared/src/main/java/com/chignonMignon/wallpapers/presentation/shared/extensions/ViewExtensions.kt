@@ -1,8 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.shared.extensions
 
 import android.graphics.Color
-import android.graphics.drawable.Animatable
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
@@ -10,12 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
-import coil.drawable.CrossfadeDrawable
-import coil.imageLoader
-import coil.load
-import coil.request.ImageRequest
-import coil.transform.RoundedCornersTransformation
-import coil.transition.TransitionTarget
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.customViews.AnimatedTitleView
 import com.chignonMignon.wallpapers.presentation.shared.navigation.model.TranslatableTextModel
@@ -43,8 +43,7 @@ fun AnimatedTitleView.setTitle(translatableTextModel: TranslatableTextModel?) = 
         "imageUrl",
         "shouldFade",
         "topCornerRadius",
-        "bottomCornerRadius",
-        "retryCount"
+        "bottomCornerRadius"
     ],
     requireAll = false
 )
@@ -52,73 +51,45 @@ fun ImageView.setImageUrl(
     imageUrl: String?,
     shouldFade: Boolean? = null,
     topCornerRadius: Float? = null,
-    bottomCornerRadius: Float? = null,
-    retryCount: Int = 3
+    bottomCornerRadius: Float? = null
 ) {
-    fun retryLoading() = postDelayed({ setImageUrl(imageUrl, shouldFade, topCornerRadius, bottomCornerRadius, retryCount - 1) }, 200)
-
     if (imageUrl?.isNotBlank() == true && imageViewTag?.url != imageUrl) {
         tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
         imageViewTag?.loadingIndicator?.isVisible = true
-        if (shouldFade == true && isLaidOut) {
-            context.imageLoader.enqueue(
-                ImageRequest.Builder(context).data(imageUrl).allowHardware(false).crossfade(600).target(object : TransitionTarget {
-
-                    override val drawable get() = this@setImageUrl.drawable
-
-                    override val view get() = this@setImageUrl
-
-                    override fun onSuccess(result: Drawable) {
-                        val drawable = if (result is Animatable) result else CrossfadeDrawable(this@setImageUrl.drawable, result, durationMillis = 600)
-                        setImageDrawable(drawable)
-                        (drawable as? Animatable)?.start()
+        Glide.with(context.applicationContext)
+            .load(imageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .transition(DrawableTransitionOptions.withCrossFade(if (shouldFade == true && isLaidOut) 600 else 250))
+            .listener(
+                object : RequestListener<Drawable> {
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                         imageViewTag?.loadingIndicator?.isVisible = false
+                        scaleType = ImageView.ScaleType.CENTER_CROP
+                        return false
                     }
 
-                    override fun onError(error: Drawable?) {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        scaleType = ImageView.ScaleType.CENTER
                         tag = imageViewTag?.copy(url = "")
-                        if (retryCount > 0) {
-                            retryLoading()
-                        } else {
-                            val drawable = CrossfadeDrawable(this@setImageUrl.drawable, null, durationMillis = 600)
-                            setImageDrawable(drawable)
-                            (drawable as? Animatable)?.start()
-                            imageViewTag?.loadingIndicator?.isVisible = false
-                        }
+                        imageViewTag?.loadingIndicator?.isVisible = false
+                        return false
                     }
-                }).build()
+                }
             )
-        } else {
-            load(imageUrl) {
-                crossfade(250)
+            .error(R.drawable.img_error)
+            .let {
                 if (topCornerRadius != null || bottomCornerRadius != null) {
-                    transformations(
-                        RoundedCornersTransformation(
-                            topLeft = (topCornerRadius ?: 0f),
-                            topRight = (topCornerRadius ?: 0f),
-                            bottomLeft = (bottomCornerRadius ?: 0f),
-                            bottomRight = (bottomCornerRadius ?: 0f)
+                    it.transform(
+                        GranularRoundedCorners(
+                            topCornerRadius ?: 0f,
+                            topCornerRadius ?: 0f,
+                            bottomCornerRadius ?: 0f,
+                            bottomCornerRadius ?: 0f
                         )
                     )
-                }
-                fallback(R.drawable.img_error)
-                error(R.drawable.img_error)
-                listener(onError = { _, _ ->
-                    tag = imageViewTag?.copy(url = "")
-                    if (retryCount > 0) {
-                        retryLoading()
-                    } else {
-                        imageViewTag?.loadingIndicator?.isVisible = false
-                    }
-                }, onSuccess = { _, result ->
-                    (result.drawable as? BitmapDrawable)?.bitmap?.let {
-                        tag = imageViewTag?.copy(bitmap = it)
-                    }
-                    imageViewTag?.loadingIndicator?.isVisible = false
-                })
-                allowHardware(false)
+                } else it
             }
-        }
+            .into(this)
     }
 }
 

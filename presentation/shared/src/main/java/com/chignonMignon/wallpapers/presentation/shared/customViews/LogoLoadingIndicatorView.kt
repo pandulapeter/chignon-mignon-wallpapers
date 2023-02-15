@@ -19,12 +19,10 @@ class LogoLoadingIndicatorView @JvmOverloads constructor(
     private val interiorImage = AppCompatImageView(context).apply {
         scaleType = ImageView.ScaleType.CENTER_INSIDE
         setImageResource(R.drawable.img_loading_indicator_interior)
-        startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_interior))
     }
     private val exteriorImage = AppCompatImageView(context).apply {
         scaleType = ImageView.ScaleType.CENTER_INSIDE
         setImageResource(R.drawable.img_loading_indicator_exterior)
-        startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_exterior))
     }
 
     init {
@@ -38,10 +36,20 @@ class LogoLoadingIndicatorView @JvmOverloads constructor(
         )
     }
 
-    fun setIndicatorColor(@ColorInt color: Int) {
-        ColorStateList.valueOf(color).let { tint ->
-            interiorImage.imageTintList = tint
-            exteriorImage.imageTintList = tint
-        }
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        interiorImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_interior))
+        exteriorImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_exterior))
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        interiorImage.clearAnimation()
+        exteriorImage.clearAnimation()
+    }
+
+    fun setIndicatorColor(@ColorInt color: Int) = ColorStateList.valueOf(color).let { tint ->
+        interiorImage.imageTintList = tint
+        exteriorImage.imageTintList = tint
     }
 }

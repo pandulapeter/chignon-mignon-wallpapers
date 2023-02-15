@@ -15,7 +15,12 @@ abstract class BaseListAdapter<LI : ListItem> : ListAdapter<LI, BaseViewHolder<o
 
     init {
         stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        // setHasStableIds(true)
     }
+
+    // final override fun setHasStableIds(hasStableIds: Boolean) = super.setHasStableIds(hasStableIds)
+
+    // override fun getItemId(position: Int) = getItem(position).id.hashCode().toLong()
 
     @CallSuper
     override fun onBindViewHolder(holder: BaseViewHolder<out LI, *>, position: Int) = holder.bindInternal(getItem(position))

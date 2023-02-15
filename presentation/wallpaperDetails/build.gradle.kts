@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.viewpager)
-    implementation(libs.coil)
     implementation(libs.google.android.material)
     implementation(libs.koin.android)
     implementation(libs.kotlin.coroutines)

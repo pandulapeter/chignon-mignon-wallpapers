@@ -11,9 +11,12 @@ import com.chignonMignon.wallpapers.data.source.remote.implementation.model.Prod
 import com.chignonMignon.wallpapers.data.source.remote.implementation.model.WallpaperResponse
 import com.chignonMignon.wallpapers.data.source.remote.implementation.networking.NetworkManager
 import com.github.theapache64.retrosheet.RetrosheetInterceptor
+import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import org.koin.dsl.module
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 val dataRemoteSourceModule = module {
     single {
@@ -28,6 +31,9 @@ val dataRemoteSourceModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(get<RetrosheetInterceptor>())
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .connectionPool(ConnectionPool(0, 1, TimeUnit.NANOSECONDS)).protocols(listOf(Protocol.HTTP_1_1))
             .build()
     }
     single { MoshiConverterFactory.create() }

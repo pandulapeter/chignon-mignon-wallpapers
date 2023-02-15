@@ -1,6 +1,5 @@
 package com.chignonMignon.wallpapers.presentation.utilities.extensions
 
-import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,7 +10,8 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlin.math.roundToInt
 
 data class ImageViewTag(
-    val url: String? = null, val bitmap: Bitmap? = null, val loadingIndicator: View? = null
+    val url: String? = null,
+    val loadingIndicator: View? = null
 )
 
 val ImageView.imageViewTag get() = tag as? ImageViewTag
