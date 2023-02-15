@@ -5,8 +5,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.annotation.AttrRes
-import androidx.core.view.get
-import com.github.chrisbanes.photoview.PhotoView
 
 internal class PhotoViewWrapper @JvmOverloads constructor(
     context: Context,
@@ -15,7 +13,6 @@ internal class PhotoViewWrapper @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var isParentInterceptionDisallowed = false
-    private val photoView get() = get(0) as PhotoView
 
     override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
         isParentInterceptionDisallowed = disallowIntercept
@@ -25,7 +22,7 @@ internal class PhotoViewWrapper @JvmOverloads constructor(
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
-        parent.requestDisallowInterceptTouchEvent(photoView.scale != 1f && isParentInterceptionDisallowed)
+        parent.requestDisallowInterceptTouchEvent(isParentInterceptionDisallowed || ev.pointerCount > 1)
         return false
     }
 }
