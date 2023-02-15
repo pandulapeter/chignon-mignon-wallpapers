@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.graphics.ColorUtils
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -96,13 +97,15 @@ private fun View.setOrUpdateGradientDrawable(colorArray: IntArray, orientation: 
     background = ((background as? GradientDrawable)?.mutate() as? GradientDrawable)?.apply { colors = colorArray } ?: GradientDrawable(orientation, colorArray)
 }
 
-@BindingAdapter("verticalGradientBackgroundA")
-fun View.setVerticalGradientBackground(colorA: Int) =
-    setOrUpdateGradientDrawable(intArrayOf(colorA, Color.TRANSPARENT), GradientDrawable.Orientation.BOTTOM_TOP)
+private const val TRANSLUCENT_GRADIENT_ALPHA = 192
 
-@BindingAdapter(value = ["horizontalGradientBackgroundA", "horizontalGradientBackgroundB"], requireAll = true)
-fun View.setHorizontalGradientBackground(colorA: Int, colorB: Int) =
-    setOrUpdateGradientDrawable(intArrayOf(colorA, colorB), GradientDrawable.Orientation.RIGHT_LEFT)
+@BindingAdapter("verticallyFadeTo")
+fun View.verticallyFadeTo(color: Int) =
+    setOrUpdateGradientDrawable(intArrayOf(ColorUtils.setAlphaComponent(color, TRANSLUCENT_GRADIENT_ALPHA), Color.TRANSPARENT), GradientDrawable.Orientation.BOTTOM_TOP)
+
+@BindingAdapter("horizontallyFadeTo")
+fun View.horizontallyFadeTo(color: Int) =
+    setOrUpdateGradientDrawable(intArrayOf(ColorUtils.setAlphaComponent(color, TRANSLUCENT_GRADIENT_ALPHA), Color.TRANSPARENT), GradientDrawable.Orientation.RIGHT_LEFT)
 
 fun View.showSnackbar(
     @StringRes messageResourceId: Int = R.string.something_went_wrong,

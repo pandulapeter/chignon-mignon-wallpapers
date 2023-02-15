@@ -26,9 +26,13 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
     ) : BaseViewHolder<WallpaperDetailsListItem.WallpaperUiModel, ItemWallpaperDetailsWallpaperBinding>(binding) {
 
         init {
-            binding.preview.tag = ImageViewTag(
-                loadingIndicator = binding.loadingIndicator
-            )
+            binding.preview.run {
+                tag = ImageViewTag(
+                    loadingIndicator = binding.loadingIndicator
+                )
+                mediumScale = 1.75f
+                maximumScale = 2.5f
+            }
             binding.root.tag = object : BitmapCallback {
 
                 override fun getBitmap(): Bitmap {

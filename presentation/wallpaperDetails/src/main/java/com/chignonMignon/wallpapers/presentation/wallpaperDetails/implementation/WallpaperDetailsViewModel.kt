@@ -2,7 +2,6 @@ package com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementatio
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Rect
 import androidx.annotation.ColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,8 +18,10 @@ import com.chignonMignon.wallpapers.presentation.wallpaperDetails.implementation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class WallpaperDetailsViewModel(
@@ -43,14 +44,10 @@ internal class WallpaperDetailsViewModel(
     val pagerProgress: StateFlow<Float> = _pagerProgress
     val productListItems = focusedWallpaper.map { wallpaper ->
         (getProductsByWallpaperId(false, wallpaper.id)).let { result ->
-            val products = (result as? Result.Success)?.data
-            if (products.isNullOrEmpty()) {
-                listOf(WallpaperDetailsProductListItem.EmptyUiModel())
-            } else {
-                products.map { WallpaperDetailsProductListItem.ProductUiModel(it) }
-            }
+            (result as? Result.Success)?.data?.map { WallpaperDetailsProductListItem.ProductUiModel(it) }.orEmpty()
         }
     }
+    val shouldShowGradient = productListItems.map { it.isNotEmpty() }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
     init {
         DebugMenu.log("Opened wallpaper details.")

@@ -13,58 +13,47 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:transitionGroup="true"
         android:transitionName="@{viewModel.focusedWallpaper.id}"
         app:backgroundColor="@{viewModel.secondaryColor}">
+
+        <include
+            android:id="@+id/content"
+            layout="@layout/layout_wallpaper_details_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:viewModel="@{viewModel}" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="@{viewModel.shouldShowGradient}"
+            app:paddingBottomWithBottomOffset="@{0f}"
+            app:verticallyFadeTo="@{viewModel.secondaryColor}">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/wallpaper_details_products_decoration_size" />
+
+        </FrameLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:transitionGroup="true"
-            app:backgroundColor="@{viewModel.primaryColor}"
             app:marginWithInsetBottom="@{@dimen/content_padding}">
 
             <include
-                android:id="@+id/content"
-                layout="@layout/layout_wallpaper_details_content"
+                android:id="@+id/app_bar"
+                layout="@layout/layout_wallpaper_details_app_bar"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:viewModel="@{viewModel}" />
-
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/coordinator_layout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:clipChildren="false"
-                app:layout_constraintBottom_toTopOf="@id/recycler_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <include
-                    android:id="@+id/app_bar"
-                    layout="@layout/layout_wallpaper_details_app_bar"
-                    app:viewModel="@{viewModel}" />
-
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/floating_action_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:text="@string/wallpaper_details_set_wallpaper"
-                    android:textColor="?colorOnPrimary"
-                    android:textStyle="bold"
-                    app:backgroundColor="@{viewModel.primaryColor}"
-                    app:icon="@drawable/ic_set_wallpaper"
-                    app:iconTint="?colorOnPrimary"
-                    app:marginWithInsetRight="@{@dimen/double_content_padding}"
-                    app:rippleColor="?colorControlHighlight" />
-
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -75,8 +64,34 @@
                 app:horizontalPaddingWithInset="@{@dimen/content_padding}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/floating_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wallpaper_details_set_wallpaper"
+                android:textColor="?colorOnPrimary"
+                android:textStyle="bold"
+                app:animatedTranslationY="@{viewModel.shouldShowGradient ? 0f : @dimen/wallpaper_details_products_carousel_size - @dimen/content_padding}"
+                app:backgroundColor="@{viewModel.primaryColor}"
+                app:icon="@drawable/ic_set_wallpaper"
+                app:iconTint="?colorOnPrimary"
+                app:layout_constraintBottom_toTopOf="@id/recycler_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:marginWithInsetRight="@{@dimen/double_content_padding}"
+                app:rippleColor="?colorControlHighlight" />
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/coordinator_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:verticalGradientBackgroundA="@{viewModel.secondaryColor}" />
+                app:layout_constraintTop_toBottomOf="@id/app_bar"
+                app:layout_constraintVertical_bias="0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

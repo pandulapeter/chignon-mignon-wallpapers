@@ -8,8 +8,4 @@ internal sealed class WallpaperDetailsProductListItem(override val id: String) :
     data class ProductUiModel(
         val product: Product
     ) : WallpaperDetailsProductListItem("product_${product.id}")
-
-    data class EmptyUiModel(
-        val nothing: Any? = null
-    ) : WallpaperDetailsProductListItem("empty")
 }

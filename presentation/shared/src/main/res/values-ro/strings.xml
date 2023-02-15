@@ -39,6 +39,5 @@
     <string name="wallpaper_details_apply_wallpaper_both">Both</string> <!-- TODO -->
     <string name="wallpaper_details_cannot_set_wallpaper_apply">Something went wrong while applying the wallpaper</string> <!-- TODO -->
     <string name="wallpaper_details_wallpaper_applied_successfully">Wallpaper applied successfully</string> <!-- TODO -->
-    <string name="wallpaper_details_products_empty">Products using this pattern are coming soon!</string> <!-- TODO -->
 
 </resources>

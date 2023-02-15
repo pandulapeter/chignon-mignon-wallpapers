@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="wallpaper_details_products_carousel_size">128dp</dimen>
+    <dimen name="wallpaper_details_products_decoration_size">64dp</dimen>
     <dimen name="wallpaper_details_bottom_sheet_bottom_margin">32dp</dimen>
     <dimen name="wallpaper_details_bottom_sheet_bottom_negative_margin">-32dp</dimen>
 

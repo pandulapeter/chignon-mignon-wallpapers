@@ -15,19 +15,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
+        app:elevation="0dp"
         app:liftOnScroll="false">
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:backgroundColor="@{viewModel.primaryColor}">
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:alpha="0.85"
+                app:backgroundColor="@{viewModel.primaryColor}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 style="@style/Widget.MaterialComponents.Toolbar"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:clipChildren="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:marginWithInsetLeft="@{0f}"
                 app:marginWithInsetRight="@{0f}"
                 app:marginWithInsetTop="@{0f}"
@@ -43,13 +56,16 @@
 
             <com.chignonMignon.wallpapers.presentation.shared.customViews.PagerProgressBar
                 android:id="@+id/progress_bar"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pager_progress_bar_height"
                 android:layout_gravity="bottom"
                 app:color="@{@color/brand_text}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:progress="@{viewModel.pagerProgress}" />
 
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 

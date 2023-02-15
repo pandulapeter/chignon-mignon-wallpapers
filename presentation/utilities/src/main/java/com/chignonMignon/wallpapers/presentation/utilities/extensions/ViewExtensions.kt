@@ -2,6 +2,7 @@ package com.chignonMignon.wallpapers.presentation.utilities.extensions
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
@@ -108,6 +109,13 @@ fun View.setHeightWithTopInset(
     }
     insets
 }
+
+private val anticipateOvershootInterpolator by lazy { AnticipateOvershootInterpolator() }
+@BindingAdapter("animatedTranslationX")
+fun View.animatedTranslationX(translation: Float) = animate().translationX(translation).setInterpolator(anticipateOvershootInterpolator).start()
+
+@BindingAdapter("animatedTranslationY")
+fun View.animatedTranslationY(translation: Float) = animate().translationY(translation).setInterpolator(anticipateOvershootInterpolator).start()
 
 @BindingAdapter("expandedTitleMarginStart") fun CollapsingToolbarLayout.updateExpandedTitleMargin(
     expandedTitleMarginStart: Float? = null
