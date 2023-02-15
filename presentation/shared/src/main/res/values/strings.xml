@@ -15,7 +15,8 @@
     <string name="about_text_4">All pattern designs showcased in the app as well as the physical products are made with love in Cluj, Romania.</string>
     <string name="about_text_5">Török Patrícia-Ágnes</string>
     <string name="about_text_6">Designer</string>
-    <string name="about_text_7">This mobile application was created by Pandula Péter</string>
+    <string name="about_text_7">This mobile application was created by <b>Pandula Péter</b></string>
+    <string name="about_text_8">Thanks for checking it out!</string>
     <string name="about_button_website">Visit our website</string>
     <string name="about_button_email">Drop us a line</string>
     <string name="about_button_facebook">Check us out on Facebook</string>
@@ -23,6 +24,7 @@
     <string name="about_button_google_play">Rate the app on Google Play</string>
     <string name="about_button_github">Check out the source code</string>
     <string name="about_button_licenses">Read the open source licenses</string>
+    <string name="about_button_bug_report">Report a bug</string>
 
     <!-- Collections -->
     <string name="collections_title">Collections</string>

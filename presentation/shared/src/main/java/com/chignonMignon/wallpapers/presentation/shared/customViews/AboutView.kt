@@ -31,6 +31,7 @@ class AboutView @JvmOverloads constructor(
         binding.linksApplication.buttonGooglePlay.setOnClickListener { context.openPlayStoreListing(this) }
         binding.linksApplication.buttonGithub.setOnClickListener { context.openUrl("https://github.com/pandulapeter/chignon-mignon-wallpapers", this) }
         binding.linksApplication.buttonLicenses.setOnClickListener { showSnackbar("Work in progress") } // TODO
+        binding.linksApplication.buttonBugReport.setOnClickListener { context.openEmailComposer("pandulapeter@gmail.com", this) }
     }
 
     private fun Context.openPlayStoreListing(view: View) {

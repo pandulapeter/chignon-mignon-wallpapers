@@ -134,4 +134,17 @@
         app:layout_constraintTop_toBottomOf="@id/text_7"
         app:layout_constraintWidth_max="@dimen/about_maximum_content_width" />
 
+    <TextView
+        android:id="@+id/text_8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pager_margin"
+        android:layout_marginTop="@dimen/about_vertical_margin"
+        android:layout_marginEnd="@dimen/pager_margin"
+        android:gravity="center"
+        android:text="@string/about_text_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/links_application" />
+
 </merge>

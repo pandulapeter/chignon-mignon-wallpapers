@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="@string/about_button_google_play"
             app:drawableStartCompat="@drawable/ic_google_play"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_licenses"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/about_button_github"
             app:drawableStartCompat="@drawable/ic_github"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_bug_report"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_google_play" />
 
@@ -36,8 +36,8 @@
             android:text="@string/about_button_licenses"
             app:drawableStartCompat="@drawable/ic_licenses"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_github" />
+            app:layout_constraintStart_toEndOf="@id/button_google_play"
+            app:layout_constraintTop_toTopOf="@id/button_google_play" />
 
         <TextView
             android:id="@+id/button_bug_report"
@@ -47,8 +47,8 @@
             android:text="@string/about_button_bug_report"
             app:drawableStartCompat="@drawable/ic_bug_report"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_licenses" />
+            app:layout_constraintStart_toEndOf="@id/button_github"
+            app:layout_constraintTop_toTopOf="@id/button_github" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
