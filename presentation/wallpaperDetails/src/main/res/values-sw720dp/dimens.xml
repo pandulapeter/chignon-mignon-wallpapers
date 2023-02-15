@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="wallpaper_details_products_carousel_size">192dp</dimen>
+    <dimen name="wallpaper_details_products_decoration_size">154dp</dimen>
+
+</resources>

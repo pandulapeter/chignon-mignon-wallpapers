@@ -30,7 +30,7 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
                 tag = ImageViewTag(
                     loadingIndicator = binding.loadingIndicator
                 )
-                mediumScale = 1.75f
+                mediumScale = 1.5f
                 maximumScale = 2.5f
             }
             binding.root.tag = object : BitmapCallback {
