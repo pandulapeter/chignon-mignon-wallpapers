@@ -1,5 +1,6 @@
 package com.chignonMignon.wallpapers.presentation.shared.extensions
 
+import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -125,9 +126,9 @@ private fun View.setOrUpdateGradientDrawable(colorArray: IntArray, orientation: 
     background = ((background as? GradientDrawable)?.mutate() as? GradientDrawable)?.apply { colors = colorArray } ?: GradientDrawable(orientation, colorArray)
 }
 
-@BindingAdapter(value = ["verticalGradientBackgroundA", "verticalGradientBackgroundB"], requireAll = true)
-fun View.setVerticalGradientBackground(colorA: Int, colorB: Int) =
-    setOrUpdateGradientDrawable(intArrayOf(colorA, colorB), GradientDrawable.Orientation.BOTTOM_TOP)
+@BindingAdapter("verticalGradientBackgroundA")
+fun View.setVerticalGradientBackground(colorA: Int) =
+    setOrUpdateGradientDrawable(intArrayOf(colorA, Color.TRANSPARENT), GradientDrawable.Orientation.BOTTOM_TOP)
 
 @BindingAdapter(value = ["horizontalGradientBackgroundA", "horizontalGradientBackgroundB"], requireAll = true)
 fun View.setHorizontalGradientBackground(colorA: Int, colorB: Int) =

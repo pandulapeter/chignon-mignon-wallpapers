@@ -19,6 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
             android:transitionGroup="true"
             app:backgroundColor="@{viewModel.primaryColor}"
             app:marginWithInsetBottom="@{@dimen/content_padding}">
@@ -38,6 +39,7 @@
                 android:id="@+id/coordinator_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:clipChildren="false"
                 app:layout_constraintBottom_toTopOf="@id/recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +55,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
-                    android:layout_marginBottom="@dimen/double_content_padding"
                     android:text="@string/wallpaper_details_set_wallpaper"
                     android:textColor="?colorOnPrimary"
                     android:textStyle="bold"
@@ -75,8 +76,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:verticalGradientBackgroundA="@{viewModel.secondaryColor}"
-                app:verticalGradientBackgroundB="@{viewModel.primaryColor}" />
+                app:verticalGradientBackgroundA="@{viewModel.secondaryColor}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
