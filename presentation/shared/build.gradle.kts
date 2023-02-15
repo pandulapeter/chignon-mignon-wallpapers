@@ -38,4 +38,5 @@ android {
         dataBinding = true
         viewBinding = true
     }
+    namespace = "com.chignonMignon.wallpapers.presentation.shared"
 }

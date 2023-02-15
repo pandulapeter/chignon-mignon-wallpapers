@@ -15,7 +15,7 @@ import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-val remoteSourceModule = module {
+val dataRemoteSourceModule = module {
     single {
         RetrosheetInterceptor.Builder()
             .run {

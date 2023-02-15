@@ -47,7 +47,7 @@
                 android:text="@string/wallpaper_details_set_wallpaper"
                 android:textColor="?colorOnPrimary"
                 android:textStyle="bold"
-                app:backgroundColor="@{viewModel.secondaryColor}"
+                app:backgroundColor="@{viewModel.primaryColor}"
                 app:icon="@drawable/ic_set_wallpaper"
                 app:iconTint="?colorOnPrimary"
                 app:marginWithInsetRight="@{@dimen/double_content_padding}"

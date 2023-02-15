@@ -25,4 +25,5 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    namespace = "com.chignonMignon.wallpapers.data.source.localImpl"
 }

@@ -127,7 +127,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
         setOnClickListener {
             WallpaperTypeSelectorBottomSheetFragment.show(
                 fragmentManager = childFragmentManager,
-                backgroundColor = this@WallpaperDetailsFragment.viewModel.focusedWallpaper.value.colorPaletteModel.secondary
+                backgroundColor = this@WallpaperDetailsFragment.viewModel.focusedWallpaper.value.colorPaletteModel.primary
             )
         }
         startAnimation(AnimationUtils.loadAnimation(binding.root.context, com.chignonMignon.wallpapers.presentation.shared.R.anim.anim_pulsate))

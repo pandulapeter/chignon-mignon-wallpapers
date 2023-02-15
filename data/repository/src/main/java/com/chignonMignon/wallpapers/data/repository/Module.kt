@@ -10,7 +10,7 @@ import com.chignonMignon.wallpapers.data.repository.implementation.ProductReposi
 import com.chignonMignon.wallpapers.data.repository.implementation.WallpaperRepositoryImpl
 import org.koin.dsl.module
 
-val repositoryModule = module {
+val dataRepositoryModule = module {
     single<AppStartupRepository> { AppStartupRepositoryImpl() }
     single<CollectionRepository> { CollectionRepositoryImpl(get(), get()) }
     single<ProductRepository> { ProductRepositoryImpl(get(), get()) }
