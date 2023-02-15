@@ -36,14 +36,31 @@ class LogoLoadingIndicatorView @JvmOverloads constructor(
         )
     }
 
+    override fun setVisibility(visibility: Int) {
+        super.setVisibility(visibility)
+        if (visibility == VISIBLE) {
+            startAnimations()
+        } else {
+            clearAnimations()
+        }
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        interiorImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_interior))
-        exteriorImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_exterior))
+        startAnimations()
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
+        clearAnimations()
+    }
+
+    private fun startAnimations() {
+        interiorImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_interior))
+        exteriorImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_loading_indicator_exterior))
+    }
+
+    private fun clearAnimations() {
         interiorImage.clearAnimation()
         exteriorImage.clearAnimation()
     }

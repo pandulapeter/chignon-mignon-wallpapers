@@ -122,9 +122,11 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     override fun startPostponedEnterTransition() {
         super.startPostponedEnterTransition()
-        viewLifecycleOwner.lifecycleScope.launch {
-            delay(TRANSITION_DURATION)
-            binding.viewPager.isUserInputEnabled = true
+        if (isAdded) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(TRANSITION_DURATION)
+                binding.viewPager.isUserInputEnabled = true
+            }
         }
     }
 

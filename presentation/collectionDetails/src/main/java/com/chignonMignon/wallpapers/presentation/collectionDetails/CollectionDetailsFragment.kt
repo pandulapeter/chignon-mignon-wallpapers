@@ -95,9 +95,11 @@ class CollectionDetailsFragment : Fragment(R.layout.fragment_collection_details)
 
     override fun startPostponedEnterTransition() {
         super.startPostponedEnterTransition()
-        viewLifecycleOwner.lifecycleScope.launch {
-            delay(TRANSITION_DURATION)
-            setUserInteractionAllowed(true)
+        if (isAdded) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(TRANSITION_DURATION)
+                setUserInteractionAllowed(true)
+            }
         }
     }
 
