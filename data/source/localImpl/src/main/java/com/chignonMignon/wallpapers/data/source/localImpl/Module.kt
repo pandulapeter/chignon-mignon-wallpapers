@@ -11,7 +11,11 @@ import com.chignonMignon.wallpapers.data.source.localImpl.implementation.databas
 import org.koin.dsl.module
 
 val dataLocalSourceModule = module {
-    single { Room.databaseBuilder(get(), DatabaseManager::class.java, "chignonMignonDatabase.db").build() }
+    single {
+        Room.databaseBuilder(get(), DatabaseManager::class.java, "chignonMignonDatabase.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
     factory { get<DatabaseManager>().getCollectionDao() }
     factory { get<DatabaseManager>().getProductDao() }
     factory { get<DatabaseManager>().getWallpaperDao() }

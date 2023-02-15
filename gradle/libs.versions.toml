@@ -1,27 +1,27 @@
 [versions]
-androidx-appcompat = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
-androidx-browser = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/browser
+androidx-appcompat = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
+androidx-browser = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/browser
 androidx-constraintlayout = "2.1.4" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidx-core = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/core
 androidx-core-splashscreen = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/core
-androidx-fragment = "1.6.0-alpha04" # https://developer.android.com/jetpack/androidx/releases/fragment
+androidx-fragment = "1.6.0-alpha05" # https://developer.android.com/jetpack/androidx/releases/fragment
 androidx-lifecycle = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-recyclerview = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/recyclerview
-androidx-room = "2.4.3" # https://developer.android.com/jetpack/androidx/releases/room
+androidx-room = "2.5.0" # https://developer.android.com/jetpack/androidx/releases/room
 androidx-swiperefreshlayout = "1.2.0-alpha01" # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
 androidx-viewpager = "1.1.0-beta01" # https://developer.android.com/jetpack/androidx/releases/viewpager2
 beagle = "2.9.0" # https://github.com/pandulapeter/beagle/releases
 coil = "2.2.2" # https://github.com/coil-kt/coil/releases
-google-android-material = "1.7.0" # https://github.com/material-components/material-components-android/releases
+google-android-material = "1.8.0" # https://github.com/material-components/material-components-android/releases
 gradle = "7.4.1" # https://developer.android.com/studio/releases/gradle-plugin
 jvm-target = "1.8" # https://kotlinlang.org/docs/gradle.html#check-for-jvm-target-compatibility-of-related-compile-tasks
-koin = "3.2.2" # https://github.com/InsertKoinIO/koin/tags
-kotlin = "1.8.0" # https://kotlinlang.org/docs/releases.html#release-details
+koin = "3.3.3" # https://github.com/InsertKoinIO/koin/tags
+kotlin = "1.8.10" # https://kotlinlang.org/docs/releases.html#release-details
 kotlin-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlin-ksp = "1.8.0-1.0.8" # https://github.com/google/ksp/releases
-photoview = "2.3.0" # https://github.com/Baseflow/PhotoView/releases
+kotlin-ksp = "1.8.10-1.0.9" # https://github.com/google/ksp/releases
+photoview = "2.3.0" # https://github.com/Baseflow/PhotoView/tags
 square-moshi = "1.14.0" # https://github.com/square/moshi/tags
-square-okhttp = "4.10.0" # https://github.com/square/okhttp/tags
+square-okhttp = "5.0.0-alpha.11" # https://github.com/square/okhttp/tags
 square-retrofit = "2.9.0" # https://github.com/square/retrofit/tags
 theapache64-retrosheet = "2.0.1" # https://github.com/theapache64/retrosheet/releases
 
