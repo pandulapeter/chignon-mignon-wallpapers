@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="@string/about_button_google_play"
             app:drawableStartCompat="@drawable/ic_google_play"
-            app:layout_constraintEnd_toStartOf="@id/button_licenses"
+            app:layout_constraintEnd_toStartOf="@id/button_privacy_policy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,12 +29,12 @@
             app:layout_constraintTop_toBottomOf="@id/button_google_play" />
 
         <TextView
-            android:id="@+id/button_licenses"
+            android:id="@+id/button_privacy_policy"
             style="@style/AboutButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/about_button_licenses"
-            app:drawableStartCompat="@drawable/ic_licenses"
+            android:text="@string/about_button_privacy_policy"
+            app:drawableStartCompat="@drawable/ic_privacy_policy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/button_google_play"
             app:layout_constraintTop_toTopOf="@id/button_google_play" />

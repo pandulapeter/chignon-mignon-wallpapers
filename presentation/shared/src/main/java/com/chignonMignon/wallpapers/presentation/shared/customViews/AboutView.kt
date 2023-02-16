@@ -30,7 +30,7 @@ class AboutView @JvmOverloads constructor(
         binding.linksBusiness.buttonInstagram.setOnClickListener { context.openUrl("https://www.instagram.com/chignonmignon/", this) }
         binding.linksApplication.buttonGooglePlay.setOnClickListener { context.openPlayStoreListing(this) }
         binding.linksApplication.buttonGithub.setOnClickListener { context.openUrl("https://github.com/pandulapeter/chignon-mignon-wallpapers", this) }
-        binding.linksApplication.buttonLicenses.setOnClickListener { showSnackbar("Work in progress") } // TODO
+        binding.linksApplication.buttonPrivacyPolicy.setOnClickListener {  context.openUrl("https://chignonmignon.ro/", this) } // TODO
         binding.linksApplication.buttonBugReport.setOnClickListener { context.openEmailComposer("pandulapeter@gmail.com", this) }
     }
 
