@@ -23,6 +23,6 @@ fun Context.openEmailComposer(address: String, view: View) = try {
     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("mailto:$address")))
 } catch (_: ActivityNotFoundException) {
     view.showSnackbar(
-        messageResourceId = R.string.no_browser_installed //TODO: error message
+        messageResourceId = R.string.no_email_client_installed
     )
 }

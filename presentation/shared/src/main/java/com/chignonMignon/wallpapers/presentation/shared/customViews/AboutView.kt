@@ -12,7 +12,6 @@ import com.chignonMignon.wallpapers.presentation.shared.R
 import com.chignonMignon.wallpapers.presentation.shared.databinding.ViewAboutBinding
 import com.chignonMignon.wallpapers.presentation.shared.extensions.openEmailComposer
 import com.chignonMignon.wallpapers.presentation.shared.extensions.openUrl
-import com.chignonMignon.wallpapers.presentation.shared.extensions.showSnackbar
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
 
 
@@ -24,14 +23,30 @@ class AboutView @JvmOverloads constructor(
 
     init {
         setPadding(paddingLeft, paddingTop, paddingRight, context.dimension(R.dimen.about_vertical_margin) + context.dimension(R.dimen.double_content_padding))
-        binding.linksBusiness.buttonWebsite.setOnClickListener { context.openUrl("https://chignonmignon.ro/", this) }
-        binding.linksBusiness.buttonEmail.setOnClickListener { context.openEmailComposer("office@chignonmignon.ro", this) }
-        binding.linksBusiness.buttonFacebook.setOnClickListener { context.openUrl("https://www.facebook.com/chignon.mignon/", this) }
-        binding.linksBusiness.buttonInstagram.setOnClickListener { context.openUrl("https://www.instagram.com/chignonmignon/", this) }
-        binding.linksApplication.buttonGooglePlay.setOnClickListener { context.openPlayStoreListing(this) }
-        binding.linksApplication.buttonGithub.setOnClickListener { context.openUrl("https://github.com/pandulapeter/chignon-mignon-wallpapers", this) }
-        binding.linksApplication.buttonPrivacyPolicy.setOnClickListener {  context.openUrl("https://chignonmignon.ro/", this) } // TODO
-        binding.linksApplication.buttonBugReport.setOnClickListener { context.openEmailComposer("pandulapeter@gmail.com", this) }
+        binding.linksBusiness.buttonWebsite.setOnClickListener {
+            context.openUrl("https://chignonmignon.ro/", this)
+        }
+        binding.linksBusiness.buttonEmail.setOnClickListener {
+            context.openEmailComposer("office@chignonmignon.ro", this)
+        }
+        binding.linksBusiness.buttonFacebook.setOnClickListener {
+            context.openUrl("https://www.facebook.com/chignon.mignon/", this)
+        }
+        binding.linksBusiness.buttonInstagram.setOnClickListener {
+            context.openUrl("https://www.instagram.com/chignonmignon/", this)
+        }
+        binding.linksApplication.buttonGooglePlay.setOnClickListener {
+            context.openPlayStoreListing(this)
+        }
+        binding.linksApplication.buttonGithub.setOnClickListener {
+            context.openUrl("https://github.com/pandulapeter/chignon-mignon-wallpapers", this)
+        }
+        binding.linksApplication.buttonPrivacyPolicy.setOnClickListener {
+            context.openUrl("https://chignonmignon.ro/wp-content/uploads/2023/02/chignon-mignon-wallpapers-privacy_policy-en.html", this)
+        }
+        binding.linksApplication.buttonBugReport.setOnClickListener {
+            context.openEmailComposer("pandulapeter@gmail.com", this)
+        }
     }
 
     private fun Context.openPlayStoreListing(view: View) {

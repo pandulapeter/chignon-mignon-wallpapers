@@ -6,6 +6,7 @@
     <string name="something_went_wrong">Something went wrong.\nCheck your internet connection</string>
     <string name="empty_state">Looks like there\'s no content here…\nCheck back later!</string>
     <string name="no_browser_installed">No browser installed on the device</string>
+    <string name="no_email_client_installed">No email client installed on the device</string>
 
     <!-- About -->
     <string name="about_title">About</string>
