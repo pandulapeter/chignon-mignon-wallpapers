@@ -35,7 +35,7 @@ internal class CollectionsAdapter(
         R.layout.item_collections_about -> AboutViewHolder.create(parent, onPreviousPageNavigationHelperClicked)
         R.layout.item_collections_collection -> CollectionViewHolder.create(parent, onItemSelected, onPreviousPageNavigationHelperClicked, onNextPageNavigationHelperClicked)
         R.layout.item_collections_empty -> EmptyViewHolder.create(parent, onPreviousPageNavigationHelperClicked)
-        R.layout.item_collections_error -> ErrorViewHolder.create(parent, onTryAgainButtonClicked, onPreviousPageNavigationHelperClicked)
+        R.layout.item_collections_error -> ErrorViewHolder.create(parent, onTryAgainButtonClicked)
         R.layout.item_collections_welcome -> WelcomeViewHolder.create(parent, onNextPageNavigationHelperClicked)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType")
     }
@@ -145,13 +145,11 @@ internal class CollectionsAdapter(
 
     private class ErrorViewHolder private constructor(
         binding: ItemCollectionsErrorBinding,
-        onTryAgainButtonClicked: () -> Unit,
-        onPreviousPageNavigationHelperClicked: () -> Unit
+        onTryAgainButtonClicked: () -> Unit
     ) : BaseViewHolder<CollectionsListItem.ErrorUiModel, ItemCollectionsErrorBinding>(binding) {
 
         init {
             binding.errorState.setOnClickListener { onTryAgainButtonClicked() }
-            binding.root.setOnClickListener { onPreviousPageNavigationHelperClicked() }
         }
 
         override fun bind(listItem: CollectionsListItem.ErrorUiModel) {
@@ -161,12 +159,10 @@ internal class CollectionsAdapter(
         companion object {
             fun create(
                 parent: ViewGroup,
-                onTryAgainButtonClicked: () -> Unit,
-                onPreviousPageNavigationHelperClicked: () -> Unit
+                onTryAgainButtonClicked: () -> Unit
             ) = ErrorViewHolder(
                 binding = ItemCollectionsErrorBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                onTryAgainButtonClicked = onTryAgainButtonClicked,
-                onPreviousPageNavigationHelperClicked = onPreviousPageNavigationHelperClicked
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
     }
