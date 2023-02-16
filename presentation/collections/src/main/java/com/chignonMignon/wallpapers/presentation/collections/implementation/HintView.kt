@@ -42,6 +42,7 @@ class HintView @JvmOverloads constructor(
                 postInvalidateOnAnimation()
             }
         }
+    private var alphaMultiplier = 1f
     var targetView: View? = null
         set(value) {
             field = value
@@ -53,11 +54,21 @@ class HintView @JvmOverloads constructor(
         alpha = VIEW_ALPHA
     }
 
+    override fun setVisibility(visibility: Int) {
+        super.setVisibility(visibility)
+        if (visibility != VISIBLE) {
+            alphaMultiplier = 0f
+        }
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (radiusMultiplier > 0f) {
             targetView?.let { targetView ->
                 canvas?.run {
+                    if (visibility == VISIBLE && alphaMultiplier < 1f) {
+                        alphaMultiplier += 0.0025f
+                    }
                     getLocationOnScreen(viewCoordinates)
                     targetView.getLocationOnScreen(targetCoordinates)
                     val centerX = targetCoordinates.first() + targetView.width * 0.5f - viewCoordinates.first()
@@ -69,11 +80,13 @@ class HintView @JvmOverloads constructor(
                         val exponentialProgress = adjustedProgress * adjustedProgress
                         val inverseExponentialProgress = 1f - exponentialProgress
                         drawCircle(centerX, centerY, maximumRadius * exponentialProgress, wavePaint.apply {
-                            alpha = (inverseExponentialProgress * MAXIMUM_ALPHA).roundToInt()
+                            alpha = (inverseExponentialProgress * alphaMultiplier * MAXIMUM_ALPHA).roundToInt()
                             strokeWidth = initialStrokeWidth * inverseExponentialProgress
                         })
                     }
-                    drawCircle(centerX, centerY, radiusMultiplier * centerRadius * 0.4f + 0.6f * sin(progress * progress * Math.PI).toFloat(), centerPaint)
+                    drawCircle(centerX, centerY, radiusMultiplier * centerRadius * 0.4f + 0.6f * sin(progress * progress * Math.PI).toFloat(), centerPaint.apply {
+                        alpha = (alphaMultiplier * MAXIMUM_ALPHA).roundToInt()
+                    })
                     progress += ANIMATION_SPEED
                     if (progress >= 1f) {
                         progress = 0f
