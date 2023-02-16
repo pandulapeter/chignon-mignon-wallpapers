@@ -125,7 +125,9 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         if (isAdded) {
             viewLifecycleOwner.lifecycleScope.launch {
                 delay(TRANSITION_DURATION)
-                binding.viewPager.isUserInputEnabled = true
+                if (isAdded) {
+                    binding.viewPager.isUserInputEnabled = true
+                }
             }
         }
     }
@@ -225,7 +227,7 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private fun onPageSelected(position: Int) {
         currentItem = position
-        if (position == collectionsAdapter.itemCount - 1) {
+        if (position == collectionsAdapter.itemCount - 1 && position != 0) {
             binding.progressBar.run {
                 progress = 1f
                 finishAnimation()

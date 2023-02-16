@@ -19,11 +19,8 @@ internal sealed class CollectionsListItem(
         val nothing: Any? = null
     ) : CollectionsListItem("empty")
 
-    data class ErrorUiModel(
-        val nothing: Any? = null
-    ) : CollectionsListItem("error")
-
     data class WelcomeUiModel(
-        val isHintVisible: Boolean
+        val isHintVisible: Boolean,
+        val isErrorVisible: Boolean
     ) : CollectionsListItem("welcome")
 }

@@ -24,6 +24,7 @@
             android:importantForAccessibility="no"
             android:padding="@dimen/content_padding"
             android:scaleType="centerInside"
+            android:visibility="@{!uiModel.errorVisible}"
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +32,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="@dimen/collections_logo_max_width"
             app:srcCompat="@drawable/img_logo" />
+
+        <com.chignonMignon.wallpapers.presentation.shared.customViews.ErrorStateView
+            android:id="@+id/error_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{uiModel.errorVisible}" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -54,7 +61,7 @@
             android:paddingBottom="@dimen/double_content_padding"
             android:text="@string/collections_welcome_message"
             android:textAppearance="@style/BodyLargeTextAppearance"
-            android:visibility="@{uiModel.isHintVisible}"
+            android:visibility="@{uiModel.hintVisible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

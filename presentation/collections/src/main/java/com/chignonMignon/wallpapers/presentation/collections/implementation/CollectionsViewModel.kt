@@ -49,12 +49,18 @@ internal class CollectionsViewModel(
     ) { shouldShowLoadingIndicator, collections ->
         collections != null || !shouldShowLoadingIndicator
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
-    val items = collections.map { collections ->
+    private val isInitialLoading = MutableStateFlow(true)
+    val items = combine(collections, isInitialLoading) { collections, isInitialLoading ->
         buildList {
             if (!areCollectionsAvailable() || collections != null) {
-                add(CollectionsListItem.WelcomeUiModel(!collections.isNullOrEmpty()))
+                add(
+                    CollectionsListItem.WelcomeUiModel(
+                        isHintVisible = !collections.isNullOrEmpty(),
+                        isErrorVisible = collections == null && !isInitialLoading
+                    )
+                )
                 when {
-                    collections == null -> add(CollectionsListItem.ErrorUiModel())
+                    collections == null -> Unit
                     collections.isEmpty() -> add(CollectionsListItem.EmptyUiModel())
                     else -> addAll(collections.map { CollectionsListItem.CollectionUiModel(it) } + CollectionsListItem.AboutUiModel())
                 }
@@ -94,6 +100,7 @@ internal class CollectionsViewModel(
                     async { loadProducts(isForceRefresh) },
                     async { loadWallpapers(isForceRefresh) }
                 ).awaitAll()
+                isInitialLoading.value = false
                 @Suppress("UNCHECKED_CAST") val collectionsData = loadResult.firstOrNull { it.second != null }?.second as? List<Collection>
                 if (loadResult.all { it.first } && collectionsData != null) {
                     collections.value = collectionsData.filter { BuildConfig.DEBUG || it.isPublic }.map { it.toNavigatorCollection() }

@@ -10,7 +10,6 @@ import com.chignonMignon.wallpapers.presentation.collections.R
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsAboutBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsCollectionBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsEmptyBinding
-import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsErrorBinding
 import com.chignonMignon.wallpapers.presentation.collections.databinding.ItemCollectionsWelcomeBinding
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseListAdapter
@@ -27,7 +26,6 @@ internal class CollectionsAdapter(
         is CollectionsListItem.AboutUiModel -> R.layout.item_collections_about
         is CollectionsListItem.CollectionUiModel -> R.layout.item_collections_collection
         is CollectionsListItem.EmptyUiModel -> R.layout.item_collections_empty
-        is CollectionsListItem.ErrorUiModel -> R.layout.item_collections_error
         is CollectionsListItem.WelcomeUiModel -> R.layout.item_collections_welcome
     }
 
@@ -35,8 +33,7 @@ internal class CollectionsAdapter(
         R.layout.item_collections_about -> AboutViewHolder.create(parent, onPreviousPageNavigationHelperClicked)
         R.layout.item_collections_collection -> CollectionViewHolder.create(parent, onItemSelected, onPreviousPageNavigationHelperClicked, onNextPageNavigationHelperClicked)
         R.layout.item_collections_empty -> EmptyViewHolder.create(parent, onPreviousPageNavigationHelperClicked)
-        R.layout.item_collections_error -> ErrorViewHolder.create(parent, onTryAgainButtonClicked)
-        R.layout.item_collections_welcome -> WelcomeViewHolder.create(parent, onNextPageNavigationHelperClicked)
+        R.layout.item_collections_welcome -> WelcomeViewHolder.create(parent, onNextPageNavigationHelperClicked, onTryAgainButtonClicked)
         else -> throw IllegalArgumentException("Unsupported view type: $viewType")
     }
 
@@ -143,38 +140,16 @@ internal class CollectionsAdapter(
         }
     }
 
-    private class ErrorViewHolder private constructor(
-        binding: ItemCollectionsErrorBinding,
-        onTryAgainButtonClicked: () -> Unit
-    ) : BaseViewHolder<CollectionsListItem.ErrorUiModel, ItemCollectionsErrorBinding>(binding) {
-
-        init {
-            binding.errorState.setOnClickListener { onTryAgainButtonClicked() }
-        }
-
-        override fun bind(listItem: CollectionsListItem.ErrorUiModel) {
-            binding.uiModel = listItem
-        }
-
-        companion object {
-            fun create(
-                parent: ViewGroup,
-                onTryAgainButtonClicked: () -> Unit
-            ) = ErrorViewHolder(
-                binding = ItemCollectionsErrorBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                onTryAgainButtonClicked = onTryAgainButtonClicked
-            )
-        }
-    }
-
     private class WelcomeViewHolder private constructor(
         binding: ItemCollectionsWelcomeBinding,
-        onNextPageNavigationHelperClicked: () -> Unit
+        onNextPageNavigationHelperClicked: () -> Unit,
+        onTryAgainButtonClicked: () -> Unit
     ) : BaseViewHolder<CollectionsListItem.WelcomeUiModel, ItemCollectionsWelcomeBinding>(binding) {
 
         init {
             binding.root.tag = binding
             binding.root.setOnClickListener { onNextPageNavigationHelperClicked() }
+            binding.errorState.setOnClickListener { onTryAgainButtonClicked() }
         }
 
         override fun bind(listItem: CollectionsListItem.WelcomeUiModel) {
@@ -184,10 +159,12 @@ internal class CollectionsAdapter(
         companion object {
             fun create(
                 parent: ViewGroup,
-                onNextPageNavigationHelperClicked: () -> Unit
+                onNextPageNavigationHelperClicked: () -> Unit,
+                onTryAgainButtonClicked: () -> Unit
             ) = WelcomeViewHolder(
                 binding = ItemCollectionsWelcomeBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-                onNextPageNavigationHelperClicked = onNextPageNavigationHelperClicked
+                onNextPageNavigationHelperClicked = onNextPageNavigationHelperClicked,
+                onTryAgainButtonClicked = onTryAgainButtonClicked
             )
         }
     }
