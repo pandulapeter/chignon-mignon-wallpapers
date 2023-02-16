@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="is_landscape" type="bool">true</item>
+    <item name="should_use_wide_ui" type="bool">true</item>
 </resources>
