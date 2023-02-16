@@ -15,14 +15,11 @@
         android:layout_height="match_parent"
         android:transitionGroup="true">
 
-        <ImageView
+        <com.chignonMignon.wallpapers.presentation.collections.implementation.AnimatedBackgroundView
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{viewModel.focusedCollectionDestination.thumbnailUrl}"
-            app:shouldFade="@{true}" />
+            app:imageUrl="@{viewModel.focusedCollectionDestination.thumbnailUrl}" />
 
         <com.chignonMignon.wallpapers.presentation.collections.implementation.HintView
             android:id="@+id/hint_view"
