@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_1"
         app:layout_constraintWidth_max="@dimen/about_maximum_image_width"
-        app:srcCompat="@drawable/img_error"
+        app:srcCompat="@drawable/img_logo_small"
         app:tint="?android:windowBackground" />
 
     <TextView
