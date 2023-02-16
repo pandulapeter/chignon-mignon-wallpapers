@@ -17,7 +17,7 @@
         <item name="colorSecondary">@color/brand_white</item>
         <item name="colorOnSecondary">@color/brand_text</item>
         <item name="colorControlNormal">@color/brand_text</item>
-        <item name="fontFamily">@font/barlow_regular</item>
+        <item name="fontFamily">@font/poppins_regular</item>
     </style>
 
 </resources>
