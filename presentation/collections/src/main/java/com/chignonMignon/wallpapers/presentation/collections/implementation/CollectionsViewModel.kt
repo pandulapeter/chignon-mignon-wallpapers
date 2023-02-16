@@ -52,7 +52,7 @@ internal class CollectionsViewModel(
     val items = collections.map { collections ->
         buildList {
             if (!areCollectionsAvailable() || collections != null) {
-                add(CollectionsListItem.WelcomeUiModel())
+                add(CollectionsListItem.WelcomeUiModel(!collections.isNullOrEmpty()))
                 when {
                     collections == null -> add(CollectionsListItem.ErrorUiModel())
                     collections.isEmpty() -> add(CollectionsListItem.EmptyUiModel())

@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <ImageView
             android:id="@+id/thumbnail"
@@ -53,6 +54,7 @@
             android:paddingBottom="@dimen/double_content_padding"
             android:text="@string/collections_welcome_message"
             android:textAppearance="@style/BodyLargeTextAppearance"
+            android:visibility="@{uiModel.isHintVisible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
