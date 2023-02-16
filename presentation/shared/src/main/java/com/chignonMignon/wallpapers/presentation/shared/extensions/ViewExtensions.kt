@@ -55,7 +55,7 @@ fun ImageView.setImageUrl(
     bottomCornerRadius: Float? = null
 ) {
     if (imageUrl?.isNotBlank() == true && imageViewTag?.url != imageUrl) {
-        tag = imageViewTag?.copy(url = imageUrl) ?: ImageViewTag(imageUrl)
+        tag = imageViewTag?.copy(url = imageUrl, isLoadingReady = false) ?: ImageViewTag(imageUrl)
         post {
             imageViewTag?.run {
                 if (!isLoadingReady) {

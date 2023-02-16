@@ -141,7 +141,7 @@ class WallpaperDetailsFragment : Fragment(R.layout.fragment_wallpaper_details), 
     private fun setWallpaper(wallpaperType: WallpaperType) {
         getCurrentBitmap()?.let { bitmap ->
             context?.run { viewModel.onSetWallpaperButtonPressed(this, bitmap, wallpaperType) }
-        }
+        } ?: showMessage(com.chignonMignon.wallpapers.presentation.shared.R.string.wallpaper_details_cannot_set_wallpaper_apply)
     }
 
     private fun onFocusedWallpaperChanged(focusedWallpaperDestination: WallpaperDestination?) {

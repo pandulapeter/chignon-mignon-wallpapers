@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.ImageViewTag
+import com.chignonMignon.wallpapers.presentation.utilities.extensions.imageViewTag
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseListAdapter
 import com.chignonMignon.wallpapers.presentation.utilities.list.BaseViewHolder
 import com.chignonMignon.wallpapers.presentation.wallpaperDetails.databinding.ItemWallpaperDetailsWallpaperBinding
@@ -35,11 +36,13 @@ internal class WallpaperDetailsAdapter : BaseListAdapter<WallpaperDetailsListIte
             }
             binding.root.tag = object : BitmapCallback {
 
-                override fun getBitmap(): Bitmap {
+                override fun getBitmap(): Bitmap? = if (binding.preview.imageViewTag?.isLoadingReady != true) {
+                    null
+                } else {
                     binding.preview.isDrawingCacheEnabled = true
                     val bitmap = Bitmap.createBitmap(binding.preview.drawingCache)
                     binding.preview.isDrawingCacheEnabled = false
-                    return bitmap
+                    bitmap
                 }
             }
             binding.container.layoutTransition = LayoutTransition().apply {
