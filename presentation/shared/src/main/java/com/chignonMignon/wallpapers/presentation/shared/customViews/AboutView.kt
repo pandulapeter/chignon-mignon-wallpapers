@@ -13,6 +13,7 @@ import com.chignonMignon.wallpapers.presentation.shared.databinding.ViewAboutBin
 import com.chignonMignon.wallpapers.presentation.shared.extensions.openEmailComposer
 import com.chignonMignon.wallpapers.presentation.shared.extensions.openUrl
 import com.chignonMignon.wallpapers.presentation.utilities.extensions.dimension
+import java.util.Locale
 
 
 class AboutView @JvmOverloads constructor(
@@ -42,7 +43,14 @@ class AboutView @JvmOverloads constructor(
             context.openUrl("https://github.com/pandulapeter/chignon-mignon-wallpapers", this)
         }
         binding.linksApplication.buttonPrivacyPolicy.setOnClickListener {
-            context.openUrl("https://chignonmignon.ro/wp-content/uploads/2023/02/chignon-mignon-wallpapers-privacy_policy-en.html", this)
+            context.openUrl(
+                when (Locale.getDefault().language) {
+                    "hu" -> "https://chignonmignon.ro/wp-content/uploads/2023/02/chignon-mignon-wallpapers-privacy_policy-hu.html"
+                    // TODO: "ro" -> ...
+                    else -> "https://chignonmignon.ro/wp-content/uploads/2023/02/chignon-mignon-wallpapers-privacy_policy-en.html"
+                },
+                this
+            )
         }
         binding.linksApplication.buttonBugReport.setOnClickListener {
             context.openEmailComposer("pandulapeter@gmail.com", this)
