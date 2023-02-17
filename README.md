@@ -1,8 +1,12 @@
 # Chignon Mignon Wallpapers
-*Browse the ever-growing collection of wallpaper designs to match the patterns of your favorite bags.*
+*Browse the ever-growing collection of wallpaper designs to match the patterns of your favorite accessories.*
 
 This simple Android application showcases a number of custom animations and transitions as well as a modular architecture. The data it displays is coming from a public
 Google Sheet instead of a dedicated backend. The app features a scalable user interface with proper edge-to-edge support and inset handling in any orientation.
+
+Chignon Mignon Wallpapers is completely free, without any ads.
+
+[<img src="https://play.google.com/intl/en_us/badges/images/badge_new.png" />](https://play.google.com/store/apps/details?id=com.chignonMignon.wallpapers)
 
 ### Screenshots
 
