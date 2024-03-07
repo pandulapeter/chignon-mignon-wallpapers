@@ -69,14 +69,14 @@ fun ImageView.setImageUrl(
             .transition(DrawableTransitionOptions.withCrossFade(if (shouldFade == true && isLaidOut) 600 else 250))
             .listener(
                 object : RequestListener<Drawable> {
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
                         imageViewTag?.loadingIndicator?.isVisible = false
                         tag = imageViewTag?.copy(isLoadingReady = true) ?: ImageViewTag(imageUrl, isLoadingReady = true)
                         scaleType = ImageView.ScaleType.CENTER_CROP
                         return false
                     }
 
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         scaleType = ImageView.ScaleType.CENTER_INSIDE
                         tag = imageViewTag?.copy(url = "")
                         imageViewTag?.loadingIndicator?.isVisible = false

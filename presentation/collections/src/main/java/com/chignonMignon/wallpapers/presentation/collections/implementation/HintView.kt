@@ -61,7 +61,7 @@ class HintView @JvmOverloads constructor(
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (radiusMultiplier > 0f) {
             targetView?.let { targetView ->

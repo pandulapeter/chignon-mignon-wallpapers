@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 include(
     ":app",
     ":data:model",
@@ -14,8 +16,7 @@ include(
     ":presentation:utilities",
     ":presentation:debugMenu"
 )
-rootProject.name = "Chignon Mignon Wallpapers"
-enableFeaturePreview("VERSION_CATALOGS")
+rootProject.name = "ChignonMignonWallpapers"
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
