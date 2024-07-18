@@ -49,7 +49,7 @@ internal class RoundedCornersTransformation(
     }
 
     override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
-        val output = createBitmap(outWidth, outHeight, toTransform.config)
+        val output = createBitmap(outWidth, outHeight, toTransform.config ?: Bitmap.Config.ARGB_8888)
         output.applyCanvas {
             drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
             val matrix = Matrix()
