@@ -101,23 +101,20 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
         delaySharedElementTransition(binding.viewPager)
         viewModel.loadData(false)
         currentItem = currentItem ?: savedInstanceState?.currentItem
+        binding.background.alpha = if (viewModel.focusedCollectionDestination.value == null) 0f else BACKGROUND_ALPHA
     }
 
     override fun onResume() {
         super.onResume()
-        fun updateUi() {
-            binding.background.alpha = if (viewModel.focusedCollectionDestination.value == null) 0f else BACKGROUND_ALPHA
-            binding.progressBar.finishAnimation()
-        }
         currentItem?.let { currentItem ->
             binding.viewPager.doOnPreDraw {
                 binding.viewPager.setCurrentItem(currentItem, false)
                 onPageSelected(currentItem)
                 onFocusedCollectionChanged(viewModel.focusedCollectionDestination.value)
-                updateUi()
+                binding.progressBar.finishAnimation()
             }
         }
-        updateUi()
+        binding.progressBar.finishAnimation()
     }
 
     override fun startPostponedEnterTransition() {
