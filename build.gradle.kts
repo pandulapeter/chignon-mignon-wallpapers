@@ -1,5 +1,5 @@
-"VERSION_NAME" set "1.1.1"
-"VERSION_CODE" set 2
+"VERSION_NAME" set "1.1.2"
+"VERSION_CODE" set 3
 "KEY_ALIAS" set "androiddebugkey"
 "KEY_PASSWORD" set "android"
 "STORE_FILE" set "internal.keystore"
