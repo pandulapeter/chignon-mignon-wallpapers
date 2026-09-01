@@ -1,5 +1,11 @@
 @file:Suppress("UnstableApiUsage")
 
+pluginManagement {
+    repositories {
+        google()
+        gradlePluginPortal()
+    }
+}
 include(
     ":app",
     ":data:model",

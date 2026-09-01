@@ -1,6 +1,5 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
     id("com.google.devtools.ksp") version libs.versions.kotlin.ksp.get()
 }
 
@@ -16,7 +15,6 @@ dependencies {
 android {
     compileSdk = System.getProperty("TARGET_SDK_VERSION").toInt()
     defaultConfig.minSdk = System.getProperty("MIN_SDK_VERSION").toInt()
-    kotlinOptions.jvmTarget = libs.versions.jvm.target.get()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("com.android.legacy-kapt") version libs.versions.gradle.get()
 }
 
 dependencies {
@@ -16,7 +15,6 @@ dependencies {
 android {
     compileSdk = System.getProperty("TARGET_SDK_VERSION").toInt()
     defaultConfig.minSdk = System.getProperty("MIN_SDK_VERSION").toInt()
-    kotlinOptions.jvmTarget = libs.versions.jvm.target.get()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
